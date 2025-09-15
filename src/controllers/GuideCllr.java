@@ -4,7 +4,7 @@ import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
-import models.Sesion;
+import models.Session;
 
 public class GuideCllr{
     
@@ -17,11 +17,11 @@ public class GuideCllr{
     @FXML
     public void initialize() {
         instance = this;
-        if (contentPane != null && Sesion.getInstance().getId_rol() == 0) {
+        if (contentPane != null && Session.getInstance().getId_rol() == 0) {
             btnNewTest();
         }
         
-        if (contentPane != null && Sesion.getInstance().getId_rol() == 1) {
+        if (contentPane != null && Session.getInstance().getId_rol() == 1) {
             btn_new();
         }
     }
@@ -67,12 +67,12 @@ public class GuideCllr{
     }
     
     public void btnViewTest() {
-        loadPanel("/views/ShowTests.fxml");
+        loadPanel("/views/ShowTestsVw.fxml");
     }
     
     public void btnLogout() {
         MainCllr.getInstance().showPanel("/views/LoginVw.fxml");
-        Sesion.cerrarSesion();
+        Session.cerrarSesion();
         MainCllr.mostrarAlerta(null, "Sesión cerrada con exito");
     }
     

@@ -33,7 +33,7 @@ public class MainCllr implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         instance = this; // Guarda referencia al controlador principal
-        showPanel("/views/menu_inicio.fxml");
+        showPanel("/views/LoginVw.fxml");
         
         navBar.setOnMousePressed((MouseEvent event) -> {
             Stage stage = (Stage) navBar.getScene().getWindow();

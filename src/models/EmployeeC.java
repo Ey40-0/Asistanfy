@@ -5,16 +5,16 @@ import java.sql.Statement;
 import java.security.SecureRandom;
 import java.sql.Connection;
 import java.sql.SQLException;
-import proyectojavafx.connect;
+import proyectojavafx.Connect;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-public class EmpleadoDAO {
+public class EmployeeC {
 
-    public boolean register(Empleado emp) {
-        try (Connection con = new connect().getConectar()) {
+    public boolean register(Employee emp) {
+        try (Connection con = new Connect().getConectar()) {
             String checkQuery = "SELECT COUNT(*) FROM Empleado WHERE email = ?";
             try (PreparedStatement checkStmt = con.prepareStatement(checkQuery)) {
                 checkStmt.setString(1, emp.getEmail());
@@ -50,8 +50,8 @@ public class EmpleadoDAO {
         }
     }
     
-    public Empleado login(String usuario, String contrasenia) {
-        try (Connection con = new connect().getConectar()) {
+    public Employee login(String usuario, String contrasenia) {
+        try (Connection con = new Connect().getConectar()) {
             String query = "SELECT * FROM Empleado WHERE email = ?";
             try (PreparedStatement stmt = con.prepareStatement(query)) {
                 stmt.setString(1, usuario);
@@ -60,7 +60,7 @@ public class EmpleadoDAO {
                         String passDB = rs.getString("contrasenia");
                         if (contrasenia.equals(passDB)) {
                             // Devuelve un objeto Empleado con los datos de la db
-                            return new Empleado(
+                            return new Employee(
                                 rs.getInt("id_emp"),
                                 rs.getString("nombre"),
                                 rs.getString("apellido"),
@@ -83,14 +83,14 @@ public class EmpleadoDAO {
         }
     }
     
-    public ObservableList<Empleado> getAllEmps() {
-        ObservableList<Empleado> empleados = FXCollections.observableArrayList();
-        try (Connection con = new connect().getConectar()) {
+    public ObservableList<Employee> getAllEmps() {
+        ObservableList<Employee> empleados = FXCollections.observableArrayList();
+        try (Connection con = new Connect().getConectar()) {
             String query = "SELECT * FROM empleado WHERE activa = 1"; //! AND codigo_vin IS NULL
             try (PreparedStatement ps = con.prepareStatement(query);
                 ResultSet rs = ps.executeQuery()) {
                     while (rs.next()) {
-                        Empleado emp = new Empleado(
+                        Employee emp = new Employee(
                             rs.getInt("id_emp"),
                             rs.getString("nombre"),
                             rs.getString("apellido"),

@@ -4,9 +4,9 @@ import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import models.Empleado;
-import models.EmpleadoDAO;
-import models.Sesion;
+import models.Employee;
+import models.EmployeeC;
+import models.Session;
 
 public class LoginCllr {
     
@@ -15,7 +15,7 @@ public class LoginCllr {
     @FXML
     private PasswordField str_contrasenia;
     
-    EmpleadoDAO empc = new EmpleadoDAO();
+    EmployeeC empc = new EmployeeC();
     
     @FXML
     public void initialize() {
@@ -38,18 +38,18 @@ public class LoginCllr {
             return;
         }
 
-        Empleado emp = empc.login(usuario, contrasenia);
+        Employee emp = empc.login(usuario, contrasenia);
         if (emp != null) {
              
             System.out.println("Id: " + emp.getId());
             System.out.println("Nombre: " + emp.getNombre());
             System.out.println("Id_rol: " + emp.getTipo());
             
-            Sesion.iniciarSesion(emp.getId(), emp.getTipo());
+            Session.iniciarSesion(emp.getId(), emp.getTipo());
             
             switch (emp.getTipo()) {
-                case 0 -> MainCllr.getInstance().showPanel("/views/menu_profesor.fxml");
-                case 1 -> MainCllr.getInstance().showPanel("/views/menu_inspector.fxml");
+                case 0 -> MainCllr.getInstance().showPanel("/views/TeacherVw.fxml");
+                case 1 -> MainCllr.getInstance().showPanel("/views/InspectorVw.fxml");
                 default -> MainCllr.getInstance().showPanel("/views/menu_admin.fxml");
             }
         } else {

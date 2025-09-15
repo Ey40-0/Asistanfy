@@ -5,15 +5,15 @@ import java.util.List;
 import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.SQLException;
-import proyectojavafx.connect;
+import proyectojavafx.Connect;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-public class EvaluacionDAO {
+public class TestC {
     
-    public boolean insert(Evaluacion eval) {
+    public boolean insert(Test eval) {
         String sql = "INSERT INTO evaluacion (descripcion, fecha, asignatura_id, empleado_id, is_active) VALUES (?, ?, ?, ?, ?)";
-        try (Connection con = new connect().getConectar();
+        try (Connection con = new Connect().getConectar();
              PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             ps.setString(1, eval.getTitulo());
@@ -42,8 +42,8 @@ public class EvaluacionDAO {
         return false;
     }
     
-    public List<Evaluacion> getEvaluacionesByProfesor(int profesorId) {
-        List<Evaluacion> evaluaciones = new ArrayList<>();
+    public List<Test> getEvaluacionesByProfesor(int profesorId) {
+        List<Test> evaluaciones = new ArrayList<>();
         String sql = """
             SELECT e.id_eva, e.descripcion, e.fecha,
                    e.is_active, a.id_asign, a.nombre AS asig_name,
@@ -56,16 +56,16 @@ public class EvaluacionDAO {
             ORDER BY e.fecha DESC;
         """;
 
-        try (Connection con = new connect().getConectar();
+        try (Connection con = new Connect().getConectar();
             PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setInt(1, profesorId);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
-                    Asignatura asig = new Asignatura(rs.getInt("id_asign"), rs.getString("asig_name"));
-                    Curso curso = new Curso(rs.getInt("id_cur"), rs.getString("curso_level"));
+                    Matter asig = new Matter(rs.getInt("id_asign"), rs.getString("asig_name"));
+                    Course curso = new Course(rs.getInt("id_cur"), rs.getString("curso_level"));
 
-                    Evaluacion eval = new Evaluacion(
+                    Test eval = new Test(
                         rs.getInt("id_eva"),
                         rs.getString("descripcion"),
                         rs.getDate("fecha").toLocalDate(),

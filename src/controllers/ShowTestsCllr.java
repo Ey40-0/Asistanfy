@@ -9,27 +9,27 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import models.Empleado;
-import models.Evaluacion;
-import models.EvaluacionDAO;
-import models.Sesion;
+import models.Employee;
+import models.Test;
+import models.TestC;
+import models.Session;
 
 public class ShowTestsCllr {
 
     @FXML
-    private TableView<Evaluacion> tableTests;
+    private TableView<Test> tableTests;
     @FXML
-    private TableColumn<Evaluacion, String> colTitle;
+    private TableColumn<Test, String> colTitle;
     @FXML
-    private TableColumn<Evaluacion, String> colDate;
+    private TableColumn<Test, String> colDate;
     @FXML
-    private TableColumn<Evaluacion, String> colCourse;
+    private TableColumn<Test, String> colCourse;
     @FXML
-    private TableColumn<Evaluacion, String> colMatter;
+    private TableColumn<Test, String> colMatter;
     @FXML
-    private TableColumn<Evaluacion, Button> colDetails;
+    private TableColumn<Test, Button> colDetails;
 
-    private final EvaluacionDAO evac = new EvaluacionDAO();
+    private final TestC evac = new TestC();
 
     @FXML
     public void initialize() {
@@ -59,20 +59,20 @@ public class ShowTestsCllr {
             }
 
             // Verifica el rol
-            int rol = Sesion.getInstance().getId_rol();
+            int rol = Session.getInstance().getId_rol();
 
             if (rol == 0) { // Profesor
                 btn.setText("Añadir");
                 btn.setOnAction(e -> {
                     // Aquí podrías pasar la evaluación seleccionada
-                    Evaluacion eval = getTableView().getItems().get(getIndex());
-                    GuideCllr.getInstance().loadPanel("/views/mp_alumnos.fxml");
+                    Test eval = getTableView().getItems().get(getIndex());
+                    GuideCllr.getInstance().loadPanel("/views/MpAddStudVw.fxml");
                 });
             } else { // Inspector
                 btn.setText("Detalles");
                 btn.setOnAction(e -> {
-                    Evaluacion eval = getTableView().getItems().get(getIndex());
-                    GuideCllr.getInstance().loadPanel("/views/mp_view_alumnos.fxml");
+                    Test eval = getTableView().getItems().get(getIndex());
+                    GuideCllr.getInstance().loadPanel("/views/ShowStudVw.fxml");
                 });
             }
 
@@ -84,11 +84,10 @@ public class ShowTestsCllr {
     }
 
     public void loadTests() {
-        ObservableList<Evaluacion> tests;
+        ObservableList<Test> tests;
         
-        if (Sesion.getInstance().getId_rol() == 0) {
-            tests = FXCollections.observableArrayList(
-                evac.getEvaluacionesByProfesor(Sesion.getInstance().getId())
+        if (Session.getInstance().getId_rol() == 0) {
+            tests = FXCollections.observableArrayList(evac.getEvaluacionesByProfesor(Session.getInstance().getId())
             );
         } else {
             

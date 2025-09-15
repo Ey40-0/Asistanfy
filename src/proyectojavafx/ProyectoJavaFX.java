@@ -13,7 +13,7 @@ public class ProyectoJavaFX extends Application {
     // definición del panel de inicio
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/views/main.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/views/MainVw.fxml"));
         Scene scene = new Scene(root);
         scene.getRoot().setStyle("-fx-background-radius: 10; -fx-background-color: #2b2b2b;");
         primaryStage.initStyle(StageStyle.UNDECORATED);

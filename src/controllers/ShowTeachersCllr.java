@@ -5,16 +5,16 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import models.Empleado;
-import models.EmpleadoDAO;
-import models.Sesion;
+import models.Employee;
+import models.EmployeeC;
+import models.Session;
 
 public class ShowTeachersCllr {
 
     @FXML
-    private ListView<Empleado> listProfesores;
+    private ListView<Employee> listProfesores;
 
-    private final EmpleadoDAO empc = new EmpleadoDAO();
+    private final EmployeeC empc = new EmployeeC();
     
     private static ShowTeachersCllr instance;
 
@@ -30,10 +30,10 @@ public class ShowTeachersCllr {
     }
 
     private void cargarProfesores() {
-        ObservableList<Empleado> empleados = empc.getAllEmps();
-        ObservableList<Empleado> profesores = javafx.collections.FXCollections.observableArrayList();
+        ObservableList<Employee> empleados = empc.getAllEmps();
+        ObservableList<Employee> profesores = javafx.collections.FXCollections.observableArrayList();
 
-        for (Empleado emp : empleados) {
+        for (Employee emp : empleados) {
             if (emp.getTipo() == 0 /*! && emp.getCodigo() == null*/) { // tipo 0 = profesor
                 profesores.add(emp);
             }
@@ -42,9 +42,9 @@ public class ShowTeachersCllr {
         listProfesores.setItems(profesores);
 
         // Para mostrar nombres legibles en la lista
-        listProfesores.setCellFactory(lv -> new ListCell<Empleado>() {
+        listProfesores.setCellFactory(lv -> new ListCell<Employee>() {
             @Override
-            protected void updateItem(Empleado emp, boolean empty) {
+            protected void updateItem(Employee emp, boolean empty) {
                 super.updateItem(emp, empty);
                 if (empty || emp == null) {
                     setText(null);
@@ -56,21 +56,21 @@ public class ShowTeachersCllr {
     }
     
     public void viewInformation() {
-        Empleado seleccionado = listProfesores.getSelectionModel().getSelectedItem();
+        Employee seleccionado = listProfesores.getSelectionModel().getSelectedItem();
         
         if (seleccionado != null) {
             try {
-                GuideCllr.getInstance().btnViewTest();
+                GuideCllr.getInstance().loadPanel("/views/ShowTestsVw.fxml");
             } catch (Exception e) {
                 e.printStackTrace();
             }
         } else {
-            MainCllr.getInstance().mostrarAlerta("Error", "Por favor selecciona un profesor para enviar la solicitud");
+            MainCllr.mostrarAlerta("Error", "Por favor selecciona un profesor para enviar la solicitud");
         }
     }
     
     public int getInfoEmpleado() {
-        Empleado selected = listProfesores.getSelectionModel().getSelectedItem();
+        Employee selected = listProfesores.getSelectionModel().getSelectedItem();
         if (selected != null) {
             return selected.getId();
         } else {

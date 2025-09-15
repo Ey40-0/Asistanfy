@@ -1,6 +1,6 @@
 package models;
 
-public class Empleado {
+public class Employee {
     private int id;
     private String nombre;
     private String apellido;
@@ -9,10 +9,10 @@ public class Empleado {
     private int tipo;
     private int activa;
 
-    public Empleado() {
+    public Employee() {
     }
 
-    public Empleado(int id, String nombre, String apellido, String contrasenia, String email, int tipo, int activa) {
+    public Employee(int id, String nombre, String apellido, String contrasenia, String email, int tipo, int activa) {
         this.id = id;
         this.nombre= nombre;
         this.apellido = apellido;

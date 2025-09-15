@@ -7,20 +7,20 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-import proyectojavafx.connect;
+import proyectojavafx.Connect;
 
-public class CursoDAO {
+public class CourseC {
 
-    public static List<Curso> obtenerCursos() {
-        List<Curso> cursos = new ArrayList<>();
+    public static List<Course> obtenerCursos() {
+        List<Course> cursos = new ArrayList<>();
         String sql = "SELECT * FROM curso";
 
-        try (Connection con = new connect().getConectar();
+        try (Connection con = new Connect().getConectar();
              PreparedStatement stmt = con.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
-                cursos.add(new Curso(rs.getInt("id_cur"), rs.getString("nivel")));
+                cursos.add(new Course(rs.getInt("id_cur"), rs.getString("nivel")));
             }
 
         } catch (SQLException e) {
@@ -30,13 +30,13 @@ public class CursoDAO {
         return cursos;
     }
     
-    public void addMatterToCourse(Curso cou, Evaluacion mat) {
+    public void addMatterToCourse(Course cou, Test mat) {
         if (mat.getId() == 0) {
             MainCllr.getInstance().mostrarAlerta("Error", "Evaluacion todavia no ha sido creada.");
             return;
         }
 
-        try (Connection con = new connect().getConectar()) {
+        try (Connection con = new Connect().getConectar()) {
             String sql = "INSERT INTO detalle_eva_cur (id_cur, id_eva) VALUES (?, ?)";
             try (PreparedStatement ps = con.prepareStatement(sql)) {
                 ps.setInt(1, cou.getId());

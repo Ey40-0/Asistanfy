@@ -6,13 +6,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import proyectojavafx.connect;
+import proyectojavafx.Connect;
 
-public class Asignatura {
+public class Matter {
     private int id;
     private String nombre;
 
-    public Asignatura(int id, String nombre) {
+    public Matter(int id, String nombre) {
         this.id = id;
         this.nombre = nombre;
     }
@@ -38,16 +38,16 @@ public class Asignatura {
         return nombre;
     }
     
-    public static List<Asignatura> obtenerAsignaturas() {
-        List<Asignatura> asignaturas = new ArrayList<>();
+    public static List<Matter> obtenerAsignaturas() {
+        List<Matter> asignaturas = new ArrayList<>();
         String sql = "SELECT * FROM asignatura";
         
-        try (Connection con = new connect().getConectar();
+        try (Connection con = new Connect().getConectar();
             PreparedStatement stmt = con.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery()) {
             
             while (rs.next()) {
-                asignaturas.add(new Asignatura(rs.getInt("id_asign"), rs.getString("nombre")));
+                asignaturas.add(new Matter(rs.getInt("id_asign"), rs.getString("nombre")));
             }
         } catch (SQLException e) {
             e.printStackTrace();

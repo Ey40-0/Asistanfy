@@ -4,18 +4,18 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import proyectojavafx.connect;
+import proyectojavafx.Connect;
 
-public class Alumno {
+public class Student {
     private int id;
     private String rut;
     private String nombre;
-    private Curso curso;
+    private Course curso;
 
-    public Alumno() {
+    public Student() {
     }
 
-    public Alumno(int id, String rut, String nombre, Curso curso) {
+    public Student(int id, String rut, String nombre, Course curso) {
         this.rut = rut;
         this.nombre = nombre;
         this.curso = curso;
@@ -46,11 +46,11 @@ public class Alumno {
         this.nombre = nombre;
     }
 
-    public Curso getCurso() {
+    public Course getCurso() {
         return curso;
     }
 
-    public void setCurso(Curso curso) {
+    public void setCurso(Course curso) {
         this.curso = curso;
     }
     

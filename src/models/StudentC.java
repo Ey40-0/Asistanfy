@@ -2,15 +2,15 @@ package models;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import proyectojavafx.connect;
+import proyectojavafx.Connect;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-public class AlumnoDAO {
+public class StudentC {
     
-    public boolean insert(Alumno stu) {
+    public boolean insert(Student stu) {
         String query = "INSERT INTO alumnos (run, nombre, id_cur) VALUES (?,?,?)";
-        try (Connection con = new connect().getConectar();
+        try (Connection con = new Connect().getConectar();
             PreparedStatement ps = con.prepareStatement(query)) {
 
             ps.setString(1, stu.getRut());

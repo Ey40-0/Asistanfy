@@ -1,25 +1,25 @@
 package models;
 
-public class Sesion {
-    private static Sesion instancia;
+public class Session {
+    private static Session instancia;
     private int id;
     private int id_rol;
 
-    public Sesion() {
+    public Session() {
         
     }
 
-    public Sesion(int id, int id_rol) {
+    public Session(int id, int id_rol) {
         this.id = id;
         this.id_rol = id_rol;
     }
     
     public static void iniciarSesion(int id, int id_rol) {
         // Siempre crea una nueva sesión, reemplazando la anterior
-        instancia = new Sesion(id, id_rol);
+        instancia = new Session(id, id_rol);
     }
 
-    public static Sesion getInstance() {
+    public static Session getInstance() {
         return instancia;
     }
 

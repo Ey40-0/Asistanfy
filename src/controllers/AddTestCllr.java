@@ -5,12 +5,12 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
-import models.Asignatura;
-import models.Curso;
-import models.CursoDAO;
-import models.Evaluacion;
-import models.EvaluacionDAO;
-import models.Sesion;
+import models.Matter;
+import models.Course;
+import models.CourseC;
+import models.Test;
+import models.TestC;
+import models.Session;
 
 public class AddTestCllr {
     
@@ -19,29 +19,29 @@ public class AddTestCllr {
     @FXML
     private DatePicker fieldDate;
     @FXML
-    private ComboBox<Asignatura> fieldMatter;
+    private ComboBox<Matter> fieldMatter;
     @FXML
-    private ComboBox<Curso> fieldCourse;
+    private ComboBox<Course> fieldCourse;
     
-    EvaluacionDAO evac = new EvaluacionDAO();
-    CursoDAO curc = new CursoDAO();
+    TestC evac = new TestC();
+    CourseC curc = new CourseC();
     
     @FXML
     public void initialize() {
         fieldDescription.setOnAction(e -> fieldDate.requestFocus());
         
         // Cargar cursos (llamando estático, sin crear objeto)
-        fieldCourse.getItems().addAll(CursoDAO.obtenerCursos());
+        fieldCourse.getItems().addAll(CourseC.obtenerCursos());
 
         // Cargar asignaturas
-        fieldMatter.getItems().addAll(Asignatura.obtenerAsignaturas());
+        fieldMatter.getItems().addAll(Matter.obtenerAsignaturas());
     }
     
     public void createTest() {
         String description = fieldDescription.getText().trim();
         LocalDate date = fieldDate.getValue();
-        Asignatura matter = fieldMatter.getValue();
-        Curso course = fieldCourse.getValue();
+        Matter matter = fieldMatter.getValue();
+        Course course = fieldCourse.getValue();
         
         if (description.isEmpty() || date == null || matter == null || course == null) {
             MainCllr.mostrarAlerta("Campos vacíos", "Por favor, rellene todos los campos.");
@@ -53,7 +53,7 @@ public class AddTestCllr {
             return;
         }
         
-        Evaluacion mat = new Evaluacion(0, description, date, course, matter, Sesion.getInstance().getId(), 1);
+        Test mat = new Test(0, description, date, course, matter, Session.getInstance().getId(), 1);
         
         if (evac.insert(mat)) {
             MainCllr.mostrarAlerta("Registro exitoso", "¡Evaluación registrada correctamente!");

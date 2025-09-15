@@ -2,19 +2,19 @@ package models;
 
 import java.time.LocalDate;
 
-public class Evaluacion {
+public class Test {
     private int id;
     private String titulo;
     private LocalDate fecha;
-    private Curso curso;
-    private Asignatura asignatura;
+    private Course curso;
+    private Matter asignatura;
     private int idProfesor;
     private int is_active;
 
-    public Evaluacion() {
+    public Test() {
     }
 
-    public Evaluacion(int id, String titulo, LocalDate fecha, Curso curso, Asignatura asignatura, int idProfesor, int is_active) {
+    public Test(int id, String titulo, LocalDate fecha, Course curso, Matter asignatura, int idProfesor, int is_active) {
         this.id = id;
         this.titulo = titulo;
         this.fecha = fecha;
@@ -48,19 +48,19 @@ public class Evaluacion {
         this.fecha = fecha;
     }
 
-    public Curso getCurso() {
+    public Course getCurso() {
         return curso;
     }
 
-    public void setCurso(Curso curso) {
+    public void setCurso(Course curso) {
         this.curso = curso;
     }
 
-    public Asignatura getAsignatura() {
+    public Matter getAsignatura() {
         return asignatura;
     }
 
-    public void setAsignatura(Asignatura asignatura) {
+    public void setAsignatura(Matter asignatura) {
         this.asignatura = asignatura;
     }
 

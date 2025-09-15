@@ -1,10 +1,10 @@
 package models;
 
-public class Curso {
+public class Course {
     private int id;
     private String nombre;
 
-    public Curso(int id, String nombre) {
+    public Course(int id, String nombre) {
         this.id = id;
         this.nombre = nombre;
     }

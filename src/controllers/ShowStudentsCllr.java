@@ -3,15 +3,15 @@ package controllers;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import models.Alumno;
+import models.Student;
 
 public class ShowStudentsCllr {
     
     @FXML
-    private TableView<Alumno> tableTests;
+    private TableView<Student> tableTests;
     @FXML
-    private TableColumn<Alumno, String> colTitle;
+    private TableColumn<Student, String> colTitle;
     @FXML
-    private TableColumn<Alumno, String> colDate;
+    private TableColumn<Student, String> colDate;
     
 }

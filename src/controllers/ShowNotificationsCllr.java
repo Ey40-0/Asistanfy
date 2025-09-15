@@ -3,9 +3,9 @@ package controllers;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
-import models.Empleado;
-import models.EmpleadoDAO;
-import models.Sesion;
+import models.Employee;
+import models.EmployeeC;
+import models.Session;
 
 /**
  *
@@ -15,7 +15,7 @@ public class ShowNotificationsCllr {
     @FXML
     private ListView<String> listNotifications;
     
-    private final EmpleadoDAO empc = new EmpleadoDAO();
+    private final EmployeeC empc = new EmployeeC();
     
     @FXML
     public void initialize() {

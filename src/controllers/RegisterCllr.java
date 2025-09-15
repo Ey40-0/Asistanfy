@@ -7,9 +7,9 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
-import models.Empleado;
-import models.EmpleadoDAO;
-import models.Sesion;
+import models.Employee;
+import models.EmployeeC;
+import models.Session;
 
 public class RegisterCllr {
     
@@ -24,11 +24,11 @@ public class RegisterCllr {
     @FXML
     private CheckBox typeUser;
     
-    EmpleadoDAO empc = new EmpleadoDAO();
+    EmployeeC empc = new EmployeeC();
 
     @FXML
     public void volver(ActionEvent event) {
-        MainCllr.getInstance().showPanel("/views/menu_inicio.fxml");
+        MainCllr.getInstance().showPanel("/views/LoginVw.fxml");
     }
     
     @FXML
@@ -40,16 +40,16 @@ public class RegisterCllr {
         int tipo = typeUser.isSelected() ? 1 : 0;
 
         if (nombre.isEmpty() || apellido.isEmpty() || contrasenia.isEmpty() || mail.isEmpty()) {
-            MainCllr.getInstance().mostrarAlerta("Campos vacíos", "Por favor, rellene todos los campos.");
+            MainCllr.mostrarAlerta("Campos vacíos", "Por favor, rellene todos los campos.");
             return;
         }
         
         if (!esValido(mail)) {
-            MainCllr.getInstance().mostrarAlerta("Tipo incorrecto", "Email invalido, vuelva a intentar con otro.");
+            MainCllr.mostrarAlerta("Tipo incorrecto", "Email invalido, vuelva a intentar con otro.");
             return;
         }
         
-        Empleado emp = new Empleado(0, nombre, apellido, contrasenia, mail, tipo, 1);
+        Employee emp = new Employee(0, nombre, apellido, contrasenia, mail, tipo, 1);
 
         if (empc.register(emp)) {
             // mostrarAlerta("Registro exitoso", "¡Usuario registrado correctamente!");
@@ -58,7 +58,7 @@ public class RegisterCllr {
             System.out.println("Nombre: " + emp.getNombre());
             System.out.println("Id_rol: " + emp.getTipo());
             
-            Sesion.iniciarSesion(emp.getId(), emp.getTipo());
+            Session.iniciarSesion(emp.getId(), emp.getTipo());
    
             // Redirigir según rol
             switch (tipo) {
