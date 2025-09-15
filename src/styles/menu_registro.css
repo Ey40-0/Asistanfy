@@ -1,0 +1,58 @@
+/*
+ * Empty Stylesheet file.
+ */
+
+.mainFxmlClass {
+    -fx-background-color: #222;
+    -fx-border-color: #395fa9;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-font-size: 14;
+}
+
+.label {
+    -fx-text-fill: #cfcfcf;
+}
+
+.text-field {
+    -fx-text-fill: #afafaf;
+    -fx-background-color: #222;
+    -fx-border-color: #395fa9;
+    -fx-border-width: 0 0 1 0;
+}
+
+.check-box .box {
+    -fx-background-color: #292929; /* El color que desees */
+    -fx-border-color: #395fa9;     /* Opcional: color del borde */
+    -fx-border-radius: 3;
+    -fx-background-radius: 3;
+}
+
+.check-box:selected .mark {
+    -fx-background-color: #dfdfdf;  /* color del check (✔) */
+}
+
+.check-box:hover .box {
+    -fx-effect: dropshadow(gaussian, #395fa9, 5, 0, 0, 0);
+}
+
+.button {
+    -fx-background-color: #525252;
+    -fx-background-radius: 5;
+    -fx-text-fill: #dfdfdf;
+}
+
+.button:hover {
+    -fx-background-color: #444;
+}
+
+.btn-volver {
+    -fx-background-color: transparent;
+    -fx-border-color: #525252;
+    -fx-border-radius: 5;
+    -fx-text-fill: #dfdfdf;
+}
+
+.btn-volver:hover {
+    -fx-background-color: #2f2f2f;
+}

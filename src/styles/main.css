@@ -1,0 +1,58 @@
+/*
+ * Empty Stylesheet file.
+*/
+
+.mainFxmlClass {
+    -fx-background-color: #020202;
+    -fx-border-color: #444;
+    -fx-border-radius: 10;
+    -fx-border-width: 0.5;
+}
+
+.content-pane {
+    -fx-background-color: #292929;
+    -fx-border-color: rgb(151,0,151);
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+}
+
+#controlApp {
+    -fx-background-color: #333;
+    -fx-border-color: #444;
+    -fx-background-radius: 10 10 0 0 ;
+    -fx-border-radius: 10 10 0 0;
+    -fx-border-width: 0.5;
+}
+
+#btn_close {
+    -fx-font-size: 13;
+    -fx-background-color: transparent;
+    -fx-text-fill: #888;
+    -fx-background-radius: 0 10 0 0;
+}
+
+#btn_close:hover {
+    -fx-background-color: #b11010;
+    -fx-text-fill: #bfbfbf;
+}
+
+#btn_minimize {
+    -fx-font-size: 13;
+    -fx-background-color: transparent;
+    -fx-text-fill: #888;
+    -fx-background-radius: 0;
+}
+
+#btn_minimize:hover {
+    -fx-background-color: #484848;
+}
+
+#btn_close:focused, #btn_minimize:focused {
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
+#btn_close:focused, #btn_minimize:pressed {
+    -fx-text-fill: #888;
+    -fx-background-color: transparent;
+}

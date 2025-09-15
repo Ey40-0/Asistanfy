@@ -1,0 +1,114 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 8 sep 2025, 10:47:52 a.m.
+    Author     : PROG
+*/
+
+.content-pane {
+    -fx-background-color: #222;
+    -fx-background-radius: 10;
+    -fx-border-width: 0;
+}
+
+.mainFxmlClass {
+    -fx-background-color: #222;
+    -fx-border-color: #395fa9;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-font-size: 14;
+}
+
+#containerBtns {
+    -fx-background-color: #02142a;
+    -fx-background-radius: 10;
+}
+
+.btns-inicio {
+    -fx-background-color: #395fa9;
+    -fx-background-radius: 40;
+    -fx-padding: 0;
+}
+
+.btns-inicio:hover {
+    -fx-background-color: #294f99;
+    -fx-effect: dropshadow(gaussian, #1d7cbd, 5, 0, 0, 0);
+}
+
+.container {
+    -fx-background-color: #191919;
+    -fx-background-radius: 10;
+}
+
+.btn-close {
+    -fx-background-color: transparent;
+    -fx-border-color: #525252;
+    
+    -fx-border-radius: 5;
+    -fx-text-fill: #dfdfdf;
+}
+
+.label {
+    -fx-text-fill: #cfcfcf;
+}
+
+.text-field {
+    -fx-background-color: transparent;
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: #395fa9;
+    -fx-border-radius: 0;
+}
+
+/* Estilo principal para el DatePicker */
+.date-picker {
+    -fx-background-color: transparent;
+    -fx-background-radius: 10;
+    -fx-font-size: 13;
+    -fx-text-fill: #cfcfcf;
+    -fx-padding: 0;
+}
+
+/* Campo de texto dentro del DatePicker */
+.date-picker .text-field {
+    -fx-text-fill: #cfcfcf;
+    -fx-font-size: 14;
+}
+
+/* Flecha desplegable del DatePicker */
+.date-picker .arrow-button {
+    -fx-background-color: #294f99;
+    -fx-padding: 3 8.5 5 8;
+}
+
+/* Popup desplegable del calendario */
+.date-picker-popup {
+    -fx-background-color: #222;
+    -fx-border-color: #395fa9;
+    -fx-border-width: 1;
+}
+
+.combo-box .text-field {
+    -fx-background-color: #191919;
+}
+
+.combo-box .arrow-button {
+    -fx-background-color: #294f99; 
+}
+
+.list-cell:selected {
+    -fx-background-color: #222; 
+}
+
+.combo-box {
+    -fx-background-color: transparent;
+    -fx-border-color: #395fa9;
+    -fx-border-width: 0 0 1 0;
+    -fx-border-radius: 0 0 5 0;
+}
+
+.btn-agendar {
+    -fx-background-color: #395fa9;
+    -fx-text-fill: #cfcfcf;
+}

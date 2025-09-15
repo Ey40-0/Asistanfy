@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="445.0" prefWidth="679.0" styleClass="container" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.TestsController">
+    <stylesheets>
+        <URL value="@/styles/menu_tabla.css" />
+    </stylesheets>
+   <children>
+      <TableView fx:id="tableTests" layoutX="14.0" layoutY="52.0" prefHeight="378.0" prefWidth="650.0">
+        <columns>
+          <TableColumn fx:id="colTitle" prefWidth="170.0" text="Titulo" />
+          <TableColumn fx:id="colDate" prefWidth="100.0" text="Fecha" />
+            <TableColumn fx:id="colCourse" prefWidth="100.0" text="Curso" />
+            <TableColumn fx:id="colMatter" prefWidth="150.0" text="Materia" />
+            <TableColumn fx:id="colDetails" prefWidth="124.0" />
+        </columns>
+      </TableView>
+      <Label layoutX="14.0" layoutY="14.0" text="Evaluaciones">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

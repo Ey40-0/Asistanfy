@@ -1,0 +1,65 @@
+/*
+ * Empty Stylesheet file.
+ */
+
+.mainFxmlClass {
+    -fx-background-color: #222;
+    -fx-border-color: #395fa9;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-font-size: 14;
+}
+
+.button {
+    -fx-background-color: #395fa9;
+    -fx-text-fill: #dfdfdf;
+}
+
+.button:hover {
+    -fx-background-color: #294f99;
+}
+
+.label {
+    -fx-text-fill: #cfcfcf;
+}
+
+.text-field {
+    -fx-text-fill: #afafaf;
+    -fx-background-color: #222;
+    -fx-border-color: #395fa9;
+    -fx-border-width: 0 0 1 0;
+}
+
+.btn-registro {
+    -fx-font-weight: 700;
+    -fx-background-color: none;
+    -fx-padding: 0;
+    -fx-text-fill: #395fa9;
+}
+
+.btn-registro:hover {
+    -fx-background-color: none;
+    -fx-text-fill: #294f99;
+}
+
+#title {
+    -fx-text-fill: #395fa9;
+    -fx-font-size: 22px;
+    -fx-font-weight: 700;
+    -fx-border-width: 0 0 0 5;
+    -fx-border-color: #395fa9;
+    -fx-padding: 0 0 0 15;
+}
+
+.btn-close {
+    -fx-background-color: transparent;
+    -fx-border-color: #525252;
+    
+    -fx-border-radius: 5;
+    -fx-text-fill: #dfdfdf;
+}
+
+.container {
+    -fx-background-color: #191919;
+    -fx-background-radius: 10;
+}
