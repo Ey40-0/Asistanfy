@@ -5,7 +5,7 @@ import java.util.List;
 import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.SQLException;
-import proyectojavafx.Connect;
+import proyectojavafx.connect;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -13,7 +13,7 @@ public class TestC {
     
     public boolean insert(Test eval) {
         String sql = "INSERT INTO evaluacion (descripcion, fecha, asignatura_id, empleado_id, is_active) VALUES (?, ?, ?, ?, ?)";
-        try (Connection con = new Connect().getConectar();
+        try (Connection con = new connect().getConectar();
              PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             ps.setString(1, eval.getTitulo());
@@ -56,7 +56,7 @@ public class TestC {
             ORDER BY e.fecha DESC;
         """;
 
-        try (Connection con = new Connect().getConectar();
+        try (Connection con = new connect().getConectar();
             PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setInt(1, profesorId);

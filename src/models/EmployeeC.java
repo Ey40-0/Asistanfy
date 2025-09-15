@@ -5,7 +5,7 @@ import java.sql.Statement;
 import java.security.SecureRandom;
 import java.sql.Connection;
 import java.sql.SQLException;
-import proyectojavafx.Connect;
+import proyectojavafx.connect;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import javafx.collections.FXCollections;
@@ -14,7 +14,7 @@ import javafx.collections.ObservableList;
 public class EmployeeC {
 
     public boolean register(Employee emp) {
-        try (Connection con = new Connect().getConectar()) {
+        try (Connection con = new connect().getConectar()) {
             String checkQuery = "SELECT COUNT(*) FROM Empleado WHERE email = ?";
             try (PreparedStatement checkStmt = con.prepareStatement(checkQuery)) {
                 checkStmt.setString(1, emp.getEmail());
@@ -51,7 +51,7 @@ public class EmployeeC {
     }
     
     public Employee login(String usuario, String contrasenia) {
-        try (Connection con = new Connect().getConectar()) {
+        try (Connection con = new connect().getConectar()) {
             String query = "SELECT * FROM Empleado WHERE email = ?";
             try (PreparedStatement stmt = con.prepareStatement(query)) {
                 stmt.setString(1, usuario);
@@ -85,7 +85,7 @@ public class EmployeeC {
     
     public ObservableList<Employee> getAllEmps() {
         ObservableList<Employee> empleados = FXCollections.observableArrayList();
-        try (Connection con = new Connect().getConectar()) {
+        try (Connection con = new connect().getConectar()) {
             String query = "SELECT * FROM empleado WHERE activa = 1"; //! AND codigo_vin IS NULL
             try (PreparedStatement ps = con.prepareStatement(query);
                 ResultSet rs = ps.executeQuery()) {

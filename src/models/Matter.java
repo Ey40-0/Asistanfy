@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import proyectojavafx.Connect;
+import proyectojavafx.connect;
 
 public class Matter {
     private int id;
@@ -42,7 +42,7 @@ public class Matter {
         List<Matter> asignaturas = new ArrayList<>();
         String sql = "SELECT * FROM asignatura";
         
-        try (Connection con = new Connect().getConectar();
+        try (Connection con = new connect().getConectar();
             PreparedStatement stmt = con.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery()) {
             

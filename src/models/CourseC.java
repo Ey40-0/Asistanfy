@@ -7,7 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-import proyectojavafx.Connect;
+import proyectojavafx.connect;
 
 public class CourseC {
 
@@ -15,7 +15,7 @@ public class CourseC {
         List<Course> cursos = new ArrayList<>();
         String sql = "SELECT * FROM curso";
 
-        try (Connection con = new Connect().getConectar();
+        try (Connection con = new connect().getConectar();
              PreparedStatement stmt = con.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
 
@@ -36,7 +36,7 @@ public class CourseC {
             return;
         }
 
-        try (Connection con = new Connect().getConectar()) {
+        try (Connection con = new connect().getConectar()) {
             String sql = "INSERT INTO detalle_eva_cur (id_cur, id_eva) VALUES (?, ?)";
             try (PreparedStatement ps = con.prepareStatement(sql)) {
                 ps.setInt(1, cou.getId());
