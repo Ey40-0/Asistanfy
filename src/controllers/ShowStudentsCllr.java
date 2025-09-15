@@ -5,7 +5,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import models.Alumno;
 
-public class StudentsController {
+public class ShowStudentsCllr {
     
     @FXML
     private TableView<Alumno> tableTests;
@@ -13,10 +13,5 @@ public class StudentsController {
     private TableColumn<Alumno, String> colTitle;
     @FXML
     private TableColumn<Alumno, String> colDate;
-    
-    @FXML
-    public void initialize() {
-        
-    }
     
 }

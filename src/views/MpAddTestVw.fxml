@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="445.0" prefWidth="679.0" styleClass="container" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.NewEvaluacionController">
+<AnchorPane prefHeight="445.0" prefWidth="679.0" styleClass="container" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AddTestCllr">
     <stylesheets>
         <URL value="@/styles/menu_profesor.css" />
     </stylesheets>

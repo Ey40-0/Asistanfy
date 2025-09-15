@@ -14,7 +14,7 @@ import models.Evaluacion;
 import models.EvaluacionDAO;
 import models.Sesion;
 
-public class TestsController {
+public class ShowTestsCllr {
 
     @FXML
     private TableView<Evaluacion> tableTests;
@@ -66,13 +66,13 @@ public class TestsController {
                 btn.setOnAction(e -> {
                     // Aquí podrías pasar la evaluación seleccionada
                     Evaluacion eval = getTableView().getItems().get(getIndex());
-                    MenuAutoController.getInstance().loadPanel("/views/mp_alumnos.fxml");
+                    GuideCllr.getInstance().loadPanel("/views/mp_alumnos.fxml");
                 });
             } else { // Inspector
                 btn.setText("Detalles");
                 btn.setOnAction(e -> {
                     Evaluacion eval = getTableView().getItems().get(getIndex());
-                    MenuAutoController.getInstance().loadPanel("/views/mp_view_alumnos.fxml");
+                    GuideCllr.getInstance().loadPanel("/views/mp_view_alumnos.fxml");
                 });
             }
 
@@ -93,7 +93,7 @@ public class TestsController {
         } else {
             
             // Consigue los datos del empleado seleccionado (Necesariamente profesor)
-            int id = MostrarProfesores.getInstance().getInfoEmpleado();
+            int id = ShowTeachersCllr.getInstance().getInfoEmpleado();
             tests = FXCollections.observableArrayList(
                 evac.getEvaluacionesByProfesor(id)
             );

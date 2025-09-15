@@ -8,7 +8,7 @@ import models.Empleado;
 import models.EmpleadoDAO;
 import models.Sesion;
 
-public class MenuInicioController {
+public class LoginCllr {
     
     @FXML
     private TextField str_user;
@@ -29,39 +29,32 @@ public class MenuInicioController {
     }
     
     @FXML
-    public void btn_menu_registro(ActionEvent event) {
-        MainController.getInstance().showPanel("/views/menu_registro.fxml");
-    }
-
-    @FXML
     public void btn_siguiente(ActionEvent event) {
         String usuario = str_user.getText().trim();
         String contrasenia = str_contrasenia.getText().trim();
 
         if (usuario.isEmpty() || contrasenia.isEmpty()) {
-            MainController.getInstance().mostrarAlerta("Campos vacíos", "Por favor, rellene todos los campos.");
+            MainCllr.mostrarAlerta("Campos vacíos", "Por favor, rellene todos los campos.");
             return;
         }
 
         Empleado emp = empc.login(usuario, contrasenia);
         if (emp != null) {
-            
+             
             System.out.println("Id: " + emp.getId());
             System.out.println("Nombre: " + emp.getNombre());
-            if (emp.getCodigo() != null) {
-                System.out.println("Codigo: " + emp.getCodigo());
-            }
             System.out.println("Id_rol: " + emp.getTipo());
             
-            Sesion.iniciarSesion(emp.getId(), emp.getTipo(), emp.getCodigo());
+            Sesion.iniciarSesion(emp.getId(), emp.getTipo());
+            
             switch (emp.getTipo()) {
-                case 0 -> MainController.getInstance().showPanel("/views/menu_profesor.fxml");
-                case 1 -> MainController.getInstance().showPanel("/views/menu_inspector.fxml");
-                default -> MainController.getInstance().showPanel("/views/menu_admin.fxml");
+                case 0 -> MainCllr.getInstance().showPanel("/views/menu_profesor.fxml");
+                case 1 -> MainCllr.getInstance().showPanel("/views/menu_inspector.fxml");
+                default -> MainCllr.getInstance().showPanel("/views/menu_admin.fxml");
             }
         } else {
             cleanInputs();
-            MainController.getInstance().mostrarAlerta("Error", "Usuario o contraseña incorrecta.");
+            MainCllr.mostrarAlerta("Error", "Usuario o contraseña incorrecta.");
         }
     }
     

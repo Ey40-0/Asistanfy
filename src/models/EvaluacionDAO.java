@@ -12,7 +12,7 @@ import java.sql.ResultSet;
 public class EvaluacionDAO {
     
     public boolean insert(Evaluacion eval) {
-        String sql = "INSERT INTO evaluacion (descripcion, fecha, asignatura_id, empleado_id) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO evaluacion (descripcion, fecha, asignatura_id, empleado_id, is_active) VALUES (?, ?, ?, ?, ?)";
         try (Connection con = new connect().getConectar();
              PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
@@ -20,6 +20,7 @@ public class EvaluacionDAO {
             ps.setDate(2, java.sql.Date.valueOf(eval.getFecha()));
             ps.setInt(3, eval.getAsignatura().getId());
             ps.setInt(4, eval.getIdProfesor());
+            ps.setInt(5, eval.getIs_active());
 
             int rows = ps.executeUpdate();
             if (rows > 0) {
@@ -45,7 +46,7 @@ public class EvaluacionDAO {
         List<Evaluacion> evaluaciones = new ArrayList<>();
         String sql = """
             SELECT e.id_eva, e.descripcion, e.fecha,
-                   a.id_asign, a.nombre AS asig_name,
+                   e.is_active, a.id_asign, a.nombre AS asig_name,
                    c.id_cur, c.nivel AS curso_level
             FROM evaluacion e
             INNER JOIN asignatura a ON e.Asignatura_id = a.id_asign
@@ -70,7 +71,8 @@ public class EvaluacionDAO {
                         rs.getDate("fecha").toLocalDate(),
                         curso,
                         asig,
-                        profesorId
+                        profesorId,
+                        rs.getInt("is_active")
                     );
 
                     evaluaciones.add(eval);

@@ -4,21 +4,19 @@ public class Sesion {
     private static Sesion instancia;
     private int id;
     private int id_rol;
-    private String code;
 
     public Sesion() {
         
     }
 
-    public Sesion(int id, int id_rol, String code) {
+    public Sesion(int id, int id_rol) {
         this.id = id;
         this.id_rol = id_rol;
-        this.code = code;
     }
     
-    public static void iniciarSesion(int id, int id_rol, String code) {
+    public static void iniciarSesion(int id, int id_rol) {
         // Siempre crea una nueva sesión, reemplazando la anterior
-        instancia = new Sesion(id, id_rol, code);
+        instancia = new Sesion(id, id_rol);
     }
 
     public static Sesion getInstance() {
@@ -35,15 +33,6 @@ public class Sesion {
     
     public static void cerrarSesion() {
         instancia = null;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-    
+    }   
     
 }

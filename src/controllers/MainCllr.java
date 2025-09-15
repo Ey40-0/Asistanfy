@@ -13,7 +13,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 // Implementacion de la interfaz en el controlador
-public class MainController implements Initializable {
+public class MainCllr implements Initializable {
 
     // leo dejate de wear y ponte serio
     // Se reciben los campos de FXML
@@ -24,7 +24,7 @@ public class MainController implements Initializable {
     private Pane navBar;
     
     // Variable static de tipo MainController
-    private static MainController instance;
+    private static MainCllr instance;
     
     private double xOffset = 0;
     private double yOffset = 0;
@@ -50,7 +50,7 @@ public class MainController implements Initializable {
     }
 
     // Getter de la clase
-    public static MainController getInstance() {
+    public static MainCllr getInstance() {
         return instance;
     }
 
@@ -78,7 +78,7 @@ public class MainController implements Initializable {
         stage.setIconified(true);
     }
     
-    public void mostrarAlerta(String titulo, String mensaje) {
+    public static void mostrarAlerta(String titulo, String mensaje) {
         Alert alerta = new Alert(Alert.AlertType.INFORMATION);
         alerta.setTitle(titulo);
         alerta.setHeaderText(null);

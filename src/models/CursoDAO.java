@@ -1,6 +1,6 @@
 package models;
 
-import controllers.MainController;
+import controllers.MainCllr;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
@@ -32,7 +32,7 @@ public class CursoDAO {
     
     public void addMatterToCourse(Curso cou, Evaluacion mat) {
         if (mat.getId() == 0) {
-            MainController.getInstance().mostrarAlerta("Error", "Evaluacion todavia no ha sido creada.");
+            MainCllr.getInstance().mostrarAlerta("Error", "Evaluacion todavia no ha sido creada.");
             return;
         }
 

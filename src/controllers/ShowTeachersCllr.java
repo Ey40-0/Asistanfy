@@ -8,17 +8,15 @@ import javafx.scene.control.ListView;
 import models.Empleado;
 import models.EmpleadoDAO;
 import models.Sesion;
-import models.SolicitudDAO;
 
-public class MostrarProfesores {
+public class ShowTeachersCllr {
 
     @FXML
     private ListView<Empleado> listProfesores;
 
     private final EmpleadoDAO empc = new EmpleadoDAO();
-    private final SolicitudDAO solic = new SolicitudDAO();
     
-    private static MostrarProfesores instance;
+    private static ShowTeachersCllr instance;
 
     @FXML
     public void initialize() {
@@ -27,7 +25,7 @@ public class MostrarProfesores {
     }
      
     // Getter de la clase
-    public static MostrarProfesores getInstance() {
+    public static ShowTeachersCllr getInstance() {
         return instance;
     }
 
@@ -62,12 +60,12 @@ public class MostrarProfesores {
         
         if (seleccionado != null) {
             try {
-                MenuAutoController.getInstance().btnViewTest();
+                GuideCllr.getInstance().btnViewTest();
             } catch (Exception e) {
                 e.printStackTrace();
             }
         } else {
-            MainController.getInstance().mostrarAlerta("Error", "Por favor selecciona un profesor para enviar la solicitud");
+            MainCllr.getInstance().mostrarAlerta("Error", "Por favor selecciona un profesor para enviar la solicitud");
         }
     }
     
@@ -79,28 +77,6 @@ public class MostrarProfesores {
             return -1; // o cualquier valor que indique "ninguna selección"
         }
     }
-
-    /*
-    @FXML
-    private void enviarSolicitud() throws SQLException {
-        Empleado seleccionado = listProfesores.getSelectionModel().getSelectedItem();
-        
-        if (seleccionado != null) {
-            System.out.println("Id emisor: " + Sesion.getInstance().getId());
-            System.out.println("Id receptor: " + seleccionado.getId());
-            
-            String msg = "Solicitud enviada al profesor: " + seleccionado.getNombre() + " " + seleccionado.getApellido();
-            if (solic.sendSol(Sesion.getInstance().getId(), seleccionado.getId())) {
-                MainController.getInstance().mostrarAlerta("Enviado", msg);
-            } else {
-                MainController.getInstance().mostrarAlerta("Incongruencia", "Ya existe una solicitud entre estos usuarios.");
-            }
-            
-        } else {
-            MainController.getInstance().mostrarAlerta("Error", "Por favor selecciona un profesor para enviar la solicitud");
-        }
-    }
-    */
 
 }
 

@@ -6,23 +6,19 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
 import models.Sesion;
 
-public class MenuAutoController{
+public class GuideCllr{
     
     @FXML
     private AnchorPane contentPane;
     
     // Variable static de tipo AutoController
-    private static MenuAutoController instance;
+    private static GuideCllr instance;
     
     @FXML
     public void initialize() {
         instance = this;
         if (contentPane != null && Sesion.getInstance().getId_rol() == 0) {
-            if (Sesion.getInstance().getCode() == null) {
-                btnNotifications();
-            } else {
-                btnNewTest();
-            }
+            btnNewTest();
         }
         
         if (contentPane != null && Sesion.getInstance().getId_rol() == 1) {
@@ -31,7 +27,7 @@ public class MenuAutoController{
     }
     
     // Getter de la clase
-    public static MenuAutoController getInstance() {
+    public static GuideCllr getInstance() {
         return instance;
     }
 
@@ -50,38 +46,34 @@ public class MenuAutoController{
 
         } catch (IOException e) {
             e.printStackTrace();
-            MainController.getInstance().mostrarAlerta("Error", "No se pudo cargar la pantalla: " + rutaFXML);
+            MainCllr.mostrarAlerta("Error", "No se pudo cargar la pantalla: " + rutaFXML);
         }
     }
     
     public void btn_new() {
-        loadPanel("/views/mi_profesores.fxml");
+        loadPanel("/views/MiShowTeachersVw.fxml");
     }
     
     public void btnConfig() {
-        loadPanel("/views/mi_configuracion.fxml");
+        loadPanel("/views/ConfigVw.fxml");
     }
     
     public void btnNotifications() {  //  f(x) = 2x+3
-        loadPanel("/views/mp_solicitudes.fxml");
+        loadPanel("/views/MpNotificationsVw.fxml");
     }
     
     public void btnNewTest() {
-        if (Sesion.getInstance().getCode() != null) {
-            loadPanel("/views/mp_newtest.fxml");
-        } else {
-            MainController.getInstance().mostrarAlerta("Error", "Dependes de un inspector.");
-        }
+        loadPanel("/views/MpAddTestVw.fxml");
     }
     
     public void btnViewTest() {
-        loadPanel("/views/mp_tests.fxml");
+        loadPanel("/views/ShowTests.fxml");
     }
     
     public void btnLogout() {
-        MainController.getInstance().showPanel("/views/menu_inicio.fxml");
+        MainCllr.getInstance().showPanel("/views/LoginVw.fxml");
         Sesion.cerrarSesion();
-        MainController.getInstance().mostrarAlerta(null, "Sesión cerrada con exito");
+        MainCllr.mostrarAlerta(null, "Sesión cerrada con exito");
     }
     
 }

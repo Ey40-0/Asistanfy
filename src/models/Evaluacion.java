@@ -9,17 +9,19 @@ public class Evaluacion {
     private Curso curso;
     private Asignatura asignatura;
     private int idProfesor;
+    private int is_active;
 
     public Evaluacion() {
     }
 
-    public Evaluacion(int id, String titulo, LocalDate fecha, Curso curso, Asignatura asignatura, int idProfesor) {
+    public Evaluacion(int id, String titulo, LocalDate fecha, Curso curso, Asignatura asignatura, int idProfesor, int is_active) {
         this.id = id;
         this.titulo = titulo;
         this.fecha = fecha;
         this.curso = curso;
         this.asignatura = asignatura;
         this.idProfesor = idProfesor;
+        this.is_active = is_active;
     }
 
     public int getId() {
@@ -68,6 +70,14 @@ public class Evaluacion {
 
     public void setIdProfesor(int idProfesor) {
         this.idProfesor = idProfesor;
+    }
+
+    public int getIs_active() {
+        return is_active;
+    }
+
+    public void setIs_active(int is_active) {
+        this.is_active = is_active;
     }
     
     

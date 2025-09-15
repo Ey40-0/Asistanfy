@@ -8,21 +8,18 @@ public class Empleado {
     private String email;
     private int tipo;
     private int activa;
-    private String codigo;
 
     public Empleado() {
     }
 
-    public Empleado(int id, String nombre, String apellido, String contrasenia, String email, int tipo, int activa, String codigo) {
+    public Empleado(int id, String nombre, String apellido, String contrasenia, String email, int tipo, int activa) {
         this.id = id;
         this.nombre= nombre;
         this.apellido = apellido;
         this.contrasenia = contrasenia;
         this.email = email;
         this.tipo = tipo;
-        this.activa = activa;
-        this.codigo = codigo;
-        
+        this.activa = activa;       
     }
 
     public String getApellido() {
@@ -79,15 +76,6 @@ public class Empleado {
 
     public void setActiva(int activa) {
         this.activa = activa;
-    }
-
-    public String getCodigo() {
-        return codigo;
-    }
-
-    public void setCodigo(String codigo) {
-        this.codigo = codigo;
-    }
-    
+    }   
     
 }
