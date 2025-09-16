@@ -1,8 +1,6 @@
 package models;
 
-import controllers.MainCllr;
 import java.sql.Statement;
-import java.security.SecureRandom;
 import java.sql.Connection;
 import java.sql.SQLException;
 import proyectojavafx.connect;

@@ -1,11 +1,5 @@
 package models;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import proyectojavafx.connect;
-
 public class Student {
     private int id;
     private String rut;
@@ -52,6 +46,11 @@ public class Student {
 
     public void setCurso(Course curso) {
         this.curso = curso;
+    }
+
+    @Override
+    public String toString() {
+        return "Student{" + "id:" + id + ", rut:" + rut + ", nombre:" + nombre + ", curso:" + curso + '}';
     }
     
 }

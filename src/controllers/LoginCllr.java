@@ -41,9 +41,7 @@ public class LoginCllr {
         Employee emp = empc.login(usuario, contrasenia);
         if (emp != null) {
              
-            System.out.println("Id: " + emp.getId());
-            System.out.println("Nombre: " + emp.getNombre());
-            System.out.println("Id_rol: " + emp.getTipo());
+            System.out.println(emp.toString());
             
             Session.iniciarSesion(emp.getId(), emp.getTipo());
             

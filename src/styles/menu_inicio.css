@@ -51,6 +51,12 @@
     -fx-padding: 0 0 0 15;
 }
 
+.title {
+    -fx-text-fill: #395fa9;
+    -fx-font-size: 22px;
+    -fx-font-weight: 700;
+}
+
 .btn-close {
     -fx-background-color: transparent;
     -fx-border-color: #525252;
@@ -59,7 +65,17 @@
     -fx-text-fill: #dfdfdf;
 }
 
+.btn-close:hover {
+    -fx-background-color: #2f2f2f;
+}
+
 .container {
     -fx-background-color: #191919;
+    -fx-background-radius: 10;
+}
+
+
+#field-container {
+    -fx-background-color: #222;
     -fx-background-radius: 10;
 }

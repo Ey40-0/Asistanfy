@@ -32,7 +32,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 
 .table-view {
     -fx-background-color: #222;
-    -fx-border-width: 1 1 1 1;
+    -fx-border-width: 1;
     -fx-border-color: #294f99;
     -fx-border-radius: 3;
     -fx-background-radius: 3;
@@ -60,6 +60,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 
 .table-view .table-cell {
     -fx-text-fill: #cfcfcf;
+    -fx-border-width: 0;
+}
+
+.table-view .row-cell {
     -fx-border-width: 0;
 }
 
@@ -98,7 +102,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     -fx-faint-focus-color: transparent; /* elimina borde azul claro */
     
     /* Quitar cualquier efecto adicional */
-    -fx-effect: none;
     -fx-background-insets: 0;
     -fx-background-radius: 0;
 }

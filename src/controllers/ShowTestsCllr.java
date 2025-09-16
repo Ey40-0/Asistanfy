@@ -64,8 +64,10 @@ public class ShowTestsCllr {
             if (rol == 0) { // Profesor
                 btn.setText("Añadir");
                 btn.setOnAction(e -> {
-                    // Aquí podrías pasar la evaluación seleccionada
+                    
                     Test eval = getTableView().getItems().get(getIndex());
+                    Session.getInstance().setSelectedTest(eval); // Guarda el curso
+                    
                     GuideCllr.getInstance().loadPanel("/views/MpAddStudVw.fxml");
                 });
             } else { // Inspector

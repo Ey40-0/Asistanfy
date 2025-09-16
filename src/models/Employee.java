@@ -77,5 +77,10 @@ public class Employee {
     public void setActiva(int activa) {
         this.activa = activa;
     }   
+
+    @Override
+    public String toString() {
+        return "Employee{" + "id:" + id + ", nombre:" + nombre + ", apellido:" + apellido + ", contrasenia:" + contrasenia + ", email:" + email + ", tipo:" + tipo + ", activa:" + activa + '}';
+    }
     
 }
