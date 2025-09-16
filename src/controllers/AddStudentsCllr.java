@@ -18,7 +18,15 @@ public class AddStudentsCllr {
     
     @FXML
     public void initialize() {
+        fldName.requestFocus();
         
+        fldName.setOnAction(e -> {
+            fldRun.requestFocus(); // pasa el foco al campo de contraseña
+        });
+        
+        fldRun.setOnAction(e -> {
+            addStudent(e); // Tu método para iniciar sesión
+        });
     }
     
     @FXML
@@ -41,16 +49,16 @@ public class AddStudentsCllr {
         }
         
         // Instanciar un alumno
-        Student stu = new Student(0, name, run, Session.getInstance().getSelectedTest().getCurso());
-        System.out.println(stu.toString());
+        Student stu = new Student(0, run, name, Session.getInstance().getSelectedTest().getCurso());
         
         // Insertar el Alumno en la db
         if (stuc.insert(stu)) {
+            System.out.println(stu.toString());
             /*fldName.setText("");
             fldRun.setText("");*/
             GuideCllr.getInstance().loadPanel("/views/ShowStudVw.fxml");
         } else {
-            MainCllr.getInstance().mostrarAlerta("Registro fallido", "Ese usuario ya existe o hubo un error.");
+            MainCllr.mostrarAlerta("Registro fallido", "Ese usuario ya existe o hubo un error.");
         }
       
     }

@@ -11,7 +11,7 @@ public class StudentC {
     
     public boolean insert(Student stu) {
         try (Connection con = new connect().getConectar()) {    
-            String checkQuery = "SELECT COUNT(*) FROM alumnos WHERE run = ?";
+            String checkQuery = "SELECT COUNT(*) FROM alumnos WHERE rut_alum = ?";
             try (PreparedStatement checkStmt = con.prepareStatement(checkQuery)) {
                 checkStmt.setString(1, stu.getRut());
                 
@@ -23,11 +23,12 @@ public class StudentC {
                 }
             }
             
-            String query = "INSERT INTO alumnos (run, nombre, id_cur) VALUES (?,?,?)";
+            String query = "INSERT INTO alumnos (rut_alum, nombre_alum, id_cur) VALUES (?,?,?)";
             try (PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
                 ps.setString(1, stu.getRut());
                 ps.setString(2, stu.getNombre());
                 ps.setInt(3, stu.getCurso().getId());
+                ps.executeUpdate();
                 
                 try (ResultSet rs = ps.getGeneratedKeys()) {
                     if (rs.next()) {
