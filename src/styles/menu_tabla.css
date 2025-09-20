@@ -15,6 +15,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     /*-fx-border-color: #888;*/
     -fx-background-radius: 4;
     -fx-alignment: center;
+    -fx-padding: 4;
 }
 
 .button:hover, .button:focused {
@@ -23,6 +24,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 
 .label {
     -fx-text-fill: #bfbfbf;
+    -fx-background-color: transparent;
 }
 
 .container {
@@ -49,31 +51,39 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 .table-view .table-column {
     -fx-background-color: #222;
     -fx-border-width: 0;
+    -fx-border-style: none;
 }
 
 .table-view .table-row-cell:focused {
     -fx-background-color: #222;
     -fx-border-color: #395fa9; /* color del borde */
     -fx-border-width: 1;
+}
+
+.table-view .table-row-cell:hover {
+    -fx-background-color: #222;
+    -fx-border-color: #597fc9; /* color del borde */
+    -fx-border-width: 0.5;
     -fx-border-style: solid;
+}
+
+.table-view .table-row-cell {
+    -fx-height: 20px;
+    -fx-border-width: 0;
+    -fx-border-style: none;
 }
 
 .table-view .table-cell {
     -fx-text-fill: #cfcfcf;
     -fx-border-width: 0;
-}
-
-.table-view .row-cell {
-    -fx-border-width: 0;
+    -fx-border-style: none;
 }
 
 .scroll-bar {
-    -fx-background-color: #222; /* Fondo oscuro de la barra */
     -fx-padding: 2;             /* Espacio interno para la barra */
 }
 
 .scroll-bar .track {
-    -fx-background-color: #333; /* Color del track (donde se mueve el thumb) */
     -fx-background-insets: 0;
     -fx-background-radius: 6;
 }
@@ -104,4 +114,24 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     /* Quitar cualquier efecto adicional */
     -fx-background-insets: 0;
     -fx-background-radius: 0;
+}
+
+* {
+    -fx-background-color: #222;
+    -fx-border-style: none;
+}
+
+.check-box .box {
+    -fx-background-color: #292929; /* El color que desees */
+    -fx-border-color: #395fa9;     /* Opcional: color del borde */
+    -fx-border-radius: 3;
+    -fx-background-radius: 3;
+}
+
+.check-box:selected .mark {
+    -fx-background-color: #dfdfdf;  /* color del check (✔) */
+}
+
+.check-box:hover .box {
+    -fx-effect: dropshadow(gaussian, #395fa9, 5, 0, 0, 0);
 }

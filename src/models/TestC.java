@@ -47,7 +47,7 @@ public class TestC {
         String sql = """
             SELECT e.id_eva, e.descripcion, e.fecha,
                    e.is_active, a.id_asign, a.nombre AS asig_name,
-                   c.id_cur, c.nivel AS curso_level
+                   c.id_cur, c.nivel
             FROM evaluacion e
             INNER JOIN asignatura a ON e.Asignatura_id = a.id_asign
             INNER JOIN detalle_eva_cur det ON e.id_eva = det.id_eva
@@ -63,7 +63,7 @@ public class TestC {
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     Matter asig = new Matter(rs.getInt("id_asign"), rs.getString("asig_name"));
-                    Course curso = new Course(rs.getInt("id_cur"), rs.getString("curso_level"));
+                    Course curso = new Course(rs.getInt("id_cur"), rs.getString("nivel"));
 
                     Test eval = new Test(
                         rs.getInt("id_eva"),

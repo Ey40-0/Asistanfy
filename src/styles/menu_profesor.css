@@ -10,10 +10,6 @@
     -fx-font-size: 14;
 }
 
-.label {
-    -fx-text-fill: #cfcfcf;
-}
-
 .browser {
     -fx-text-fill: #afafaf;
     -fx-background-color: #1c1c1c;
@@ -57,7 +53,7 @@
 }
 
 .list-view {
-    -fx-background-color: #2f2f2f;
+    -fx-background-color: #222;
     -fx-background-radius: 10;
     -fx-padding: 5;
 }

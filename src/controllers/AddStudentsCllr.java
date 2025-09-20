@@ -52,7 +52,7 @@ public class AddStudentsCllr {
         Student stu = new Student(0, run, name, Session.getInstance().getSelectedTest().getCurso());
         
         // Insertar el Alumno en la db
-        if (stuc.insert(stu)) {
+        if (stuc.insert(stu, Session.getInstance().getSelectedTest().getId())) {
             System.out.println(stu.toString());
             /*fldName.setText("");
             fldRun.setText("");*/
@@ -63,9 +63,8 @@ public class AddStudentsCllr {
       
     }
     
-    @FXML
-    public void volver(ActionEvent event) {
-        MainCllr.getInstance().showPanel("/views/ShowTestsVw.fxml");
+    public void btnView() {
+        GuideCllr.getInstance().loadPanel("/views/ShowStudVw.fxml");
     }
-    
+
 }

@@ -9,7 +9,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import models.Employee;
 import models.Test;
 import models.TestC;
 import models.Session;
@@ -46,7 +45,6 @@ public class ShowTestsCllr {
 
         {
             setAlignment(Pos.CENTER);
-            btn.setMaxWidth(Double.MAX_VALUE);
         }
 
         @Override
@@ -62,18 +60,18 @@ public class ShowTestsCllr {
             int rol = Session.getInstance().getId_rol();
 
             if (rol == 0) { // Profesor
-                btn.setText("Añadir");
+                btn.setText("Alumnos");
                 btn.setOnAction(e -> {
                     
                     Test eval = getTableView().getItems().get(getIndex());
-                    Session.getInstance().setSelectedTest(eval); // Guarda el curso
-                    
-                    GuideCllr.getInstance().loadPanel("/views/MpAddStudVw.fxml");
+                    Session.getInstance().setSelectedTest(eval);
+                    GuideCllr.getInstance().loadPanel("/views/ShowStudVw.fxml");
                 });
             } else { // Inspector
                 btn.setText("Detalles");
                 btn.setOnAction(e -> {
                     Test eval = getTableView().getItems().get(getIndex());
+                    Session.getInstance().setSelectedTest(eval);
                     GuideCllr.getInstance().loadPanel("/views/ShowStudVw.fxml");
                 });
             }
