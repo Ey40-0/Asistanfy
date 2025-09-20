@@ -87,8 +87,8 @@ public class MainCllr implements Initializable {
     }
 
     public static boolean validarRun(String run) {
-        // Limpiar puntos, convertir a mayúsculas y quitar espacios
-        run = run.replace(".", "").replace("-", "").toUpperCase();
+        // Limpiar puntos, guiones, espacios y convertir a mayúsculas
+        run = run.replace(".", "").replace("-", "").replace(" ", "").toUpperCase();
 
         if (!run.matches("\\d{7,8}[0-9K]")) {
             return false;
@@ -116,6 +116,23 @@ public class MainCllr implements Initializable {
         if (resto == 11) return '0';
         if (resto == 10) return 'K';
         return (char) (resto + '0');
+    }
+    
+    public static String formatearRun(String run) {
+        if (run == null || run.isEmpty()) return "";
+
+        // Limpiar puntos, guiones, espacios y convertir a mayúsculas
+        run = run.replace(".", "").replace("-", "").replace(" ", "").toUpperCase();
+
+        // Validar antes de formatear
+        if (!validarRun(run)) {
+            return ""; // o puedes lanzar una excepción si prefieres
+        }
+
+        String numero = run.substring(0, run.length() - 1);
+        char dv = run.charAt(run.length() - 1);
+
+        return numero + "-" + dv;
     }
 
 }
