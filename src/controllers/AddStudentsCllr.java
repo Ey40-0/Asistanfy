@@ -49,7 +49,7 @@ public class AddStudentsCllr {
         }
         
         // Instanciar un alumno
-        Student stu = new Student(0, run, name, Session.getInstance().getSelectedTest().getCurso());
+        Student stu = new Student(0, MainCllr.formatearRun(run), name, Session.getInstance().getSelectedTest().getCurso());
         
         // Insertar el Alumno en la db
         if (stuc.insert(stu, Session.getInstance().getSelectedTest().getId())) {
