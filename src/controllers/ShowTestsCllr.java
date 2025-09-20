@@ -83,20 +83,19 @@ public class ShowTestsCllr {
         loadTests();
     }
 
+    // En ShowTestsCllr.java
     public void loadTests() {
         ObservableList<Test> tests;
-        
-        if (Session.getInstance().getId_rol() == 0) {
-            tests = FXCollections.observableArrayList(evac.getEvaluacionesByProfesor(Session.getInstance().getId())
-            );
-        } else {
-            
-            // Consigue los datos del empleado seleccionado (Necesariamente profesor)
-            int id = ShowTeachersCllr.getInstance().getInfoEmpleado();
+
+        if (Session.getInstance().getId_rol() == 0) { // Profesor
+            tests = FXCollections.observableArrayList(evac.getEvaluacionesByProfesor(Session.getInstance().getId()));
+        } else { // Inspector
+            // Obtener el ID del empleado seleccionado de la sesión
+            int id = Session.getInstance().getSelectedEmployeeId();
             tests = FXCollections.observableArrayList(
                 evac.getEvaluacionesByProfesor(id)
             );
-        }    
+        }
         tableTests.setItems(tests);
     }
     

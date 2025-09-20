@@ -4,6 +4,7 @@ public class Session {
     private static Session instancia;
     private int id;
     private int id_rol;
+    private int selectedEmployeeId;
     
     private Test selectedTest;
 
@@ -15,6 +16,7 @@ public class Session {
         this.id = id;
         this.id_rol = id_rol;
         this.selectedTest = selectedTest;
+        this.selectedEmployeeId = selectedEmployeeId;
     }
     
     public static void iniciarSesion(int id, int id_rol) {
@@ -44,6 +46,14 @@ public class Session {
 
     public void setSelectedTest(Test selectedTest) {
         this.selectedTest = selectedTest;
+    }
+
+    public int getSelectedEmployeeId() {
+        return selectedEmployeeId;
+    }
+
+    public void setSelectedEmployeeId(int selectedEmployeeId) {
+        this.selectedEmployeeId = selectedEmployeeId;
     }
     
 }

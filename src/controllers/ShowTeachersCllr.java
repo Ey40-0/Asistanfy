@@ -1,6 +1,5 @@
 package controllers;
 
-import java.sql.SQLException;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
@@ -55,17 +54,22 @@ public class ShowTeachersCllr {
         });
     }
     
+    // En ShowTeachersCllr.java
     public void viewInformation() {
         Employee seleccionado = listProfesores.getSelectionModel().getSelectedItem();
-        
+
         if (seleccionado != null) {
             try {
+                // Guardar el ID del empleado seleccionado en la sesión
+                Session.getInstance().setSelectedEmployeeId(seleccionado.getId());
+
+                // Cargar el nuevo panel
                 GuideCllr.getInstance().loadPanel("/views/ShowTestsVw.fxml");
             } catch (Exception e) {
                 e.printStackTrace();
             }
         } else {
-            MainCllr.mostrarAlerta("Error", "Por favor selecciona un profesor para enviar la solicitud");
+            MainCllr.mostrarAlerta("Error", "Por favor selecciona un profesor para ver sus evaluaciones.");
         }
     }
     
