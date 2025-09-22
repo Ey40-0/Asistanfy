@@ -83,7 +83,7 @@ public class RegisterCllr {
     }
     
     public void loadTeachers() {
-        // Obtiene la lista de profesores de forma centralizada
+        // Obtiene la lista de profesores de forma centralizadas
         listProfesores.setItems(empc.getAllEmps());
         
         // El CellFactory, que es una lógica de presentación,
@@ -108,7 +108,7 @@ public class RegisterCllr {
     public void viewInformation() {
         Employee seleccionado = listProfesores.getSelectionModel().getSelectedItem();
 
-        if (seleccionado != null) {
+        if (seleccionado != null && seleccionado.getTipo() != 10.) {
             try {
                 // Guardar el ID del empleado seleccionado en la sesión
                 Session.getInstance().setSelectedEmployeeId(seleccionado.getId());

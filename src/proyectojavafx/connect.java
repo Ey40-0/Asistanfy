@@ -11,7 +11,7 @@ import java.sql.SQLException;
 public class connect {
     private static Connection conectar;
     private final String usuario = "root";
-    private final String contrasenia = "277353";
+    private final String contrasenia = "root";
     private final String bd = "Controller";
     private final String ip = "localhost";
     private final String puerto = "3306";

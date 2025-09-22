@@ -36,10 +36,10 @@ public class AddCourseCllr {
     }
     
     private void loadCourses() {
-        // Llama al método centralizado en EmployeeC para obtener la lista de profesores
+        // Llama al método en CourseC para obtener una lista
         listCourses.setItems(CourseC.getCourses());
         
-        // El CellFactory sigue aquí porque es una configuración de la vista
+        // El CellFactory asigna una configuración en la vista
         listCourses.setCellFactory(lv -> new ListCell<Course>() {
             @Override
             protected void updateItem(Course cou, boolean empty) {

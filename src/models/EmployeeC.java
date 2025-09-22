@@ -62,8 +62,8 @@ public class EmployeeC {
                                 rs.getInt("id_emp"),
                                 rs.getString("nombre"),
                                 rs.getString("apellido"),
-                                rs.getString("email"),
                                 rs.getString("contrasenia"),
+                                rs.getString("email"),
                                 rs.getInt("id_rol"),
                                 rs.getInt("activa")
                             );
