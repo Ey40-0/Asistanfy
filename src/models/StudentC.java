@@ -66,9 +66,9 @@ public class StudentC {
         List<Student> students = new ArrayList<>();
         String sql = """
             SELECT a.id, a.rut_alum, a.nombre_alum, 
-                   c.id_cur, c.nivel, a.justification
+                   c.id, c.nivel, a.justification
             FROM alumnos a
-            JOIN curso c ON a.id_cur = c.id_cur
+            JOIN curso c ON a.id_cur = c.id
             JOIN detalle_eva_alumno dea ON dea.id_alumno = a.id
             WHERE dea.id_eva = ?;
         """;
@@ -79,7 +79,7 @@ public class StudentC {
 
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
-                    Course level = new Course(rs.getInt("id_cur"), rs.getString("nivel"));
+                    Course level = new Course(rs.getInt("id"), rs.getString("nivel"));
 
                     Student stud = new Student(
                         rs.getInt("id"),

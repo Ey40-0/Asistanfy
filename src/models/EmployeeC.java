@@ -47,7 +47,7 @@ public class EmployeeC {
             return false; // error al insertar
         }
     }
-    
+
     public Employee login(String usuario, String contrasenia) {
         try (Connection con = new connect().getConectar()) {
             String query = "SELECT * FROM Empleado WHERE email = ?";
@@ -62,8 +62,8 @@ public class EmployeeC {
                                 rs.getInt("id_emp"),
                                 rs.getString("nombre"),
                                 rs.getString("apellido"),
-                                rs.getString("contrasenia"),
                                 rs.getString("email"),
+                                rs.getString("contrasenia"),
                                 rs.getInt("id_rol"),
                                 rs.getInt("activa")
                             );
@@ -80,13 +80,13 @@ public class EmployeeC {
             return null;
         }
     }
-    
+
     public ObservableList<Employee> getAllEmps() {
         ObservableList<Employee> empleados = FXCollections.observableArrayList();
         try (Connection con = new connect().getConectar()) {
-            String query = "SELECT * FROM empleado WHERE activa = 1"; //! AND codigo_vin IS NULL
+            String query = "SELECT * FROM empleado WHERE activa = 1 AND id_rol != 2";
             try (PreparedStatement ps = con.prepareStatement(query);
-                ResultSet rs = ps.executeQuery()) {
+                 ResultSet rs = ps.executeQuery()) {
                     while (rs.next()) {
                         Employee emp = new Employee(
                             rs.getInt("id_emp"),
@@ -99,10 +99,22 @@ public class EmployeeC {
                         );
                         empleados.add(emp);
                     }
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return empleados;
+    }
+    
+    public ObservableList<Employee> getProfesores() {
+        ObservableList<Employee> todosEmpleados = this.getAllEmps();
+        ObservableList<Employee> profesores = FXCollections.observableArrayList();
+
+        for (Employee emp : todosEmpleados) {
+            if (emp.getTipo() == 0) { // tipo 0 = profesor
+                profesores.add(emp);
+            }
+        }
+        return profesores;
     }
 }

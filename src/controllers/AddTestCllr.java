@@ -31,10 +31,10 @@ public class AddTestCllr {
         fieldDescription.setOnAction(e -> fieldDate.requestFocus());
         
         // Cargar cursos (llamando estático, sin crear objeto)
-        fieldCourse.getItems().addAll(CourseC.obtenerCursos());
+        fieldCourse.getItems().addAll(CourseC.getCourses());
 
         // Cargar asignaturas
-        fieldMatter.getItems().addAll(Matter.obtenerAsignaturas());
+        fieldMatter.getItems().addAll(Matter.getMatters());
     }
     
     public void createTest() {

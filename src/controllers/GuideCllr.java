@@ -22,7 +22,11 @@ public class GuideCllr{
         }
         
         if (contentPane != null && Session.getInstance().getId_rol() == 1) {
-            btn_new();
+            btnShowTeachers();
+        }
+        
+        if (contentPane != null && Session.getInstance().getId_rol() == 2) {
+            btnRegister();
         }
     }
     
@@ -50,15 +54,16 @@ public class GuideCllr{
         }
     }
     
-    public void btn_new() {
+    public void btnShowTeachers() {
         loadPanel("/views/MiShowTeachersVw.fxml");
     }
     
     public void btnConfig() {
         loadPanel("/views/ConfigVw.fxml");
+        
     }
     
-    public void btnNotifications() {  //  f(x) = 2x+3
+    public void btnNotifications() {
         loadPanel("/views/MpNotificationsVw.fxml");
     }
     
@@ -68,6 +73,18 @@ public class GuideCllr{
     
     public void btnViewTest() {
         loadPanel("/views/ShowTestsVw.fxml");
+    }
+    
+    public void btnAddCourse() {
+        loadPanel("/views/MaAddCourseVw.fxml");
+    }
+    
+    public void btnAddMatter() {
+        loadPanel("/views/MaAddMatterVw.fxml");
+    }
+    
+    public void btnRegister() {
+        loadPanel("/views/MaRegisterVw.fxml");
     }
     
     public void btnLogout() {

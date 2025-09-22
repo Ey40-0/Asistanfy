@@ -15,7 +15,6 @@ import javafx.stage.Stage;
 // Implementacion de la interfaz en el controlador
 public class MainCllr implements Initializable {
 
-    // leo dejate de wear y ponte serio
     // Se reciben los campos de FXML
     
     @FXML

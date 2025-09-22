@@ -3,6 +3,8 @@ package controllers;
 import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javax.mail.internet.AddressException;
@@ -24,11 +26,17 @@ public class RegisterCllr {
     @FXML
     private CheckBox typeUser;
     
-    EmployeeC empc = new EmployeeC();
-
     @FXML
-    public void volver(ActionEvent event) {
-        MainCllr.getInstance().showPanel("/views/LoginVw.fxml");
+    private ListView<Employee> listProfesores;
+    
+    EmployeeC empc = new EmployeeC();
+    
+    @FXML
+    public void initialize() {
+        txtNombre.setOnAction(e -> {txtApellido.requestFocus();});
+        txtApellido.setOnAction(e -> {txtContrasenia.requestFocus();});
+        txtApellido.setOnAction(e -> {txtMail.requestFocus();});
+        loadTeachers();
     }
     
     @FXML
@@ -52,20 +60,13 @@ public class RegisterCllr {
         Employee emp = new Employee(0, nombre, apellido, contrasenia, mail, tipo, 1);
 
         if (empc.register(emp)) {
-            // mostrarAlerta("Registro exitoso", "¡Usuario registrado correctamente!");
-            
-            System.out.println("Id: " + emp.getId());
-            System.out.println("Nombre: " + emp.getNombre());
-            System.out.println("Id_rol: " + emp.getTipo());
-            
-            Session.iniciarSesion(emp.getId(), emp.getTipo());
-   
-            // Redirigir según rol
-            switch (tipo) {
-                case 0 -> MainCllr.getInstance().showPanel("/views/menu_profesor.fxml");
-                case 1 -> MainCllr.getInstance().showPanel("/views/menu_inspector.fxml");
-                default -> MainCllr.getInstance().showPanel("/views/menu_admin.fxml");
-            }
+            //MainCllr.mostrarAlerta("Registro exitoso", "¡Usuario registrado correctamente!");
+            txtNombre.setText("");
+            txtApellido.setText("");
+            txtContrasenia.setText("");
+            txtMail.setText("");
+            typeUser.setSelected(false);
+            loadTeachers();
         } else {
             MainCllr.getInstance().mostrarAlerta("Registro fallido", "Ese usuario ya existe o hubo un error.");
         }
@@ -78,6 +79,56 @@ public class RegisterCllr {
             return true;
         } catch (AddressException e) {
             return false;
+        }
+    }
+    
+    public void loadTeachers() {
+        // Obtiene la lista de profesores de forma centralizada
+        listProfesores.setItems(empc.getAllEmps());
+        
+        // El CellFactory, que es una lógica de presentación,
+        // está aquí porque es específico de esta vista.
+        listProfesores.setCellFactory(lv -> new ListCell<Employee>() {
+            @Override
+            protected void updateItem(Employee emp, boolean empty) {
+                super.updateItem(emp, empty);
+                if (empty || emp == null) {
+                    setText(null);
+                } else {
+                    if (emp.getTipo() == 0) {
+                        setText(emp.getNombre() + " " + emp.getApellido() + " - Profesor");
+                    } else {
+                        setText(emp.getNombre() + " " + emp.getApellido() + " - Inspector");
+                    }
+                }
+            }
+        });
+    }
+    
+    public void viewInformation() {
+        Employee seleccionado = listProfesores.getSelectionModel().getSelectedItem();
+
+        if (seleccionado != null) {
+            try {
+                // Guardar el ID del empleado seleccionado en la sesión
+                Session.getInstance().setSelectedEmployeeId(seleccionado.getId());
+
+                // Cargar el nuevo panel
+                GuideCllr.getInstance().loadPanel("/views/ShowTestsVw.fxml");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            MainCllr.mostrarAlerta("Error", "Por favor selecciona un profesor para ver sus evaluaciones.");
+        }
+    }
+    
+    public int getInfoEmpleado() {
+        Employee selected = listProfesores.getSelectionModel().getSelectedItem();
+        if (selected != null) {
+            return selected.getId();
+        } else {
+            return -1; // o cualquier valor que indique "ninguna selección"
         }
     }
 }

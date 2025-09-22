@@ -19,13 +19,9 @@ public class LoginCllr {
     
     @FXML
     public void initialize() {
-        str_user.setOnAction(e -> {
-            str_contrasenia.requestFocus(); // pasa el foco al campo de contraseña
-        });
-        
-        str_contrasenia.setOnAction(e -> {
-            btn_siguiente(e); // Tu método para iniciar sesión
-        });
+        // pasa el foco al campo de contraseña
+        str_user.setOnAction(e -> {str_contrasenia.requestFocus();});
+        str_contrasenia.setOnAction(e -> {btn_siguiente(e);});
     }
     
     @FXML
@@ -48,7 +44,7 @@ public class LoginCllr {
             switch (emp.getTipo()) {
                 case 0 -> MainCllr.getInstance().showPanel("/views/TeacherVw.fxml");
                 case 1 -> MainCllr.getInstance().showPanel("/views/InspectorVw.fxml");
-                default -> MainCllr.getInstance().showPanel("/views/menu_admin.fxml");
+                default -> MainCllr.getInstance().showPanel("/views/AdminVw.fxml");
             }
         } else {
             cleanInputs();

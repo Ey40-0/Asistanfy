@@ -1,10 +1,9 @@
 package controllers;
 
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import models.Employee;
+import models.Employee;                                 
 import models.EmployeeC;
 import models.Session;
 
@@ -27,20 +26,12 @@ public class ShowTeachersCllr {
     public static ShowTeachersCllr getInstance() {
         return instance;
     }
-
+    
     private void cargarProfesores() {
-        ObservableList<Employee> empleados = empc.getAllEmps();
-        ObservableList<Employee> profesores = javafx.collections.FXCollections.observableArrayList();
-
-        for (Employee emp : empleados) {
-            if (emp.getTipo() == 0 /*! && emp.getCodigo() == null*/) { // tipo 0 = profesor
-                profesores.add(emp);
-            }
-        }
-
-        listProfesores.setItems(profesores);
-
-        // Para mostrar nombres legibles en la lista
+        // Llama al método centralizado en EmployeeC para obtener la lista de profesores
+        listProfesores.setItems(empc.getProfesores());
+        
+        // El CellFactory sigue aquí porque es una configuración de la vista
         listProfesores.setCellFactory(lv -> new ListCell<Employee>() {
             @Override
             protected void updateItem(Employee emp, boolean empty) {
@@ -54,7 +45,6 @@ public class ShowTeachersCllr {
         });
     }
     
-    // En ShowTeachersCllr.java
     public void viewInformation() {
         Employee seleccionado = listProfesores.getSelectionModel().getSelectedItem();
 

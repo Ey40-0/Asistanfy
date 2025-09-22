@@ -46,12 +46,12 @@ public class TestC {
         List<Test> evaluaciones = new ArrayList<>();
         String sql = """
             SELECT e.id_eva, e.descripcion, e.fecha,
-                   e.is_active, a.id_asign, a.nombre AS asig_name,
-                   c.id_cur, c.nivel
+                   e.is_active, a.id, a.name,
+                   c.id, c.nivel
             FROM evaluacion e
-            INNER JOIN asignatura a ON e.Asignatura_id = a.id_asign
+            INNER JOIN matter a ON e.Asignatura_id = a.id
             INNER JOIN detalle_eva_cur det ON e.id_eva = det.id_eva
-            INNER JOIN curso c ON det.id_cur = c.id_cur
+            INNER JOIN curso c ON det.id_cur = c.id
             WHERE e.Empleado_id = ?
             ORDER BY e.fecha DESC;
         """;
@@ -62,8 +62,8 @@ public class TestC {
             ps.setInt(1, profesorId);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
-                    Matter asig = new Matter(rs.getInt("id_asign"), rs.getString("asig_name"));
-                    Course curso = new Course(rs.getInt("id_cur"), rs.getString("nivel"));
+                    Matter asig = new Matter(rs.getInt("id"), rs.getString("name"));
+                    Course curso = new Course(rs.getInt("id"), rs.getString("nivel"));
 
                     Test eval = new Test(
                         rs.getInt("id_eva"),
