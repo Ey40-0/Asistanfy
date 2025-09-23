@@ -13,11 +13,11 @@
         <URL value="@/styles/menu_registro.css" />
     </stylesheets>
     <children>
-      <Pane layoutX="40.0" layoutY="58.0" prefHeight="368.0" prefWidth="300.0" style="-fx-background-color: #222; -fx-background-radius: 5;">
+      <Pane layoutX="40.0" layoutY="58.0" prefHeight="368.0" prefWidth="300.0" style="-fx-background-color: #222; -fx-background-radius: 5;" styleClass="Pane_ingresarMat">
          <children>
             <Label layoutX="35.0" layoutY="19.0" prefHeight="20.0" prefWidth="230.0" text="Nombre" />
             <TextField fx:id="fldName" layoutX="35.0" layoutY="36.0" prefHeight="31.0" prefWidth="230.0" promptText="Ingrese nombre" />
-            <Button fx:id="btn_registrarme" layoutX="35.0" layoutY="303.0" mnemonicParsing="false" onAction="#register" prefHeight="30.0" prefWidth="85.0" text="Registrar" />
+            <Button fx:id="btn_registrarme" layoutX="35.0" layoutY="232.0" mnemonicParsing="false" onAction="#register" prefHeight="30.0" prefWidth="85.0" text="Registrar" />
             
          </children>
       </Pane>

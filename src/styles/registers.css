@@ -1,0 +1,595 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 23-09-2025, 10:25:32 a. m.
+    Author     : PROG
+*/
+
+.mainFxmlClass {
+    -fx-background-color: #222;
+    -fx-border-color: #395fa9;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-font-size: 14;
+}
+
+
+.Buttons {
+    -fx-background-color: #395fa9;
+    -fx-text-fill: #dfdfdf;
+}
+
+.content-pane {
+    -fx-background-color: #292929;
+
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+}
+
+.text-field {
+    -fx-text-fill: #afafaf;
+    -fx-background-color: #222;
+    -fx-border-color: #395fa9;
+    -fx-border-width: 0 0 1 0;
+}
+.label {
+    -fx-text-fill: #cfcfcf;
+}
+#title {
+    -fx-text-fill: #395fa9;
+    -fx-font-size: 22px;
+    -fx-font-weight: 700;
+    -fx-border-width: 0 0 0 5;
+    -fx-border-color: #395fa9;
+    -fx-padding: 0 0 0 15;
+}
+
+/*listas*/
+
+
+
+   .list-view {
+    -fx-background-color: #2f2f2f;
+    -fx-background-radius: 10;
+    -fx-padding: 5;
+}
+
+.list-cell {
+    -fx-background-color: #2f2f2f;
+    -fx-text-fill: #afafaf;
+    -fx-background-radius: 5;
+}
+
+.list-cell:hover {
+    -fx-background-color: #294f9955;
+    -fx-text-fill: #cfcfcf;
+}
+
+
+.scroll-bar {
+    -fx-background-color: transparent; /* Fondo de la barra */
+    -fx-padding: 2;             /* Espacio interno para la barra */
+}
+
+.scroll-bar .track {
+    -fx-background-insets: 0;
+    -fx-background-radius: 6;
+}
+
+
+.scroll-bar .thumb {
+    -fx-background-color: #395fa9; /* Color del "pulgar" (la parte que se mueve) */
+    -fx-background-insets: 2;
+    -fx-background-radius: 6;
+}
+
+
+/* Opcional: Hover efecto en el thumb */
+.scroll-bar .thumb:hover {
+    -fx-background-color: #5a7dcf;
+}
+
+
+
+
+
+
+
+
+
+
+/*listas*/
+
+/*DE ADDTEST*/
+
+
+/* inicio */
+.mainFxmlClass {
+    -fx-background-color: #222;
+    -fx-border-color: #395fa9;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-font-size: 14;
+}
+
+.Buttons {
+    -fx-background-color: #395fa9;
+    -fx-text-fill: #dfdfdf;
+}
+
+.button:hover {
+    -fx-background-color: #294f99;
+}
+
+.Title {
+    -fx-text-fill: #cfcfcf;
+}
+
+.text-field {
+    -fx-text-fill: #afafaf;
+    -fx-background-color: #222;
+    -fx-border-color: #395fa9;
+    -fx-border-width: 0 0 1 0;
+}
+/*bt-registro inexistente*/
+.btn-registro {
+    -fx-font-weight: 700;
+    -fx-background-color: none;
+    -fx-padding: 0;
+    -fx-text-fill: #395fa9;
+}
+
+.btn-registro:hover {
+    -fx-background-color: none;
+    -fx-text-fill: #294f99;
+}
+
+#title {
+    -fx-text-fill: #395fa9;
+    -fx-font-size: 22px;
+    -fx-font-weight: 700;
+    -fx-border-width: 0 0 0 5;
+    -fx-border-color: #395fa9;
+    -fx-padding: 0 0 0 15;
+}
+
+.title {
+    -fx-text-fill: #395fa9;
+    -fx-font-size: 22px;
+    -fx-font-weight: 700;
+}
+
+
+
+.btn-close {
+    -fx-background-color: transparent;
+    -fx-border-color: #525252;
+    
+    -fx-border-radius: 5;
+    -fx-text-fill: #dfdfdf;
+}
+
+.btn-close:hover {
+    -fx-background-color: #2f2f2f;
+}
+
+.container {
+    -fx-background-color: #191919;
+    -fx-background-radius: 10;
+}
+
+
+#field-container {
+    -fx-background-color: #222;
+    -fx-background-radius: 10;
+}
+
+/* Menu desplegable */
+.list-view {
+    -fx-background-color: #2f2f2f;
+    -fx-background-radius: 10;
+    -fx-padding: 5;
+}
+
+.list-cell {
+    -fx-background-color: #2f2f2f;
+    -fx-text-fill: #afafaf;
+    -fx-background-radius: 5;
+}
+
+.list-cell:hover {
+    -fx-background-color: #294f9955;
+    -fx-text-fill: #cfcfcf;
+}
+
+/* Barra de desplazamiento */
+.scroll-bar {
+    -fx-background-color: transparent; /* Fondo de la barra */
+    -fx-padding: 2;             /* Espacio interno para la barra */
+}
+
+.scroll-bar .track {
+    -fx-background-insets: 0;
+    -fx-background-radius: 6;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: #395fa9; /* Color del "pulgar" (la parte que se mueve) */
+    -fx-background-insets: 2;
+    -fx-background-radius: 6;
+}
+
+/* Opcional: Hover efecto en el thumb */
+.scroll-bar .thumb:hover {
+    -fx-background-color: #5a7dcf;
+}
+/* inicio */
+
+
+
+
+/*menu_inspector*/
+.mainFxmlClass {
+    -fx-background-color: #222;
+    -fx-border-color: #395fa9;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-font-size: 14;
+}
+
+.label {
+    -fx-text-fill: #cfcfcf;
+}
+
+.text-field {
+    -fx-text-fill: #afafaf;
+    -fx-background-color: #292929;
+    -fx-border-color: #395fa9;
+    -fx-border-width: 0 0 1 0;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+}
+
+#containerBtns {
+    -fx-background-color: #02142a;
+    -fx-background-radius: 10;
+}
+
+.btns-inicio {
+    -fx-background-color: #395fa9;
+    -fx-background-radius: 40;
+    -fx-padding: 0;
+}
+
+.btns-inicio:hover {
+    -fx-background-color: #294f99;
+    -fx-effect: dropshadow(gaussian, #1d7cbd, 5, 0, 0, 0);
+}
+
+.container {
+    -fx-background-color: #191919;
+    -fx-background-radius: 10;
+}
+
+.btn-close {
+    -fx-background-color: transparent;
+    -fx-border-color: #525252;
+    
+    -fx-border-radius: 5;
+    -fx-text-fill: #dfdfdf;
+}
+
+.btn-close:hover {
+    -fx-background-color: #2f2f2f;
+}
+
+.list-view {
+    -fx-background-color: #2f2f2f;
+    -fx-background-radius: 5;
+    -fx-padding: 5;
+}
+
+.list-cell {
+    -fx-background-color: #222;
+    -fx-text-fill: #afafaf;
+    /*-fx-background-radius: 5;*/
+}
+
+.list-cell:selected {
+    -fx-background-color: #395fa9;
+    -fx-text-fill: #cfcfcf;
+}
+
+.list-cell:hover {
+    -fx-background-color: #294f9955;
+    -fx-text-fill: #cfcfcf;
+}
+
+#new-inspector {
+    -fx-background-color: #395fa9;
+    -fx-text-fill: #cfcfcf;
+}
+
+#new-inspector:hover {
+    -fx-background-color: #294f99;
+}
+
+.scroll-bar {
+    -fx-background-color: #2f2f2f; /* Fondo de la barra */ 
+    -fx-border-style: none;
+}
+
+.scroll-bar:vertical .thumb {
+    -fx-background-color: #525252;
+    -fx-background-radius: 5;
+}
+
+.scroll-bar:vertical .track {
+    -fx-background-color: #2f2f2f; /* Fondo del canal */
+}
+
+/*menu_inspector*/
+
+/* menu_profesor*/
+.mainFxmlClass {
+    -fx-background-color: #222;
+    -fx-border-color: #395fa9;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-font-size: 14;
+}
+
+.browser {
+    -fx-text-fill: #afafaf;
+    -fx-background-color: #1c1c1c;
+    -fx-border-color: #395fa9;
+    -fx-border-width: 0 0 1 0;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+}
+
+#containerBtns {
+    -fx-background-color: #02142a;
+    -fx-background-radius: 10;
+}
+
+.btns-inicio {
+    -fx-background-color: #395fa9;
+    -fx-background-radius: 40;
+    -fx-padding: 0;
+}
+
+.btns-inicio:hover {
+    -fx-background-color: #294f99;
+    -fx-effect: dropshadow(gaussian, #1d7cbd, 5, 0, 0, 0);
+}
+
+.container {
+    -fx-background-color: #191919;
+    -fx-background-radius: 10;
+}
+
+.btn-close {
+    -fx-background-color: transparent;
+    -fx-border-color: #525252;
+    
+    -fx-border-radius: 5;
+    -fx-text-fill: #dfdfdf;
+}
+
+.btn-close:hover {
+    -fx-background-color: #2f2f2f;
+}
+
+.list-view {
+    -fx-background-color: #222;
+    -fx-background-radius: 10;
+    -fx-padding: 5;
+}
+
+.list-cell {
+    -fx-background-color: #222;
+    -fx-text-fill: #afafaf;
+    /*-fx-background-radius: 5;*/
+}
+
+.list-cell:selected {
+    -fx-background-color: #395fa9;
+    -fx-text-fill: #cfcfcf;
+}
+
+.list-cell:hover {
+    -fx-background-color: #294f9955;
+    -fx-text-fill: #cfcfcf;
+}
+
+.btn-vinculo {
+    -fx-background-color: #395fa9;
+    -fx-text-fill: #dfdfdf;
+}
+
+.text-field {
+    -fx-background-color: #191919;
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: #395fa9;
+    -fx-border-radius: 0;
+}
+
+/* menu_profesor*/
+
+
+/*menu_prueba*/
+.content-pane {
+    -fx-background-color: #222;
+    -fx-background-radius: 10;
+    -fx-border-width: 0;
+}
+
+.mainFxmlClass {
+    -fx-background-color: #222;
+    -fx-border-color: #395fa9;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-font-size: 14;
+}
+
+#containerBtns {
+    -fx-background-color: #02142a;
+    -fx-background-radius: 10;
+}
+
+.btns-inicio {
+    -fx-background-color: #395fa9;
+    -fx-background-radius: 40;
+    -fx-padding: 0;
+}
+
+.btns-inicio:hover {
+    -fx-background-color: #294f99;
+    -fx-effect: dropshadow(gaussian, #1d7cbd, 5, 0, 0, 0);
+}
+
+.container {
+    -fx-background-color: #191919;
+    -fx-background-radius: 10;
+}
+
+.btn-close {
+    -fx-background-color: transparent;
+    -fx-border-color: #525252;
+    
+    -fx-border-radius: 5;
+    -fx-text-fill: #dfdfdf;
+}
+
+.label {
+    -fx-text-fill: #cfcfcf;
+}
+
+.text-field {
+    -fx-background-color: transparent;
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: #395fa9;
+    -fx-border-radius: 0;
+}
+
+/* Estilo principal para el DatePicker */
+.date-picker {
+    -fx-background-color: transparent;
+    -fx-background-radius: 10;
+    -fx-font-size: 13;
+    -fx-text-fill: #cfcfcf;
+    -fx-padding: 0;
+}
+
+/* Campo de texto dentro del DatePicker */
+.date-picker .text-field {
+    -fx-text-fill: #cfcfcf;
+    -fx-font-size: 14;
+}
+
+/* Flecha desplegable del DatePicker */
+.date-picker .arrow-button {
+    -fx-background-color: #294f99;
+    -fx-padding: 3 8.5 5 8;
+}
+
+/* Popup desplegable del calendario */
+.date-picker-popup {
+    -fx-background-color: #222;
+    -fx-border-color: #395fa9;
+    -fx-border-width: 1;
+}
+
+.combo-box .text-field {
+    -fx-background-color: #191919;
+}
+
+.combo-box .arrow-button {
+    -fx-background-color: #294f99; 
+}
+
+.list-cell:selected {
+    -fx-background-color: #222; 
+}
+
+.combo-box {
+    -fx-background-color: transparent;
+    -fx-border-color: #395fa9;
+    -fx-border-width: 0 0 1 0;
+    -fx-border-radius: 0 0 5 0;
+}
+
+.btn-agendar {
+    -fx-background-color: #395fa9;
+    -fx-text-fill: #cfcfcf;
+}
+
+/*menu_prueba*/
+
+
+/*menu_registro*/
+.mainFxmlClass {
+    -fx-background-color: #222;
+    -fx-border-color: #395fa9;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-font-size: 14;
+}
+
+.label {
+    -fx-text-fill: #cfcfcf;
+}
+
+.text-field {
+    -fx-text-fill: #afafaf;
+    -fx-background-color: #222;
+    -fx-border-color: #395fa9;
+    -fx-border-width: 0 0 1 0;
+}
+
+.check-box .box {
+    -fx-background-color: #292929; /* El color que desees */
+    -fx-border-color: #395fa9;     /* Opcional: color del borde */
+    -fx-border-radius: 3;
+    -fx-background-radius: 3;
+}
+
+.check-box:selected .mark {
+    -fx-background-color: #dfdfdf;  /* color del check (✔) */
+}
+
+.check-box:hover .box {
+    -fx-effect: dropshadow(gaussian, #395fa9, 5, 0, 0, 0);
+}
+
+.button {
+    -fx-background-color: #525252;
+    -fx-background-radius: 5;
+    -fx-text-fill: #dfdfdf;
+}
+
+.button:hover {
+    -fx-background-color: #444;
+}
+
+.btn-volver {
+    -fx-background-color: transparent;
+    -fx-border-color: #525252;
+    -fx-border-radius: 5;
+    -fx-text-fill: #dfdfdf;
+}
+
+.btn-volver:hover {
+    -fx-background-color: #2f2f2f;
+}
+
+/*menu_registro*/
+
+
+/*menu_tabla*/
+f45cg
+
+/*menu_tabla*/
