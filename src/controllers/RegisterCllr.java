@@ -108,7 +108,7 @@ public class RegisterCllr {
     public void viewInformation() {
         Employee seleccionado = listProfesores.getSelectionModel().getSelectedItem();
 
-        if (seleccionado != null && seleccionado.getTipo() != 10.) {
+        if (seleccionado != null && seleccionado.getTipo() != 10) {
             try {
                 // Guardar el ID del empleado seleccionado en la sesión
                 Session.getInstance().setSelectedEmployeeId(seleccionado.getId());
