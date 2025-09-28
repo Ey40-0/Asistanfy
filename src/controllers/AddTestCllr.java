@@ -53,18 +53,21 @@ public class AddTestCllr {
             return;
         }
         
-        Test mat = new Test(0, description, date, course, matter, Session.getInstance().getId(), 1);
+        Test test = new Test(0, description, date, course, matter, Session.getInstance().getId(), 1);
         
-        if (evac.insert(mat)) {
+        if (evac.insert(test)) {
             MainCllr.mostrarAlerta("Registro exitoso", "¡Evaluación registrada correctamente!");
             fieldDescription.clear();
             fieldDate.setValue(null);
             fieldMatter.setValue(null);
             fieldCourse.setValue(null);
-            curc.addMatterToCourse(course, mat);
+            curc.addTestToCourse(course, test);
         } else {
             MainCllr.mostrarAlerta("Prueba Duplicada", "Ya existe una evaluación con ese nombre en esas credenciales.");
         }
     }
     
+    private void updateTest() {
+        
+    }
 }

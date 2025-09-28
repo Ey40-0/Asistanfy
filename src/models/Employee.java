@@ -12,7 +12,7 @@ public class Employee {
     public Employee() {
     }
 
-    public Employee(int id, String nombre, String apellido, String contrasenia, String email, int tipo, int activa) {
+    public Employee(int id, String nombre, String apellido, String email, String contrasenia, int tipo, int activa) {
         this.id = id;
         this.nombre= nombre;
         this.apellido = apellido;

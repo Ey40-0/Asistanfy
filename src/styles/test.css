@@ -112,3 +112,44 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     -fx-background-color: #395fa9;
     -fx-text-fill: #cfcfcf;
 }
+
+
+/* Menu desplegable */
+.list-view {
+    -fx-background-color: #2f2f2f;
+    -fx-background-radius: 10;
+    -fx-padding: 5;
+}
+
+.list-cell {
+    -fx-background-color: #2f2f2f;
+    -fx-text-fill: #afafaf;
+    -fx-background-radius: 5;
+}
+
+.list-cell:hover {
+    -fx-background-color: #294f9955;
+    -fx-text-fill: #cfcfcf;
+}
+
+/* Barra de desplazamiento */
+.scroll-bar {
+    -fx-background-color: transparent; /* Fondo de la barra */
+    -fx-padding: 2;             /* Espacio interno para la barra */
+}
+
+.scroll-bar .track {
+    -fx-background-insets: 0;
+    -fx-background-radius: 6;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: #395fa9; /* Color del "pulgar" (la parte que se mueve) */
+    -fx-background-insets: 2;
+    -fx-background-radius: 6;
+}
+
+/* Opcional: Hover efecto en el thumb */
+.scroll-bar .thumb:hover {
+    -fx-background-color: #5a7dcf;
+}

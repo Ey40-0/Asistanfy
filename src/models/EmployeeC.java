@@ -13,7 +13,7 @@ public class EmployeeC {
 
     public boolean register(Employee emp) {
         try (Connection con = new connect().getConectar()) {
-            String checkQuery = "SELECT COUNT(*) FROM Empleado WHERE email = ?";
+            String checkQuery = "SELECT COUNT(*) FROM Empleado WHERE email = ? AND activa = 1";
             try (PreparedStatement checkStmt = con.prepareStatement(checkQuery)) {
                 checkStmt.setString(1, emp.getEmail());
 
@@ -50,7 +50,7 @@ public class EmployeeC {
 
     public Employee login(String usuario, String contrasenia) {
         try (Connection con = new connect().getConectar()) {
-            String query = "SELECT * FROM Empleado WHERE email = ?";
+            String query = "SELECT * FROM Empleado WHERE email = ? AND activa = 1";
             try (PreparedStatement stmt = con.prepareStatement(query)) {
                 stmt.setString(1, usuario);
                 try (ResultSet rs = stmt.executeQuery()) {
@@ -117,4 +117,50 @@ public class EmployeeC {
         }
         return profesores;
     }
+    
+    public void deleteEmployee(int idEmployee) { 
+        try (Connection con = new connect().getConectar()) {
+            String query = "UPDATE empleado SET activa = 0 WHERE id_emp = ?";
+            try (PreparedStatement ps = con.prepareStatement(query)) {
+                ps.setInt(1, idEmployee);
+                ps.executeUpdate();
+            }
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public boolean updateEmployee(Employee emp) {
+        try (Connection con = new connect().getConectar()) {
+            String query = """
+                UPDATE empleado SET
+                    nombre = ?,
+                    apellido = ?,
+                    email = ?,
+                    contrasenia = ?,
+                    id_rol = ?
+                WHERE id_emp = ?""";
+            try (PreparedStatement ps = con.prepareStatement(query)) {
+                ps.setString(1, emp.getNombre());
+                ps.setString(2, emp.getApellido());
+                ps.setString(3, emp.getEmail());
+                ps.setString(4, emp.getContrasenia());
+                ps.setInt(5, emp.getTipo());
+                ps.setInt(6, emp.getId());
+                int rows = ps.executeUpdate();
+                if (rows > 0) {
+                    System.out.println("Empleado actualizado correctamente.");
+                    return true;
+                } else {
+                    System.out.println("No se encontró el empleado con ID: " + emp.getId());
+                }
+            }
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
 }

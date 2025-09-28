@@ -31,12 +31,14 @@ public class StudentC {
                 }
             }
 
-            // Insertar alumno si no existe
+            // Insertar alumno si no existe  
             String query = "INSERT INTO alumnos (rut_alum, nombre_alum, id_cur) VALUES (?,?,?)";
             try (PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
                 ps.setString(1, stu.getRut());
                 ps.setString(2, stu.getNombre());
                 ps.setInt(3, stu.getCurso().getId());
+                System.out.println("getcur" + stu.getCurso().getId());
+                System.out.println("idTest" + idTest);
                 ps.executeUpdate();
 
                 try (ResultSet rs = ps.getGeneratedKeys()) {
@@ -112,6 +114,41 @@ public class StudentC {
             e.printStackTrace();
             return false;
         }
+    }
+    
+    public boolean updateStudent(Student stu) {
+        try (Connection con = new connect().getConectar()) {
+            // Verificar si ya existe otro estudiante activo con el mismo RUT
+            String checkQuery = "SELECT id FROM alumnos WHERE rut_alum = ? AND id != ?";
+            try (PreparedStatement checkPs = con.prepareStatement(checkQuery)) {
+                checkPs.setString(1, stu.getRut());
+                checkPs.setInt(2, stu.getId());
+                try (ResultSet rs = checkPs.executeQuery()) {
+                    if (rs.next()) {
+                        System.out.println("Ya existe otro alumno activo con el RUT: " + stu.getRut());
+                        return false; // No actualizar si ya existe otro estudiante con este RUT
+                    }
+                }
+            }
+
+            // Proceder con la actualización
+            String query = "UPDATE alumnos SET rut_alum = ?, nombre_alum = ? WHERE id = ?";
+            try (PreparedStatement ps = con.prepareStatement(query)) {
+                ps.setString(1, stu.getRut());
+                ps.setString(2, stu.getNombre());
+                ps.setInt(3, stu.getId());
+                int rows = ps.executeUpdate();
+                if (rows > 0) {
+                    System.out.println("Alumno actualizado correctamente.");
+                    return true;
+                } else {
+                    System.out.println("No se encontró el alumno con ID: " + stu.getId());
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
     
 }

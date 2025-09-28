@@ -9,15 +9,16 @@
 
 <AnchorPane id="content" prefHeight="445.0" prefWidth="679.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ShowTeachersCllr">
     <stylesheets>
-        <URL value="@/styles/menu_inspector.css" />
+        <URL value="@/styles/teacher.css" />
+        <URL value="@/styles/common.css" />
     </stylesheets>
    <styleClass>
       <String fx:value="content" />
       <String fx:value="container" />
    </styleClass>
    <children>
-      <ListView fx:id="listProfesores" editable="true" layoutX="22.0" layoutY="58.0" prefHeight="368.0" prefWidth="260.0" />
-      <TextField layoutX="22.0" layoutY="20.0" prefHeight="26.0" prefWidth="180.0" promptText="Buscar" styleClass="browser" />
-      <Button id="new-inspector" layoutX="211.0" layoutY="21.0" mnemonicParsing="false" onAction="#viewInformation" prefHeight="25.0" prefWidth="71.0" text="Ver" />
+      <ListView fx:id="listProfesores" editable="true" layoutX="23.0" layoutY="58.0" prefHeight="368.0" prefWidth="260.0" />
+      <TextField layoutX="23.0" layoutY="20.0" prefHeight="26.0" prefWidth="180.0" promptText="Buscar" styleClass="browser" />
+      <Button id="new-inspector" layoutX="212.0" layoutY="21.0" mnemonicParsing="false" onAction="#viewInformation" prefHeight="25.0" prefWidth="71.0" text="Ver" />
    </children>
 </AnchorPane>

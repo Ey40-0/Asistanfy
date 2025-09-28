@@ -84,7 +84,7 @@ public class GuideCllr{
     }
     
     public void btnRegister() {
-        loadPanel("/views/MaRegisterVw.fxml");
+        loadPanel("/views/MaAddEmployeeVw.fxml");
     }
     
     public void btnLogout() {

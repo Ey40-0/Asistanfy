@@ -10,14 +10,16 @@
 
 <AnchorPane prefHeight="445.0" prefWidth="679.0" styleClass="container" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ShowStudentsCllr">
     <stylesheets>
-        <URL value="@/styles/menu_tabla.css" />
+        <URL value="@/styles/student.css" />
+        <URL value="@/styles/common.css" />
     </stylesheets>
    <children>
       <TableView fx:id="tableStuds" layoutX="14.0" layoutY="52.0" prefHeight="378.0" prefWidth="650.0">
         <columns>
-          <TableColumn fx:id="colName" prefWidth="170.0" text="Nombre" />
-          <TableColumn fx:id="colRun" prefWidth="100.0" text="Rut" />
-            <TableColumn fx:id="colJustification" prefWidth="124.0" text="Justificativo" />
+          <TableColumn fx:id="colName" prefWidth="251.19999408721924" text="Nombre" />
+          <TableColumn fx:id="colRun" prefWidth="174.4000244140625" text="Rut" />
+            <TableColumn fx:id="colJustification" prefWidth="114.40008544921875" text="Justificativo" />
+            <TableColumn fx:id="colUpdate" prefWidth="110.39996337890625" />
         </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

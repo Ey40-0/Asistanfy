@@ -12,33 +12,70 @@ import java.sql.ResultSet;
 public class TestC {
     
     public boolean insert(Test eval) {
-        String sql = "INSERT INTO evaluacion (descripcion, fecha, asignatura_id, empleado_id, is_active) VALUES (?, ?, ?, ?, ?)";
-        try (Connection con = new connect().getConectar();
-             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+        String checkSql = "SELECT id_eva, is_active FROM evaluacion WHERE descripcion = ? AND fecha = ? AND asignatura_id = ? AND is_active = 1";
 
-            ps.setString(1, eval.getTitulo());
-            ps.setDate(2, java.sql.Date.valueOf(eval.getFecha()));
-            ps.setInt(3, eval.getAsignatura().getId());
-            ps.setInt(4, eval.getIdProfesor());
-            ps.setInt(5, eval.getIs_active());
+        try (Connection con = new connect().getConectar()) {
+            // Verificar si ya existe una evaluación activa con los mismos datos
+            try (PreparedStatement checkPs = con.prepareStatement(checkSql)) {
+                checkPs.setString(1, eval.getTitulo());
+                checkPs.setDate(2, java.sql.Date.valueOf(eval.getFecha()));
+                checkPs.setInt(3, eval.getAsignatura().getId());
 
-            int rows = ps.executeUpdate();
-            if (rows > 0) {
-                try (ResultSet rs = ps.getGeneratedKeys()) {
+                try (ResultSet rs = checkPs.executeQuery()) {
                     if (rs.next()) {
-                        eval.setId(rs.getInt(1));
+                        // Ya existe una evaluación activa: error
+                        System.out.println("Ya existe una evaluación activa con esos datos.");
+                        return false;
                     }
                 }
-                return true;
             }
+
+            // Verificar si existe una evaluación inactiva para reactivar
+            String checkInactiveSql = "SELECT id_eva FROM evaluacion WHERE descripcion = ? AND fecha = ? AND asignatura_id = ? AND is_active = 0";
+            try (PreparedStatement checkInactivePs = con.prepareStatement(checkInactiveSql)) {
+                checkInactivePs.setString(1, eval.getTitulo());
+                checkInactivePs.setDate(2, java.sql.Date.valueOf(eval.getFecha()));
+                checkInactivePs.setInt(3, eval.getAsignatura().getId());
+
+                try (ResultSet rs = checkInactivePs.executeQuery()) {
+                    if (rs.next()) {
+                        // Existe inactiva: reactivarla
+                        String updateSql = "UPDATE evaluacion SET is_active = 1, empleado_id = ? WHERE id_eva = ?";
+                        try (PreparedStatement updatePs = con.prepareStatement(updateSql)) {
+                            updatePs.setInt(1, eval.getIdProfesor());
+                            updatePs.setInt(2, rs.getInt("id_eva"));
+                            updatePs.executeUpdate();
+                            eval.setId(rs.getInt("id_eva"));
+                            return true;
+                        }
+                    }
+                }
+            }
+
+            // Si no existe, insertar nueva evaluación
+            String insertSql = "INSERT INTO evaluacion (descripcion, fecha, asignatura_id, empleado_id, is_active) VALUES (?, ?, ?, ?, ?)";
+            try (PreparedStatement ps = con.prepareStatement(insertSql, Statement.RETURN_GENERATED_KEYS)) {
+                ps.setString(1, eval.getTitulo());
+                ps.setDate(2, java.sql.Date.valueOf(eval.getFecha()));
+                ps.setInt(3, eval.getAsignatura().getId());
+                ps.setInt(4, eval.getIdProfesor());
+                ps.setInt(5, eval.getIs_active());
+
+                int rows = ps.executeUpdate();
+                if (rows > 0) {
+                    try (ResultSet rs = ps.getGeneratedKeys()) {
+                        if (rs.next()) {
+                            eval.setId(rs.getInt(1));
+                        }
+                    }
+                    return true;
+                }
+            }
+
         } catch (SQLException e) {
-            // Manejo del error de duplicado
-            if (e.getErrorCode() == 1062) { // MySQL: entrada duplicada
-                System.out.println("Ya existe una evaluación con ese nombre en esas credenciales.");
-            } else {
-                e.printStackTrace();
-            }
+            e.printStackTrace();
         }
+
         return false;
     }
     
@@ -52,7 +89,7 @@ public class TestC {
             INNER JOIN matter a ON e.Asignatura_id = a.id
             INNER JOIN detalle_eva_cur det ON e.id_eva = det.id_eva
             INNER JOIN curso c ON det.id_cur = c.id
-            WHERE e.Empleado_id = ?
+            WHERE e.Empleado_id = ? AND e.is_active = 1
             ORDER BY e.fecha DESC;
         """;
 
@@ -62,8 +99,8 @@ public class TestC {
             ps.setInt(1, profesorId);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
-                    Matter asig = new Matter(rs.getInt("id"), rs.getString("name"));
-                    Course curso = new Course(rs.getInt("id"), rs.getString("nivel"));
+                    Matter asig = new Matter(rs.getInt("a.id"), rs.getString("name"));
+                    Course curso = new Course(rs.getInt("c.id"), rs.getString("nivel"));
 
                     Test eval = new Test(
                         rs.getInt("id_eva"),
@@ -85,4 +122,15 @@ public class TestC {
         return evaluaciones;
     }
     
+    public void deleteTest(Test test) {
+        try (Connection con = new connect().getConectar()) {
+            String query = "UPDATE evaluacion SET is_active = 0 WHERE id_eva = ?";
+            try (PreparedStatement ps = con.prepareStatement(query)) {
+                ps.setInt(1, test.getId());
+                ps.executeUpdate();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

@@ -5,7 +5,9 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.CheckBoxTableCell;
@@ -15,14 +17,11 @@ import models.StudentC;
 
 public class ShowStudentsCllr {
     
-    @FXML
-    private TableView<Student> tableStuds;
-    @FXML
-    private TableColumn<Student, String> colName;
-    @FXML
-    private TableColumn<Student, String> colRun;
-    @FXML
-    private TableColumn<Student, Boolean> colJustification;
+    @FXML private TableView<Student> tableStuds;
+    @FXML private TableColumn<Student, String> colName;
+    @FXML private TableColumn<Student, String> colRun;
+    @FXML private TableColumn<Student, Boolean> colJustification;
+    @FXML private TableColumn<Student, Button> colUpdate;
     
     private final StudentC stuc = new StudentC();
     
@@ -45,6 +44,26 @@ public class ShowStudentsCllr {
             colJustification.setCellFactory(CheckBoxTableCell.forTableColumn(colJustification));
             tableStuds.setEditable(true);
         }
+        
+        colUpdate.setCellFactory(tc -> new TableCell<>() {
+            private final Button upd = new Button("Modificar");
+            {
+                upd.setOnAction(e -> {           
+                    Student stu = getTableView().getItems().get(getIndex());
+                    Session.getInstance().setSelectedStud(stu);
+                    GuideCllr.getInstance().loadPanel("/views/MpAddStudVw.fxml");
+                });
+            }
+            @Override
+            protected void updateItem(Button item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || getTableRow() == null || getTableRow().getItem() == null) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(upd);
+                }
+            }
+        });
         loadStuds();
     }
     

@@ -5,8 +5,8 @@ public class Session {
     private int id;
     private int id_rol;
     private int selectedEmployeeId;
-    
     private Test selectedTest;
+    private Student selectedStud;
 
     public Session() {
         
@@ -15,8 +15,6 @@ public class Session {
     public Session(int id, int id_rol) {
         this.id = id;
         this.id_rol = id_rol;
-        this.selectedTest = selectedTest;
-        this.selectedEmployeeId = selectedEmployeeId;
     }
     
     public static void iniciarSesion(int id, int id_rol) {
@@ -55,5 +53,14 @@ public class Session {
     public void setSelectedEmployeeId(int selectedEmployeeId) {
         this.selectedEmployeeId = selectedEmployeeId;
     }
+
+    public Student getSelectedStud() {
+        return selectedStud;
+    }
+
+    public void setSelectedStud(Student slectedStud) {
+        this.selectedStud = slectedStud;
+    }
+    
     
 }

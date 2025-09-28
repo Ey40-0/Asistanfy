@@ -9,24 +9,19 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.layout.HBox;
 import models.Test;
 import models.TestC;
 import models.Session;
 
 public class ShowTestsCllr {
 
-    @FXML
-    private TableView<Test> tableTests;
-    @FXML
-    private TableColumn<Test, String> colTitle;
-    @FXML
-    private TableColumn<Test, String> colDate;
-    @FXML
-    private TableColumn<Test, String> colCourse;
-    @FXML
-    private TableColumn<Test, String> colMatter;
-    @FXML
-    private TableColumn<Test, Button> colDetails;
+    @FXML private TableView<Test> tableTests;
+    @FXML private TableColumn<Test, String> colTitle;
+    @FXML private TableColumn<Test, String> colDate;
+    @FXML private TableColumn<Test, String> colCourse;
+    @FXML private TableColumn<Test, String> colMatter;
+    @FXML private TableColumn<Test, Button> colDetails;
 
     private final TestC evac = new TestC();
 
@@ -34,6 +29,7 @@ public class ShowTestsCllr {
     public void initialize() {
         
         // configuracion de columnas
+        // nombre.establecerValor( celda tipo string(celda.valorAgregado ))
         colTitle.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getTitulo()));
         colDate.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getFecha().toString()));
         colCourse.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getCurso().getNombre()));
@@ -41,50 +37,44 @@ public class ShowTestsCllr {
 
         // botón addAlumnos-detalles
         colDetails.setCellFactory(tc -> new TableCell<>() {
-        private final Button btn = new Button();
+            private final Button det = new Button("Ausentes");
+            private final Button del = new Button("Borrar");
+            private final HBox box = new HBox(10, det, del);
 
-        {
-            setAlignment(Pos.CENTER);
-        }
+            {
+                box.setAlignment(Pos.CENTER);
 
-        @Override
-        protected void updateItem(Button item, boolean empty) {
-            super.updateItem(item, empty);
-
-            if (empty || getTableRow() == null || getTableRow().getItem() == null) {
-                setGraphic(null);
-                return;
-            }
-
-            // Verifica el rol
-            int rol = Session.getInstance().getId_rol();
-
-            if (rol == 0) { // Profesor
-                btn.setText("Alumnos");
-                btn.setOnAction(e -> {
-                    
+                det.setOnAction(e -> {           
                     Test eval = getTableView().getItems().get(getIndex());
                     Session.getInstance().setSelectedTest(eval);
                     GuideCllr.getInstance().loadPanel("/views/ShowStudVw.fxml");
                 });
-            } else { // Inspector
-                btn.setText("Detalles");
-                btn.setOnAction(e -> {
+
+                del.setOnAction(e -> {
                     Test eval = getTableView().getItems().get(getIndex());
                     Session.getInstance().setSelectedTest(eval);
-                    GuideCllr.getInstance().loadPanel("/views/ShowStudVw.fxml");
+                    deleteTest();
+                    getTableView().getItems().remove(eval);
+                    loadTests();
                 });
             }
 
-            setGraphic(btn);
-        }
-    });
+            @Override
+            protected void updateItem(Button item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (empty || getTableRow() == null || getTableRow().getItem() == null) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(box);
+                }
+            }
+        });
 
         loadTests();
     }
 
-    // En ShowTestsCllr.java
-    public void loadTests() {
+    private void loadTests() {
         ObservableList<Test> tests;
 
         if (Session.getInstance().getId_rol() == 0) { // Profesor
@@ -97,6 +87,12 @@ public class ShowTestsCllr {
             );
         }
         tableTests.setItems(tests);
+    }
+    
+    private void deleteTest() {
+        if (Session.getInstance().getSelectedTest() != null) {
+            evac.deleteTest(Session.getInstance().getSelectedTest());
+        }
     }
     
 }

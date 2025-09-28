@@ -1,3 +1,77 @@
-/*
- * Empty Stylesheet file.
- */
+/* 
+    Created on : 20-09-2025, 5:31:13 p. m.
+    Author     : pelus
+*/
+
+
+
+.mainFxmlClass {
+    -fx-background-color: #222;
+    -fx-border-color: #395fa9;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-font-size: 14;
+}
+
+.content-pane{
+    -fx-background-color: #292929;
+    -fx-border-color: #395fa9;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+
+
+}
+
+
+.button {
+    -fx-background-color: #395fa9;
+    -fx-text-fill: #dfdfdf;
+}
+
+
+.button:hover {
+    -fx-background-color: #294f99;
+}
+
+.label {
+    -fx-text-fill: #cfcfcf;
+}
+
+.text-field {
+    -fx-text-fill: #afafaf;
+    -fx-background-color: #222;
+    -fx-border-color: #395fa9;
+    -fx-border-width: 0 0 1 0;
+}
+
+
+.btn-close {
+    -fx-background-color: transparent;
+    -fx-border-color: #525252;
+    
+    -fx-border-radius: 5;
+    -fx-text-fill: #dfdfdf;
+}
+
+.btn-close:hover {
+    -fx-background-color: #2f2f2f;
+}
+
+#btn_minimize {
+    -fx-font-size: 13;
+    -fx-background-color: transparent;
+    -fx-text-fill: #888;
+    -fx-background-radius: 0;
+}
+
+
+.container {
+    -fx-background-color: #191919;
+    -fx-background-radius: 10;
+}
+
+.list-view {
+    -fx-background-color: #2f2f2f;
+    -fx-background-radius: 10;
+    -fx-padding: 5;
+}

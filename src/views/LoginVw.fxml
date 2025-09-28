@@ -7,7 +7,8 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="460.0" prefWidth="750.0" styleClass="mainFxmlClass" stylesheets="@../styles/menu_inicio.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LoginCllr">
+<AnchorPane prefHeight="460.0" prefWidth="750.0" styleClass="mainFxmlClass" stylesheets="@../styles/login.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LoginCllr">
+
     <children>
         <Label layoutX="41.0" layoutY="236.0" prefHeight="20.0" prefWidth="230.0" text="Correo" />
         <Label layoutX="41.0" layoutY="292.0" prefHeight="20.0" prefWidth="230.0" text="Contraseña" />

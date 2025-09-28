@@ -10,6 +10,13 @@
     -fx-font-size: 14;
 }
 
+.content-pane{
+    -fx-background-color: #292929;
+    -fx-border-color: #395fa9;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+}
+
 .browser {
     -fx-text-fill: #afafaf;
     -fx-background-color: #1c1c1c;
