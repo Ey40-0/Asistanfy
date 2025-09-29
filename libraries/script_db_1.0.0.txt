@@ -1,0 +1,39 @@
+-- drop database controller;
+use Controller;
+
+-- Reiniciar AUTO_INCREMENT
+ALTER TABLE empleado AUTO_INCREMENT = 1;
+ALTER TABLE detalle_eva_cur AUTO_INCREMENT = 1;
+ALTER TABLE evaluacion AUTO_INCREMENT = 1;
+ALTER TABLE alumnos AUTO_INCREMENT = 1;
+ALTER TABLE curso AUTO_INCREMENT = 1;
+ALTER TABLE matter AUTO_INCREMENT = 1;
+ALTER TABLE roles AUTO_INCREMENT = 1;
+
+insert into roles (id_rol, descripcion_rol)
+values (0, 'Profesor');
+insert into roles (id_rol, descripcion_rol)
+values (1, 'Inspector');
+insert into roles (id_rol, descripcion_rol)
+values (2, 'Administrador');
+
+-- Profesor
+insert into empleado (nombre, apellido, email, contrasenia, id_rol, activa)
+values ('111', '111', '111', '111', 0, 1);
+-- Inspector
+insert into empleado (nombre, apellido, email, contrasenia, id_rol, activa)
+values ('222', '222', '222', '222', 1, 1);
+-- Administrador
+insert into empleado (nombre, email, contrasenia, id_rol, activa)
+values ('admin', 'admin', 'admin2025', 2, 1);
+
+SELECT e.id_emp, e.nombre, e.apellido, e.email,
+	   e.id_rol, r.descripcion_rol, e.activa
+FROM Empleado e
+JOIN roles r ON e.id_rol = r.id_rol
+ORDER BY e.id_emp;
+
+/* DEBES ELIMINAR LOS OTROS INDEXES */
+ALTER TABLE evaluacion
+ADD UNIQUE INDEX uq_eval_completa
+(descripcion, fecha, asignatura_id, empleado_id);

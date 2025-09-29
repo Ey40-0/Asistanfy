@@ -1,0 +1,173 @@
+-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
+-- -----------------------------------------------------
+-- Schema controller
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema controller
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `controller` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci ;
+USE `controller` ;
+
+-- -----------------------------------------------------
+-- Table `controller`.`curso`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `controller`.`curso` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `nivel` VARCHAR(15) NOT NULL,
+  `is_active` TINYINT NULL DEFAULT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 5
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `controller`.`alumnos`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `controller`.`alumnos` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `rut_alum` VARCHAR(11) NOT NULL,
+  `nombre_alum` VARCHAR(50) NOT NULL,
+  `id_cur` INT NOT NULL,
+  `justification` TINYINT NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `Alumnos_Cur_FK` (`id_cur` ASC) VISIBLE,
+  CONSTRAINT `Alumnos_Cur_FK`
+    FOREIGN KEY (`id_cur`)
+    REFERENCES `controller`.`curso` (`id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 15
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `controller`.`matter`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `controller`.`matter` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(100) NOT NULL,
+  `is_active` TINYINT NULL DEFAULT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 7
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `controller`.`roles`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `controller`.`roles` (
+  `id_rol` INT NOT NULL,
+  `descripcion_rol` VARCHAR(20) NOT NULL,
+  PRIMARY KEY (`id_rol`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `controller`.`empleado`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `controller`.`empleado` (
+  `id_emp` INT NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(20) NOT NULL,
+  `apellido` VARCHAR(30) NULL DEFAULT NULL,
+  `email` VARCHAR(100) NOT NULL,
+  `contrasenia` VARCHAR(40) NOT NULL,
+  `id_rol` INT NOT NULL,
+  `activa` TINYINT NOT NULL,
+  PRIMARY KEY (`id_emp`),
+  INDEX `Empleado_Roles_FK` (`id_rol` ASC) VISIBLE,
+  CONSTRAINT `Empleado_Roles_FK`
+    FOREIGN KEY (`id_rol`)
+    REFERENCES `controller`.`roles` (`id_rol`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 8
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `controller`.`evaluacion`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `controller`.`evaluacion` (
+  `id_eva` INT NOT NULL AUTO_INCREMENT,
+  `fecha` DATE NOT NULL,
+  `descripcion` VARCHAR(100) NULL DEFAULT NULL,
+  `Asignatura_id` INT NOT NULL,
+  `Empleado_id` INT NOT NULL,
+  `is_active` TINYINT NOT NULL,
+  PRIMARY KEY (`id_eva`),
+  UNIQUE INDEX `uq_eval_fecha_desc_asig` (`fecha` ASC, `descripcion` ASC, `Asignatura_id` ASC) VISIBLE,
+  INDEX `Evaluacion_Asig_FK` (`Asignatura_id` ASC) VISIBLE,
+  INDEX `Evaluacion_Emp_FK` (`Empleado_id` ASC) VISIBLE,
+  CONSTRAINT `Evaluacion_Asig_FK`
+    FOREIGN KEY (`Asignatura_id`)
+    REFERENCES `controller`.`matter` (`id`),
+  CONSTRAINT `Evaluacion_Emp_FK`
+    FOREIGN KEY (`Empleado_id`)
+    REFERENCES `controller`.`empleado` (`id_emp`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 9
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `controller`.`detalle_eva_alumno`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `controller`.`detalle_eva_alumno` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `id_eva` INT NULL DEFAULT NULL,
+  `id_alumno` INT NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `id_eva` (`id_eva` ASC) VISIBLE,
+  INDEX `id_alumno` (`id_alumno` ASC) VISIBLE,
+  CONSTRAINT `detalle_eva_alumno_ibfk_1`
+    FOREIGN KEY (`id_eva`)
+    REFERENCES `controller`.`evaluacion` (`id_eva`),
+  CONSTRAINT `detalle_eva_alumno_ibfk_2`
+    FOREIGN KEY (`id_alumno`)
+    REFERENCES `controller`.`alumnos` (`id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 7
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `controller`.`detalle_eva_cur`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `controller`.`detalle_eva_cur` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `id_cur` INT NOT NULL,
+  `id_eva` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `Detalle_eva_cur_Cur_FK` (`id_cur` ASC) VISIBLE,
+  INDEX `Detalle_eva_cur_Eva_FK` (`id_eva` ASC) VISIBLE,
+  CONSTRAINT `Detalle_eva_cur_Cur_FK`
+    FOREIGN KEY (`id_cur`)
+    REFERENCES `controller`.`curso` (`id`),
+  CONSTRAINT `Detalle_eva_cur_Eva_FK`
+    FOREIGN KEY (`id_eva`)
+    REFERENCES `controller`.`evaluacion` (`id_eva`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB
+AUTO_INCREMENT = 8
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

@@ -1,5 +1,6 @@
 package models;
 
+import controllers.MainCllr;
 import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -19,31 +20,28 @@ public class StudentC {
      */
     public boolean insert(Student stu, int idTest) {
         try (Connection con = new connect().getConectar()) {
-
-            // Verificar si alumno existe por RUT global
+            // Verificar si el alumno ya existe por rut_alum
+            int idAlumno = 0;
             String checkStudentQuery = "SELECT id, id_cur FROM alumnos WHERE rut_alum = ?";
-            int existingStudentId = -1;
-            int existingCourseId = -1;
             try (PreparedStatement checkStudentStmt = con.prepareStatement(checkStudentQuery)) {
                 checkStudentStmt.setString(1, stu.getRut());
                 try (ResultSet rs = checkStudentStmt.executeQuery()) {
                     if (rs.next()) {
-                        existingStudentId = rs.getInt("id");
-                        existingCourseId = rs.getInt("id_cur");
+                        idAlumno = rs.getInt("id");
+                        int existingCourseId = rs.getInt("id_cur");
+                        // Verificar que el curso sea el mismo
+                        if (existingCourseId != stu.getCurso().getId()) {
+                            MainCllr.mostrarAlerta("Error al insertar","El alumno ya está registrado en un curso diferente.");
+                            return false;
+                        }
+                        stu.setId(idAlumno);
                     }
                 }
             }
 
-            if (existingStudentId != -1) {
-                // Verificar si curso coincide
-                if (existingCourseId != stu.getCurso().getId()) {
-                    System.out.println("Alumno existe pero en curso diferente.");
-                    return false;
-                }
-                stu.setId(existingStudentId); // Usar ID existente
-            } else {
-                // Insertar nuevo alumno
-                String insertStudentQuery = "INSERT INTO alumnos (rut_alum, nombre_alum, id_cur) VALUES (?,?,?)";
+            // Si el alumno no existe, insertarlo en la tabla alumnos
+            if (idAlumno == 0) {
+                String insertStudentQuery = "INSERT INTO alumnos (rut_alum, nombre_alum, id_cur) VALUES (?, ?, ?)";
                 try (PreparedStatement ps = con.prepareStatement(insertStudentQuery, Statement.RETURN_GENERATED_KEYS)) {
                     ps.setString(1, stu.getRut());
                     ps.setString(2, stu.getNombre());
@@ -52,16 +50,30 @@ public class StudentC {
 
                     try (ResultSet rs = ps.getGeneratedKeys()) {
                         if (rs.next()) {
-                            stu.setId(rs.getInt(1));
+                            idAlumno = rs.getInt(1);
+                            stu.setId(idAlumno);
                         }
                     }
                 }
             }
 
-            // Verificar si ya tiene la evaluación
+            // Verificar si la evaluación pertenece al curso correcto
+            String checkCourseQuery = "SELECT COUNT(*) FROM detalle_eva_cur WHERE id_eva = ? AND id_cur = ?";
+            try (PreparedStatement checkCourseStmt = con.prepareStatement(checkCourseQuery)) {
+                checkCourseStmt.setInt(1, idTest);
+                checkCourseStmt.setInt(2, stu.getCurso().getId());
+                try (ResultSet rs = checkCourseStmt.executeQuery()) {
+                    if (rs.next() && rs.getInt(1) == 0) {
+                        System.out.println("La evaluación no está asociada al curso especificado.");
+                        return false;
+                    }
+                }
+            }
+
+            // Verificar si el alumno ya tiene la evaluación
             String checkEvalQuery = "SELECT COUNT(*) FROM detalle_eva_alumno WHERE id_alumno = ? AND id_eva = ?";
             try (PreparedStatement checkEvalStmt = con.prepareStatement(checkEvalQuery)) {
-                checkEvalStmt.setInt(1, stu.getId());
+                checkEvalStmt.setInt(1, idAlumno);
                 checkEvalStmt.setInt(2, idTest);
                 try (ResultSet rs = checkEvalStmt.executeQuery()) {
                     if (rs.next() && rs.getInt(1) > 0) {
@@ -71,11 +83,11 @@ public class StudentC {
                 }
             }
 
-            // Asignar evaluación
+            // Asignar evaluación al alumno
             String assignQuery = "INSERT INTO detalle_eva_alumno (id_eva, id_alumno) VALUES (?, ?)";
             try (PreparedStatement assignStmt = con.prepareStatement(assignQuery)) {
                 assignStmt.setInt(1, idTest);
-                assignStmt.setInt(2, stu.getId());
+                assignStmt.setInt(2, idAlumno);
                 assignStmt.executeUpdate();
             }
 
