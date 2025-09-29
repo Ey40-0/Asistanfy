@@ -1,94 +1,105 @@
-/*
- * Empty Stylesheet file.
- */
+/* Estilos para la vista de profesores */
 
+/* Estilo base para el contenedor principal */
 .mainFxmlClass {
-    -fx-background-color: #222;
-    -fx-border-color: #395fa9;
-    -fx-background-radius: 10;
+    -fx-background-color: #222; /* Fondo oscuro */
+    -fx-border-color: #395fa9; /* Borde azul */
+    -fx-background-radius: 10; /* Bordes redondeados */
     -fx-border-radius: 10;
-    -fx-font-size: 14;
+    -fx-font-size: 14; /* Tamaño de fuente estándar */
 }
 
-.content-pane{
-    -fx-background-color: #292929;
-    -fx-border-color: #395fa9;
-    -fx-background-radius: 10;
+/* Estilo para el panel de contenido */
+.content-pane {
+    -fx-background-color: #292929; /* Fondo gris oscuro */
+    -fx-border-color: #395fa9; /* Borde azul */
+    -fx-background-radius: 10; /* Bordes redondeados */
     -fx-border-radius: 10;
 }
 
+/* Estilo para el campo de búsqueda */
 .browser {
-    -fx-text-fill: #afafaf;
-    -fx-background-color: #1c1c1c;
-    -fx-border-color: #395fa9;
-    -fx-border-width: 0 0 1 0;
-    -fx-border-radius: 5;
+    -fx-text-fill: #afafaf; /* Texto gris claro */
+    -fx-background-color: #1c1c1c; /* Fondo muy oscuro */
+    -fx-border-color: #395fa9; /* Borde azul */
+    -fx-border-width: 0 0 1 0; /* Borde solo en la parte inferior */
+    -fx-border-radius: 5; /* Bordes redondeados */
     -fx-background-radius: 5;
 }
 
+/* Estilo para el contenedor de botones */
 #containerBtns {
-    -fx-background-color: #02142a;
-    -fx-background-radius: 10;
+    -fx-background-color: #02142a; /* Fondo azul oscuro */
+    -fx-background-radius: 10; /* Bordes redondeados */
 }
 
+/* Estilo para los botones de inicio */
 .btns-inicio {
-    -fx-background-color: #395fa9;
-    -fx-background-radius: 40;
-    -fx-padding: 0;
+    -fx-background-color: #395fa9; /* Fondo azul */
+    -fx-background-radius: 40; /* Bordes muy redondeados */
+    -fx-padding: 0; /* Sin padding */
 }
 
+/* Efecto hover para los botones de inicio */
 .btns-inicio:hover {
-    -fx-background-color: #294f99;
-    -fx-effect: dropshadow(gaussian, #1d7cbd, 5, 0, 0, 0);
+    -fx-background-color: #294f99; /* Azul más oscuro */
+    -fx-effect: dropshadow(gaussian, #1d7cbd, 5, 0, 0, 0); /* Sombra azul */
 }
 
+/* Estilo para contenedores genéricos */
 .container {
-    -fx-background-color: #191919;
-    -fx-background-radius: 10;
+    -fx-background-color: #191919; /* Fondo muy oscuro */
+    -fx-background-radius: 10; /* Bordes redondeados */
 }
 
+/* Estilo para el botón de cerrar */
 .btn-close {
-    -fx-background-color: transparent;
-    -fx-border-color: #525252;
-    
-    -fx-border-radius: 5;
-    -fx-text-fill: #dfdfdf;
+    -fx-background-color: transparent; /* Fondo transparente */
+    -fx-border-color: #525252; /* Borde gris */
+    -fx-border-radius: 5; /* Bordes redondeados */
+    -fx-text-fill: #dfdfdf; /* Texto claro */
 }
 
+/* Efecto hover para el botón de cerrar */
 .btn-close:hover {
-    -fx-background-color: #2f2f2f;
+    -fx-background-color: #2f2f2f; /* Fondo gris oscuro */
 }
 
+/* Estilo para listas */
 .list-view {
-    -fx-background-color: #222;
-    -fx-background-radius: 10;
-    -fx-padding: 5;
+    -fx-background-color: #222; /* Fondo oscuro */
+    -fx-background-radius: 10; /* Bordes redondeados */
+    -fx-padding: 5; /* Espaciado interno */
 }
 
+/* Estilo para celdas de listas */
 .list-cell {
-    -fx-background-color: #222;
-    -fx-text-fill: #afafaf;
-    /*-fx-background-radius: 5;*/
+    -fx-background-color: #222; /* Fondo oscuro */
+    -fx-text-fill: #afafaf; /* Texto gris claro */
 }
 
+/* Estilo para celdas seleccionadas */
 .list-cell:selected {
-    -fx-background-color: #395fa9;
-    -fx-text-fill: #cfcfcf;
+    -fx-background-color: #395fa9; /* Fondo azul */
+    -fx-text-fill: #cfcfcf; /* Texto gris claro */
 }
 
+/* Efecto hover para celdas de listas */
 .list-cell:hover {
-    -fx-background-color: #294f9955;
-    -fx-text-fill: #cfcfcf;
+    -fx-background-color: #294f9955; /* Fondo azul translúcido */
+    -fx-text-fill: #cfcfcf; /* Texto gris claro */
 }
 
+/* Estilo para el botón de vínculo */
 .btn-vinculo {
-    -fx-background-color: #395fa9;
-    -fx-text-fill: #dfdfdf;
+    -fx-background-color: #395fa9; /* Fondo azul */
+    -fx-text-fill: #dfdfdf; /* Texto claro */
 }
 
+/* Estilo para campos de texto */
 .text-field {
-    -fx-background-color: #191919;
-    -fx-border-width: 0 0 1 0;
-    -fx-border-color: #395fa9;
-    -fx-border-radius: 0;
+    -fx-background-color: #191919; /* Fondo muy oscuro */
+    -fx-border-width: 0 0 1 0; /* Borde solo en la parte inferior */
+    -fx-border-color: #395fa9; /* Borde azul */
+    -fx-border-radius: 0; /* Sin bordes redondeados */
 }

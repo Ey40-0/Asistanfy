@@ -1,9 +1,23 @@
-/*
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
-*/
-/* 
-    Created on : 20-09-2025, 5:32:43 p. m.
-    Author     : pelus
-*/
+/* Estilos para la vista de configuración */
 
+/* Estilo base para el contenedor principal */
+.mainFxmlClass {
+    -fx-background-color: #222; /* Fondo oscuro */
+    -fx-border-color: #395fa9; /* Borde azul */
+    -fx-background-radius: 10; /* Bordes redondeados */
+    -fx-border-radius: 10;
+    -fx-font-size: 14; /* Tamaño de fuente estándar */
+}
+
+/* Estilo para el botón de cerrar sesión */
+.btn-close {
+    -fx-background-color: transparent; /* Fondo transparente */
+    -fx-border-color: #525252; /* Borde gris */
+    -fx-border-radius: 5; /* Bordes redondeados */
+    -fx-text-fill: #dfdfdf; /* Texto claro */
+}
+
+/* Efecto hover para el botón de cerrar sesión */
+.btn-close:hover {
+    -fx-background-color: #2f2f2f; /* Fondo gris oscuro al pasar el ratón */
+}

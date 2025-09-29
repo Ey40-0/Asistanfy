@@ -1,58 +1,65 @@
-/*
- * Empty Stylesheet file.
-*/
+/* Estilos para la vista principal */
 
+/* Estilo base para el contenedor principal */
 .mainFxmlClass {
-    -fx-background-color: #020202;
-    -fx-border-color: #444;
-    -fx-border-radius: 10;
-    -fx-border-width: 0.5;
+    -fx-background-color: #020202; /* Fondo muy oscuro */
+    -fx-border-color: #444; /* Borde gris oscuro */
+    -fx-border-radius: 10; /* Bordes redondeados */
+    -fx-border-width: 0.5; /* Grosor del borde */
 }
 
+/* Estilo para el panel de contenido */
 .content-pane {
-    -fx-background-color: #292929;
-    -fx-border-color: rgb(151,0,151);
-    -fx-background-radius: 10;
+    -fx-background-color: #292929; /* Fondo gris oscuro */
+    -fx-border-color: rgb(151,0,151); /* Borde morado */
+    -fx-background-radius: 10; /* Bordes redondeados */
     -fx-border-radius: 10;
 }
 
+/* Estilo para la barra de control de la aplicación */
 #controlApp {
-    -fx-background-color: #333;
-    -fx-border-color: #444;
-    -fx-background-radius: 10 10 0 0 ;
+    -fx-background-color: #333; /* Fondo gris oscuro */
+    -fx-border-color: #444; /* Borde gris */
+    -fx-background-radius: 10 10 0 0; /* Bordes redondeados solo arriba */
     -fx-border-radius: 10 10 0 0;
-    -fx-border-width: 0.5;
+    -fx-border-width: 0.5; /* Grosor del borde */
 }
 
+/* Estilo para el botón de cerrar */
 #btn_close {
-    -fx-font-size: 13;
-    -fx-background-color: transparent;
-    -fx-text-fill: #888;
-    -fx-background-radius: 0 10 0 0;
+    -fx-font-size: 13; /* Tamaño de fuente */
+    -fx-background-color: transparent; /* Fondo transparente */
+    -fx-text-fill: #888; /* Texto gris */
+    -fx-background-radius: 0 10 0 0; /* Bordes redondeados en la esquina superior derecha */
 }
 
+/* Efecto hover para el botón de cerrar */
 #btn_close:hover {
-    -fx-background-color: #b11010;
-    -fx-text-fill: #bfbfbf;
+    -fx-background-color: #b11010; /* Fondo rojo */
+    -fx-text-fill: #bfbfbf; /* Texto gris claro */
 }
 
+/* Estilo para el botón de minimizar */
 #btn_minimize {
-    -fx-font-size: 13;
-    -fx-background-color: transparent;
-    -fx-text-fill: #888;
-    -fx-background-radius: 0;
+    -fx-font-size: 13; /* Tamaño de fuente */
+    -fx-background-color: transparent; /* Fondo transparente */
+    -fx-text-fill: #888; /* Texto gris */
+    -fx-background-radius: 0; /* Sin bordes redondeados */
 }
 
+/* Efecto hover para el botón de minimizar */
 #btn_minimize:hover {
-    -fx-background-color: #484848;
+    -fx-background-color: #484848; /* Fondo gris oscuro */
 }
 
+/* Elimina el foco visual en los botones de cerrar y minimizar */
 #btn_close:focused, #btn_minimize:focused {
-    -fx-focus-color: transparent;
-    -fx-faint-focus-color: transparent;
+    -fx-focus-color: transparent; /* Sin borde de foco */
+    -fx-faint-focus-color: transparent; /* Sin borde de foco claro */
 }
 
-#btn_close:focused, #btn_minimize:pressed {
-    -fx-text-fill: #888;
-    -fx-background-color: transparent;
+/* Estilo cuando los botones están presionados */
+#btn_close:pressed, #btn_minimize:pressed {
+    -fx-text-fill: #888; /* Texto gris */
+    -fx-background-color: transparent; /* Fondo transparente */
 }

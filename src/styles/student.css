@@ -1,137 +1,141 @@
-/*
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
-*/
-/* 
-    Created on : 8 sep 2025, 11:12:20 a.m.
-    Author     : PROG
-*/
+/* Estilos para la vista de estudiantes */
 
+/* Estilo para botones genéricos */
 .button {
-    -fx-text-fill: #cfcfcf;
-    -fx-background-color: #395fa9;
-    /* -fx-border-width: 1;*/
-    -fx-border-radius: 4;
-    /*-fx-border-color: #888;*/
+    -fx-text-fill: #cfcfcf; /* Texto gris claro */
+    -fx-background-color: #395fa9; /* Fondo azul */
+    -fx-border-radius: 4; /* Bordes redondeados */
     -fx-background-radius: 4;
-    -fx-alignment: center;
-    -fx-padding: 4;
+    -fx-alignment: center; /* Centrado */
+    -fx-padding: 4; /* Espaciado interno */
 }
 
+/* Efecto hover y foco para botones */
 .button:hover, .button:focused {
-    -fx-background-color: #294f99;
+    -fx-background-color: #294f99; /* Azul más oscuro */
 }
 
+/* Estilo para etiquetas */
 .label {
-    -fx-text-fill: #bfbfbf;
-    -fx-background-color: transparent;
+    -fx-text-fill: #bfbfbf; /* Texto gris claro */
+    -fx-background-color: transparent; /* Fondo transparente */
 }
 
+/* Estilo para contenedores genéricos */
 .container {
-    -fx-background-color: #191919;
-    -fx-background-radius: 10;
+    -fx-background-color: #191919; /* Fondo muy oscuro */
+    -fx-background-radius: 10; /* Bordes redondeados */
 }
 
+/* Estilo para la tabla */
 .table-view {
-    -fx-background-color: #222;
-    -fx-border-width: 1;
-    -fx-border-color: #294f99;
-    -fx-border-radius: 3;
+    -fx-background-color: #222; /* Fondo oscuro */
+    -fx-border-width: 1; /* Grosor del borde */
+    -fx-border-color: #294f99; /* Borde azul oscuro */
+    -fx-border-radius: 3; /* Bordes redondeados */
     -fx-background-radius: 3;
-    -fx-text-fill: #bfbfbf;
+    -fx-text-fill: #bfbfbf; /* Texto gris claro */
 }
 
+/* Estilo para el encabezado de la tabla */
 .table-view .column-header {
-    /* Cada columna del encabezado */
-    -fx-background-color: #222;
-    -fx-border-width: 0 0 1 0;
-    -fx-border-color: #294f99;
+    -fx-background-color: #222; /* Fondo oscuro */
+    -fx-border-width: 0 0 1 0; /* Borde inferior */
+    -fx-border-color: #294f99; /* Borde azul oscuro */
 }
 
+/* Estilo para las columnas de la tabla */
 .table-view .table-column {
-    -fx-background-color: #222;
-    -fx-border-width: 0;
-    -fx-border-style: none;
+    -fx-background-color: #222; /* Fondo oscuro */
+    -fx-border-width: 0; /* Sin borde */
+    -fx-border-style: none; /* Sin estilo de borde */
 }
 
+/* Estilo para filas enfocadas */
 .table-view .table-row-cell:focused {
-    -fx-background-color: #222;
-    -fx-border-color: #395fa9; /* color del borde */
-    -fx-border-width: 1;
+    -fx-background-color: #222; /* Fondo oscuro */
+    -fx-border-color: #395fa9; /* Borde azul */
+    -fx-border-width: 1; /* Grosor del borde */
 }
 
+/* Efecto hover para filas */
 .table-view .table-row-cell:hover {
-    -fx-background-color: #222;
-    -fx-border-color: #597fc9; /* color del borde */
-    -fx-border-width: 0.5;
-    -fx-border-style: solid;
+    -fx-background-color: #222; /* Fondo oscuro */
+    -fx-border-color: #597fc9; /* Borde azul claro */
+    -fx-border-width: 0.5; /* Grosor del borde */
+    -fx-border-style: solid; /* Estilo de borde sólido */
 }
 
+/* Estilo para filas de la tabla */
 .table-view .table-row-cell {
-    -fx-height: 20px;
-    -fx-border-width: 0;
-    -fx-border-style: none;
+    -fx-height: 20px; /* Altura de la fila */
+    -fx-border-width: 0; /* Sin borde */
+    -fx-border-style: none; /* Sin estilo de borde */
 }
 
+/* Estilo para celdas de la tabla */
 .table-view .table-cell {
-    -fx-text-fill: #cfcfcf;
-    -fx-border-width: 0;
-    -fx-border-style: none;
+    -fx-text-fill: #cfcfcf; /* Texto gris claro */
+    -fx-border-width: 0; /* Sin borde */
+    -fx-border-style: none; /* Sin estilo de borde */
 }
 
+/* Estilo para la barra de desplazamiento */
 .scroll-bar {
-    -fx-padding: 2;             /* Espacio interno para la barra */
+    -fx-padding: 2; /* Espaciado interno */
 }
 
+/* Estilo para el fondo de la barra de desplazamiento */
 .scroll-bar .track {
-    -fx-background-insets: 0;
-    -fx-background-radius: 6;
+    -fx-background-insets: 0; /* Sin márgenes internos */
+    -fx-background-radius: 6; /* Bordes redondeados */
 }
 
+/* Estilo para el pulgar de la barra de desplazamiento */
 .scroll-bar .thumb {
-    -fx-background-color: #395fa9; /* Color del "pulgar" (la parte que se mueve) */
-    -fx-background-insets: 2;
-    -fx-background-radius: 6;
+    -fx-background-color: #395fa9; /* Azul característico */
+    -fx-background-insets: 2; /* Márgenes internos */
+    -fx-background-radius: 6; /* Bordes redondeados */
 }
 
-/* Opcional: Hover efecto en el thumb */
+/* Efecto hover para el pulgar de la barra de desplazamiento */
 .scroll-bar .thumb:hover {
-    -fx-background-color: #5a7dcf;
+    -fx-background-color: #5a7dcf; /* Azul más claro */
 }
 
+/* Estilo para filas y celdas seleccionadas o enfocadas */
 .table-view .table-row-cell:selected, 
 .table-view .table-cell:selected,
 .table-view .table-row-cell:focused, 
-.table-view .table-cell:focused
-{
-    -fx-background-color: #395fa9; /* fondo azul, o el que quieras */
-    -fx-text-fill: white;
-
-    /* Cambia o quita el borde focus */
-    -fx-focus-color: transparent;       /* elimina borde azul */
-    -fx-faint-focus-color: transparent; /* elimina borde azul claro */
-    
-    /* Quitar cualquier efecto adicional */
-    -fx-background-insets: 0;
-    -fx-background-radius: 0;
+.table-view .table-cell:focused {
+    -fx-background-color: #395fa9; /* Fondo azul */
+    -fx-text-fill: white; /* Texto blanco */
+    -fx-focus-color: transparent; /* Sin borde de foco */
+    -fx-faint-focus-color: transparent; /* Sin borde de foco claro */
+    -fx-background-insets: 0; /* Sin márgenes internos */
+    -fx-background-radius: 0; /* Sin bordes redondeados */
 }
 
+/* Estilo base para todos los elementos */
 * {
-    -fx-background-color: #222;
-    -fx-border-style: none;
+    -fx-background-color: #222; /* Fondo oscuro */
+    -fx-border-style: none; /* Sin borde */
 }
 
+/* Estilo para la caja del checkbox */
 .check-box .box {
-    -fx-background-color: #292929; /* El color que desees */
-    -fx-border-color: #395fa9;     /* Opcional: color del borde */
-    -fx-border-radius: 3;
+    -fx-background-color: #292929; /* Fondo gris oscuro */
+    -fx-border-color: #395fa9; /* Borde azul */
+    -fx-border-radius: 3; /* Bordes redondeados */
     -fx-background-radius: 3;
 }
 
+/* Estilo para el check seleccionado */
 .check-box:selected .mark {
-    -fx-background-color: #dfdfdf;  /* color del check (✔) */
+    -fx-background-color: #dfdfdf; /* Color claro para el check */
 }
 
+/* Efecto hover para la caja del checkbox */
 .check-box:hover .box {
-    -fx-effect: dropshadow(gaussian, #395fa9, 5, 0, 0, 0);
+    -fx-effect: dropshadow(gaussian, #395fa9, 5, 0, 0, 0); /* Sombra azul */
 }

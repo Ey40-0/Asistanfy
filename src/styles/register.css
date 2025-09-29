@@ -1,58 +1,66 @@
-/*
- * Empty Stylesheet file.
- */
+/* Estilos para la vista de registro */
 
+/* Estilo base para el contenedor principal */
 .mainFxmlClass {
-    -fx-background-color: #222;
-    -fx-border-color: #395fa9;
-    -fx-background-radius: 10;
+    -fx-background-color: #222; /* Fondo oscuro */
+    -fx-border-color: #395fa9; /* Borde azul */
+    -fx-background-radius: 10; /* Bordes redondeados */
     -fx-border-radius: 10;
-    -fx-font-size: 14;
+    -fx-font-size: 14; /* Tamaño de fuente estándar */
 }
 
+/* Estilo para etiquetas */
 .label {
-    -fx-text-fill: #cfcfcf;
+    -fx-text-fill: #cfcfcf; /* Texto gris claro */
 }
 
+/* Estilo para campos de texto */
 .text-field {
-    -fx-text-fill: #afafaf;
-    -fx-background-color: #222;
-    -fx-border-color: #395fa9;
-    -fx-border-width: 0 0 1 0;
+    -fx-text-fill: #afafaf; /* Texto gris claro */
+    -fx-background-color: #222; /* Fondo oscuro */
+    -fx-border-color: #395fa9; /* Borde azul */
+    -fx-border-width: 0 0 1 0; /* Borde solo en la parte inferior */
 }
 
+/* Estilo para la caja del checkbox */
 .check-box .box {
-    -fx-background-color: #292929; /* El color que desees */
-    -fx-border-color: #395fa9;     /* Opcional: color del borde */
-    -fx-border-radius: 3;
+    -fx-background-color: #292929; /* Fondo gris oscuro */
+    -fx-border-color: #395fa9; /* Borde azul */
+    -fx-border-radius: 3; /* Bordes redondeados */
     -fx-background-radius: 3;
 }
 
+/* Estilo para el check seleccionado */
 .check-box:selected .mark {
-    -fx-background-color: #dfdfdf;  /* color del check (✔) */
+    -fx-background-color: #dfdfdf; /* Color claro para el check */
 }
 
+/* Efecto hover para la caja del checkbox */
 .check-box:hover .box {
-    -fx-effect: dropshadow(gaussian, #395fa9, 5, 0, 0, 0);
+    -fx-effect: dropshadow(gaussian, #395fa9, 5, 0, 0, 0); /* Sombra azul */
 }
 
+/* Estilo para botones genéricos */
 .button {
-    -fx-background-color: #525252;
-    -fx-background-radius: 5;
-    -fx-text-fill: #dfdfdf;
+    -fx-background-color: #525252; /* Fondo gris oscuro */
+    -fx-background-radius: 5; /* Bordes redondeados */
+    -fx-text-fill: #dfdfdf; /* Texto claro */
 }
 
+/* Efecto hover para botones */
 .button:hover {
-    -fx-background-color: #444;
+    -fx-background-color: #444; /* Gris más oscuro */
 }
 
+/* Estilo para el botón de volver */
 .btn-volver {
-    -fx-background-color: transparent;
-    -fx-border-color: #525252;
-    -fx-border-radius: 5;
-    -fx-text-fill: #dfdfdf;
+    -fx-background-color: transparent; /* Fondo transparente */
+    -fx-border-color: #525252; /* Borde gris */
+    -fx-border-radius: 5; /* Bordes redondeados */
+    -fx-text-fill: #dfdfdf; /* Texto claro */
 }
 
+/* Efecto hover para el botón de volver */
 .btn-volver:hover {
-    -fx-background-color: #2f2f2f;
+    -fx-background-color: #2f2f2f; /* Fondo gris oscuro */
 }
