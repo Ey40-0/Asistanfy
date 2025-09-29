@@ -7,11 +7,14 @@ import java.sql.DriverManager;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-// conexión a la db
+/**
+ * Conexión a la base de datos.
+ * @author PROG
+ */
 public class connect {
     private static Connection conectar;
     private final String usuario = "root";
-    private final String contrasenia = "277353";
+    private final String contrasenia = "root";
     private final String bd = "Controller";
     private final String ip = "localhost";
     private final String puerto = "3306";

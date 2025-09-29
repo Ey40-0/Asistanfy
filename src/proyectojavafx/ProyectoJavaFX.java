@@ -10,7 +10,11 @@ import javafx.stage.StageStyle;
 
 public class ProyectoJavaFX extends Application {
     
-    // definición del panel de inicio
+    /**
+     * Declaración del panel de inicio.
+     * @param primaryStage
+     * @throws Exception 
+     */
     @Override
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/views/MainVw.fxml"));
@@ -25,7 +29,11 @@ public class ProyectoJavaFX extends Application {
         primaryStage.show();
         primaryStage.getScene().setFill(Color.TRANSPARENT);
     }
-
+    
+    /**
+     * Inicializa la app
+     * @param args 
+     */
     public static void main(String[] args) {
         launch(args);
     }
