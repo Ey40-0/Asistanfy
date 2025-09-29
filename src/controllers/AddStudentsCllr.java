@@ -52,8 +52,8 @@ public class AddStudentsCllr {
         // Insertar el Alumno en la db
         if (stuc.insert(stu, Session.getInstance().getSelectedTest().getId())) {
             System.out.println(stu.toString());
-            /*fldName.setText("");
-            fldRun.setText("");*/
+            fldName.setText("");
+            fldRun.setText("");
             GuideCllr.getInstance().loadPanel("/views/ShowStudVw.fxml");
         } else {
             MainCllr.mostrarAlerta("Registro fallido", "Ese usuario ya existe o hubo un error.");

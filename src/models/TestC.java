@@ -12,38 +12,37 @@ import java.sql.ResultSet;
 public class TestC {
     
     public boolean insert(Test eval) {
-        String checkSql = "SELECT id_eva, is_active FROM evaluacion WHERE descripcion = ? AND fecha = ? AND asignatura_id = ? AND is_active = 1";
+        String checkSql = "SELECT id_eva FROM evaluacion WHERE descripcion = ? AND fecha = ? AND asignatura_id = ? AND empleado_id = ? AND is_active = 1";
 
         try (Connection con = new connect().getConectar()) {
-            // Verificar si ya existe una evaluación activa con los mismos datos
+            // Verificar si ya existe activa para este profesor
             try (PreparedStatement checkPs = con.prepareStatement(checkSql)) {
                 checkPs.setString(1, eval.getTitulo());
                 checkPs.setDate(2, java.sql.Date.valueOf(eval.getFecha()));
                 checkPs.setInt(3, eval.getAsignatura().getId());
+                checkPs.setInt(4, eval.getIdProfesor());
 
                 try (ResultSet rs = checkPs.executeQuery()) {
                     if (rs.next()) {
-                        // Ya existe una evaluación activa: error
-                        System.out.println("Ya existe una evaluación activa con esos datos.");
+                        System.out.println("Ya existe una evaluación activa con esos datos para este profesor.");
                         return false;
                     }
                 }
             }
 
-            // Verificar si existe una evaluación inactiva para reactivar
-            String checkInactiveSql = "SELECT id_eva FROM evaluacion WHERE descripcion = ? AND fecha = ? AND asignatura_id = ? AND is_active = 0";
+            // Verificar si existe inactiva para reactivar
+            String checkInactiveSql = "SELECT id_eva FROM evaluacion WHERE descripcion = ? AND fecha = ? AND asignatura_id = ? AND empleado_id = ? AND is_active = 0";
             try (PreparedStatement checkInactivePs = con.prepareStatement(checkInactiveSql)) {
                 checkInactivePs.setString(1, eval.getTitulo());
                 checkInactivePs.setDate(2, java.sql.Date.valueOf(eval.getFecha()));
                 checkInactivePs.setInt(3, eval.getAsignatura().getId());
+                checkInactivePs.setInt(4, eval.getIdProfesor());
 
                 try (ResultSet rs = checkInactivePs.executeQuery()) {
                     if (rs.next()) {
-                        // Existe inactiva: reactivarla
-                        String updateSql = "UPDATE evaluacion SET is_active = 1, empleado_id = ? WHERE id_eva = ?";
+                        String updateSql = "UPDATE evaluacion SET is_active = 1 WHERE id_eva = ?";
                         try (PreparedStatement updatePs = con.prepareStatement(updateSql)) {
-                            updatePs.setInt(1, eval.getIdProfesor());
-                            updatePs.setInt(2, rs.getInt("id_eva"));
+                            updatePs.setInt(1, rs.getInt("id_eva"));
                             updatePs.executeUpdate();
                             eval.setId(rs.getInt("id_eva"));
                             return true;
@@ -52,7 +51,7 @@ public class TestC {
                 }
             }
 
-            // Si no existe, insertar nueva evaluación
+            // Insertar nueva
             String insertSql = "INSERT INTO evaluacion (descripcion, fecha, asignatura_id, empleado_id, is_active) VALUES (?, ?, ?, ?, ?)";
             try (PreparedStatement ps = con.prepareStatement(insertSql, Statement.RETURN_GENERATED_KEYS)) {
                 ps.setString(1, eval.getTitulo());
