@@ -11,44 +11,67 @@ import java.util.List;
 
 public class StudentC {
     
+    /**
+     * Inserta un estudiante y lo asocia a una prueba, verificando duplicados por RUT.
+     * @param stu El estudiante.
+     * @param idTest ID de la prueba.
+     * @return true si se insertó/asociado, false en error o duplicado.
+     */
     public boolean insert(Student stu, int idTest) {
         try (Connection con = new connect().getConectar()) {
 
-            // Verificar si ya existe el alumno con esa evaluación
-            String checkQuery = """
-                SELECT COUNT(*) FROM detalle_eva_alumno dea
-                JOIN alumnos a ON dea.id_alumno = a.id
-                WHERE a.rut_alum = ? AND dea.id_eva = ?""";
-            try (PreparedStatement checkStmt = con.prepareStatement(checkQuery)) {
-                checkStmt.setString(1, stu.getRut());
-                checkStmt.setInt(2, idTest);
+            // Verificar si alumno existe por RUT global
+            String checkStudentQuery = "SELECT id, id_cur FROM alumnos WHERE rut_alum = ?";
+            int existingStudentId = -1;
+            int existingCourseId = -1;
+            try (PreparedStatement checkStudentStmt = con.prepareStatement(checkStudentQuery)) {
+                checkStudentStmt.setString(1, stu.getRut());
+                try (ResultSet rs = checkStudentStmt.executeQuery()) {
+                    if (rs.next()) {
+                        existingStudentId = rs.getInt("id");
+                        existingCourseId = rs.getInt("id_cur");
+                    }
+                }
+            }
 
-                try (ResultSet rs = checkStmt.executeQuery()) {
+            if (existingStudentId != -1) {
+                // Verificar si curso coincide
+                if (existingCourseId != stu.getCurso().getId()) {
+                    System.out.println("Alumno existe pero en curso diferente.");
+                    return false;
+                }
+                stu.setId(existingStudentId); // Usar ID existente
+            } else {
+                // Insertar nuevo alumno
+                String insertStudentQuery = "INSERT INTO alumnos (rut_alum, nombre_alum, id_cur) VALUES (?,?,?)";
+                try (PreparedStatement ps = con.prepareStatement(insertStudentQuery, Statement.RETURN_GENERATED_KEYS)) {
+                    ps.setString(1, stu.getRut());
+                    ps.setString(2, stu.getNombre());
+                    ps.setInt(3, stu.getCurso().getId());
+                    ps.executeUpdate();
+
+                    try (ResultSet rs = ps.getGeneratedKeys()) {
+                        if (rs.next()) {
+                            stu.setId(rs.getInt(1));
+                        }
+                    }
+                }
+            }
+
+            // Verificar si ya tiene la evaluación
+            String checkEvalQuery = "SELECT COUNT(*) FROM detalle_eva_alumno WHERE id_alumno = ? AND id_eva = ?";
+            try (PreparedStatement checkEvalStmt = con.prepareStatement(checkEvalQuery)) {
+                checkEvalStmt.setInt(1, stu.getId());
+                checkEvalStmt.setInt(2, idTest);
+                try (ResultSet rs = checkEvalStmt.executeQuery()) {
                     if (rs.next() && rs.getInt(1) > 0) {
-                        System.out.println("Ese usuario ya tiene esta evaluación asignada");
+                        System.out.println("El alumno ya tiene esta evaluación.");
                         return false;
                     }
                 }
             }
 
-            // Insertar alumno si no existe  
-            String query = "INSERT INTO alumnos (rut_alum, nombre_alum, id_cur) VALUES (?,?,?)";
-            try (PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
-                ps.setString(1, stu.getRut());
-                ps.setString(2, stu.getNombre());
-                ps.setInt(3, stu.getCurso().getId());
-                System.out.println("getcur" + stu.getCurso().getId());
-                System.out.println("idTest" + idTest);
-                ps.executeUpdate();
-
-                try (ResultSet rs = ps.getGeneratedKeys()) {
-                    if (rs.next()) {
-                        stu.setId(rs.getInt(1));
-                    }
-                }
-            }
-
-            // Asignar evaluación al alumno
+            // Asignar evaluación
             String assignQuery = "INSERT INTO detalle_eva_alumno (id_eva, id_alumno) VALUES (?, ?)";
             try (PreparedStatement assignStmt = con.prepareStatement(assignQuery)) {
                 assignStmt.setInt(1, idTest);
@@ -64,6 +87,11 @@ public class StudentC {
         }
     }
     
+    /**
+     * Obtiene estudiantes por ID de prueba.
+     * @param testId ID de la prueba.
+     * @return Lista de estudiantes.
+     */
     public List<Student> getStudentsByTest(int testId) {
         List<Student> students = new ArrayList<>();
         String sql = """
@@ -101,6 +129,12 @@ public class StudentC {
         return students;
     }
     
+    /**
+     * Actualiza la justificación de un estudiante.
+     * @param studentId ID del estudiante.
+     * @param justification Valor de justificación.
+     * @return true si se actualizó, false en error.
+     */
     public boolean updateJustification(int studentId, boolean justification) {
         String query = "UPDATE alumnos SET justification = ? WHERE id = ?";
         try (Connection con = new connect().getConectar();
@@ -116,9 +150,13 @@ public class StudentC {
         }
     }
     
+    /**
+     * Actualiza un estudiante, verificando unicidad de RUT.
+     * @param stu El estudiante actualizado.
+     * @return true si se actualizó, false si RUT duplicado o error.
+     */
     public boolean updateStudent(Student stu) {
         try (Connection con = new connect().getConectar()) {
-            // Verificar si ya existe otro estudiante activo con el mismo RUT
             String checkQuery = "SELECT id FROM alumnos WHERE rut_alum = ? AND id != ?";
             try (PreparedStatement checkPs = con.prepareStatement(checkQuery)) {
                 checkPs.setString(1, stu.getRut());
@@ -126,12 +164,11 @@ public class StudentC {
                 try (ResultSet rs = checkPs.executeQuery()) {
                     if (rs.next()) {
                         System.out.println("Ya existe otro alumno activo con el RUT: " + stu.getRut());
-                        return false; // No actualizar si ya existe otro estudiante con este RUT
+                        return false;
                     }
                 }
             }
 
-            // Proceder con la actualización
             String query = "UPDATE alumnos SET rut_alum = ?, nombre_alum = ? WHERE id = ?";
             try (PreparedStatement ps = con.prepareStatement(query)) {
                 ps.setString(1, stu.getRut());

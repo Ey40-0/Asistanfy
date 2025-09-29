@@ -16,22 +16,29 @@ public class ShowTeachersCllr {
     
     private static ShowTeachersCllr instance;
 
+    /**
+     * Inicializa el controlador, cargando profesores.
+     */
     @FXML
     public void initialize() {
         instance = this;
         cargarProfesores();
     }
      
-    // Getter de la clase
+    /**
+     * Obtiene la instancia singleton del controlador.
+     * @return La instancia de ShowTeachersCllr.
+     */
     public static ShowTeachersCllr getInstance() {
         return instance;
     }
     
+    /**
+     * Carga la lista de profesores desde la base de datos.
+     */
     private void cargarProfesores() {
-        // Llama al método centralizado en EmployeeC para obtener la lista de profesores
         listProfesores.setItems(empc.getProfesores());
         
-        // El CellFactory sigue aquí porque es una configuración de la vista
         listProfesores.setCellFactory(lv -> new ListCell<Employee>() {
             @Override
             protected void updateItem(Employee emp, boolean empty) {
@@ -45,15 +52,16 @@ public class ShowTeachersCllr {
         });
     }
     
+    /**
+     * Muestra la información del profesor seleccionado (carga panel de tests).
+     */
     public void viewInformation() {
         Employee seleccionado = listProfesores.getSelectionModel().getSelectedItem();
 
         if (seleccionado != null) {
             try {
-                // Guardar el ID del empleado seleccionado en la sesión
                 Session.getInstance().setSelectedEmployeeId(seleccionado.getId());
 
-                // Cargar el nuevo panel
                 GuideCllr.getInstance().loadPanel("/views/ShowTestsVw.fxml");
             } catch (Exception e) {
                 e.printStackTrace();
@@ -63,14 +71,17 @@ public class ShowTeachersCllr {
         }
     }
     
+    /**
+     * Obtiene el ID del empleado seleccionado.
+     * @return El ID, o -1 si no hay selección.
+     */
     public int getInfoEmpleado() {
         Employee selected = listProfesores.getSelectionModel().getSelectedItem();
         if (selected != null) {
             return selected.getId();
         } else {
-            return -1; // o cualquier valor que indique "ninguna selección"
+            return -1;
         }
     }
 
 }
-

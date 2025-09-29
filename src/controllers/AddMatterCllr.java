@@ -17,20 +17,25 @@ public class AddMatterCllr {
     private FilteredList<Matter> filteredMatters;
     private Matter selected;
     
+    /**
+     * Inicializa el controlador, cargando las materias y configurando listeners.
+     */
     @FXML
     public void initialize() {
         loadMatters();
-        // Listener de selección
         listMatters.getSelectionModel().selectedItemProperty().addListener((obs, oldSel, newSel) -> {
             selected = newSel;
             if (selected != null) {
                 fldName.setText(selected.getNombre());
             } else {
-                fldName.clear(); // Por si se deselecciona
+                fldName.clear();
             }
         });
     }
     
+    /**
+     * Registra una nueva materia en la base de datos.
+     */
     public void register() {
         String name = fldName.getText().trim();
         
@@ -46,16 +51,16 @@ public class AddMatterCllr {
         }
     }
 
+    /**
+     * Carga la lista de materias desde la base de datos.
+     */
     private void loadMatters() {
         ObservableList<Matter> materias = Matter.getMatters();
 
-        // Creamos la lista filtrada
         filteredMatters = new FilteredList<>(materias, m -> true);
 
-        // Asignamos al ListView
         listMatters.setItems(filteredMatters);
 
-        // Configuramos la visualización
         listMatters.setCellFactory(lv -> new ListCell<Matter>() {
             @Override
             protected void updateItem(Matter mat, boolean empty) {
@@ -68,19 +73,20 @@ public class AddMatterCllr {
             }
         });
 
-        // Listener para filtrar en tiempo real
         fldSearch.textProperty().addListener((obs, oldValue, newValue) -> {
             String filtro = (newValue == null) ? "" : newValue.toLowerCase();
 
             filteredMatters.setPredicate(mat -> {
                 if (filtro.isEmpty()) return true;
 
-                // Filtrar por nombre de la materia
                 return mat.getNombre().toLowerCase().contains(filtro);
             });
         });
     }
     
+    /**
+     * Elimina la materia seleccionada (setea is_active=0).
+     */
     public void deleteMatter() {
         if (selected != null) {
             Matter.deleteMatter(selected.getId());
@@ -90,6 +96,9 @@ public class AddMatterCllr {
         }
     }
     
+    /**
+     * Actualiza la materia seleccionada en la base de datos.
+     */
     @FXML
     private void updateMatter() {
         if (selected != null) {

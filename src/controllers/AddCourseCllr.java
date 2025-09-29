@@ -19,6 +19,9 @@ public class AddCourseCllr {
     private FilteredList<Course> filteredCourses;
     private final CourseC couc = new CourseC();
 
+    /**
+     * Inicializa el controlador, cargando los cursos y configurando listeners.
+     */
     @FXML
     public void initialize() {
         loadCourses();
@@ -38,6 +41,9 @@ public class AddCourseCllr {
         });
     }
 
+    /**
+     * Registra un nuevo curso en la base de datos.
+     */
     @FXML
     private void registerCourse() {
         String name = fldName.getText().trim();
@@ -56,6 +62,9 @@ public class AddCourseCllr {
         }
     }
 
+    /**
+     * Actualiza el curso seleccionado en la base de datos.
+     */
     @FXML
     private void updateCourse() {
         if (selected != null) {
@@ -78,6 +87,9 @@ public class AddCourseCllr {
         }
     }
 
+    /**
+     * Elimina el curso seleccionado (setea is_active=0).
+     */
     @FXML
     private void deleteCourse() {
         if (selected != null) {
@@ -89,6 +101,9 @@ public class AddCourseCllr {
         }
     }
 
+    /**
+     * Carga la lista de cursos desde la base de datos y configura el ListView.
+     */
     private void loadCourses() {
         ObservableList<Course> courses = CourseC.getCourses();
         filteredCourses = new FilteredList<>(courses, c -> true);
@@ -103,6 +118,9 @@ public class AddCourseCllr {
         });
     }
 
+    /**
+     * Limpia los campos de texto y deselecciona el curso.
+     */
     private void clearFields() {
         fldName.clear();
         fldSearch.clear();

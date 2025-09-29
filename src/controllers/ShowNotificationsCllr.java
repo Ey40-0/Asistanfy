@@ -7,25 +7,26 @@ import models.Employee;
 import models.EmployeeC;
 import models.Session;
 
-/**
- *
- * @author PROG
- */
 public class ShowNotificationsCllr {
     @FXML
     private ListView<String> listNotifications;
     
     private final EmployeeC empc = new EmployeeC();
     
+    /**
+     * Inicializa el controlador, cargando notificaciones.
+     */
     @FXML
     public void initialize() {
         cargarNotificaciones();
     }
     
+    /**
+     * Carga las notificaciones en el ListView (hardcoded por ahora).
+     */
     private void cargarNotificaciones() {
         ObservableList<String> notify = javafx.collections.FXCollections.observableArrayList();
 
-        // filtrar inspectores que no tienen el mismo código que el profesor
         if (listNotifications.getItems().isEmpty()) {
             notify.add("No tienes notificaciones");
         }

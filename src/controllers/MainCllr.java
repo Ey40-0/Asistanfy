@@ -12,26 +12,26 @@ import javafx.scene.control.Alert;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
-// Implementacion de la interfaz en el controlador
 public class MainCllr implements Initializable {
 
-    // Se reciben los campos de FXML
-    
     @FXML
     private Pane contentPane;
     @FXML
     private Pane navBar;
     
-    // Variable static de tipo MainController
     private static MainCllr instance;
     
     private double xOffset = 0;
     private double yOffset = 0;
     
-    // Metodo abstracto
+    /**
+     * Inicializa el controlador principal, cargando el panel de login y configurando drag de ventana.
+     * @param location URL de ubicación.
+     * @param resources Recursos.
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        instance = this; // Guarda referencia al controlador principal
+        instance = this;
         showPanel("/views/LoginVw.fxml");
         
         navBar.setOnMousePressed((MouseEvent event) -> {
@@ -48,12 +48,18 @@ public class MainCllr implements Initializable {
 
     }
 
-    // Getter de la clase
+    /**
+     * Obtiene la instancia singleton del controlador principal.
+     * @return La instancia de MainCllr.
+     */
     public static MainCllr getInstance() {
         return instance;
     }
 
-    // Metodo principal del AnchorPane
+    /**
+     * Muestra un panel FXML en el Pane principal.
+     * @param rutaFXML La ruta del archivo FXML.
+     */
     public void showPanel(String rutaFXML) {
         try {
             AnchorPane pane = FXMLLoader.load(getClass().getResource(rutaFXML));
@@ -68,15 +74,26 @@ public class MainCllr implements Initializable {
         }
     }
     
+    /**
+     * Cierra la aplicación.
+     */
     public void close() {
         System.exit(0);
     }
     
+    /**
+     * Minimiza la ventana.
+     */
     public void minimize() {
-        javafx.stage.Stage stage = (javafx.stage.Stage) contentPane.getScene().getWindow();
+        Stage stage = (Stage) contentPane.getScene().getWindow();
         stage.setIconified(true);
     }
     
+    /**
+     * Muestra una alerta informativa.
+     * @param titulo Título de la alerta.
+     * @param mensaje Mensaje de la alerta.
+     */
     public static void mostrarAlerta(String titulo, String mensaje) {
         Alert alerta = new Alert(Alert.AlertType.INFORMATION);
         alerta.setTitle(titulo);
@@ -85,22 +102,30 @@ public class MainCllr implements Initializable {
         alerta.showAndWait();
     }
 
+    /**
+     * Valida un RUN chileno (formato xxxxxxxx-x).
+     * @param run El RUN a validar.
+     * @return true si es válido, false en caso contrario.
+     */
     public static boolean validarRun(String run) {
-        // Limpiar puntos, guiones, espacios y convertir a mayúsculas
         run = run.replace(".", "").replace("-", "").replace(" ", "").toUpperCase();
 
-        if (!run.matches("\\d{7,8}[0-9K]")) {
+        // Agregado: Verificar longitud exacta (8 dígitos + DV)
+        if (!run.matches("\\d{8}[0-9K]")) {
             return false;
         }
 
-        // Separar número y dígito verificador
         String numero = run.substring(0, run.length() - 1);
         char dv = run.charAt(run.length() - 1);
 
         return dv == calcularDV(numero);
     }
 
-    // Función para calcular el dígito verificador (módulo 11)
+    /**
+     * Calcula el dígito verificador de un RUN.
+     * @param rut El número sin DV.
+     * @return El DV calculado.
+     */
     private static char calcularDV(String rut) {
         int suma = 0;
         int multiplicador = 2;
@@ -117,15 +142,18 @@ public class MainCllr implements Initializable {
         return (char) (resto + '0');
     }
     
+    /**
+     * Formatea un RUN válido a xxxxxxxx-x.
+     * @param run El RUN a formatear.
+     * @return El RUN formateado, o vacío si inválido.
+     */
     public static String formatearRun(String run) {
         if (run == null || run.isEmpty()) return "";
 
-        // Limpiar puntos, guiones, espacios y convertir a mayúsculas
         run = run.replace(".", "").replace("-", "").replace(" ", "").toUpperCase();
 
-        // Validar antes de formatear
         if (!validarRun(run)) {
-            return ""; // o puedes lanzar una excepción si prefieres
+            return "";
         }
 
         String numero = run.substring(0, run.length() - 1);

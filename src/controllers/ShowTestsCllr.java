@@ -25,17 +25,17 @@ public class ShowTestsCllr {
 
     private final TestC evac = new TestC();
 
+    /**
+     * Inicializa el controlador, configurando columnas de la tabla.
+     */
     @FXML
     public void initialize() {
         
-        // configuracion de columnas
-        // nombre.establecerValor( celda tipo string(celda.valorAgregado ))
         colTitle.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getTitulo()));
         colDate.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getFecha().toString()));
         colCourse.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getCurso().getNombre()));
         colMatter.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getAsignatura().getNombre()));
 
-        // botón addAlumnos-detalles
         colDetails.setCellFactory(tc -> new TableCell<>() {
             private final Button det = new Button("Ausentes");
             private final Button del = new Button("Borrar");
@@ -55,7 +55,7 @@ public class ShowTestsCllr {
                     Session.getInstance().setSelectedTest(eval);
                     deleteTest();
                     getTableView().getItems().remove(eval);
-                    loadTests();
+                    loadTests(); // Recarga después de borrar
                 });
             }
 
@@ -74,13 +74,15 @@ public class ShowTestsCllr {
         loadTests();
     }
 
+    /**
+     * Carga las pruebas desde la base de datos según el rol.
+     */
     private void loadTests() {
         ObservableList<Test> tests;
 
-        if (Session.getInstance().getId_rol() == 0) { // Profesor
+        if (Session.getInstance().getId_rol() == 0) {
             tests = FXCollections.observableArrayList(evac.getEvaluacionesByProfesor(Session.getInstance().getId()));
-        } else { // Inspector
-            // Obtener el ID del empleado seleccionado de la sesión
+        } else {
             int id = Session.getInstance().getSelectedEmployeeId();
             tests = FXCollections.observableArrayList(
                 evac.getEvaluacionesByProfesor(id)
@@ -89,10 +91,12 @@ public class ShowTestsCllr {
         tableTests.setItems(tests);
     }
     
+    /**
+     * Elimina la prueba seleccionada.
+     */
     private void deleteTest() {
         if (Session.getInstance().getSelectedTest() != null) {
             evac.deleteTest(Session.getInstance().getSelectedTest());
         }
     }
-    
 }

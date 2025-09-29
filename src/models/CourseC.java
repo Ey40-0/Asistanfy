@@ -1,5 +1,3 @@
-
-
 package models;
 
 import controllers.MainCllr;
@@ -14,6 +12,10 @@ import javafx.collections.ObservableList;
 
 public class CourseC {
 
+    /**
+     * Obtiene todos los cursos activos.
+     * @return Lista observable de cursos.
+     */
     public static ObservableList<Course> getCourses() {
         ObservableList<Course> cursos = FXCollections.observableArrayList();
         String sql = "SELECT * FROM curso WHERE is_active = 1 ORDER BY nivel";
@@ -33,6 +35,11 @@ public class CourseC {
         return cursos;
     }
     
+    /**
+     * Asocia una prueba a un curso.
+     * @param cou El curso.
+     * @param tes La prueba.
+     */
     public void addTestToCourse(Course cou, Test tes) {
         if (tes.getId() == 0) {
             MainCllr.getInstance().mostrarAlerta("Error", "Evaluación todavía no ha sido creada.");
@@ -40,7 +47,6 @@ public class CourseC {
         }
 
         try (Connection con = new connect().getConectar()) {
-            // Verificar si ya existe la relación
             String checkSql = "SELECT COUNT(*) FROM detalle_eva_cur WHERE id_cur = ? AND id_eva = ?";
             try (PreparedStatement checkPs = con.prepareStatement(checkSql)) {
                 checkPs.setInt(1, cou.getId());
@@ -48,12 +54,11 @@ public class CourseC {
                 try (ResultSet rs = checkPs.executeQuery()) {
                     if (rs.next() && rs.getInt(1) > 0) {
                         MainCllr.getInstance().mostrarAlerta("Advertencia", "La evaluación ya estaba asociada a este curso.");
-                        return; // No insertar si ya existe
+                        return;
                     }
                 }
             }
 
-            // Insertar nueva relación
             String sql = "INSERT INTO detalle_eva_cur (id_cur, id_eva) VALUES (?, ?)";
             try (PreparedStatement ps = con.prepareStatement(sql)) {
                 ps.setInt(1, cou.getId());
@@ -66,25 +71,27 @@ public class CourseC {
         }
     }
 
+    /**
+     * Añade un nuevo curso si no existe.
+     * @param cou El curso a añadir.
+     * @return true si se añadió, false si ya existía o error.
+     */
     public boolean addNewCourse(Course cou) {
         String checkQuery = "SELECT COUNT(id) FROM curso WHERE nivel = ? AND is_active = 1";
         String insertQuery = "INSERT INTO curso (nivel, is_active) VALUES (?, ?)";
 
         try (Connection con = new connect().getConectar()) {
-            // 1. Verificar si el curso ya existe
             try (PreparedStatement checkStmt = con.prepareStatement(checkQuery)) {
                 checkStmt.setString(1, cou.getNombre());
                 
                 try (ResultSet rs = checkStmt.executeQuery()) {
                     if (rs.next() && rs.getInt(1) > 0) {
-                        // El curso ya existe, salir del método
                         System.out.println("El curso ya existe, no se puede añadir de nuevo.");
-                        return false; // Importante: salir del método aquí
+                        return false;
                     }
                 }
             }
 
-            // 2. Insertar el curso si no existe
             try (PreparedStatement ps = con.prepareStatement(insertQuery, Statement.RETURN_GENERATED_KEYS)) {
                 ps.setString(1, cou.getNombre());
                 ps.setInt(2, 1);
@@ -106,8 +113,24 @@ public class CourseC {
         return false;
     }
     
+    /**
+     * Desactiva un curso (setea is_active=0), verificando si no hay pruebas asociadas.
+     * @param idCourse ID del curso.
+     */
     public void deleteCourse(int idCourse) {
         try (Connection con = new connect().getConectar()) {
+            // Verificar dependencias (pruebas asociadas)
+            String checkQuery = "SELECT COUNT(*) FROM detalle_eva_cur WHERE id_cur = ?";
+            try (PreparedStatement checkPs = con.prepareStatement(checkQuery)) {
+                checkPs.setInt(1, idCourse);
+                try (ResultSet rs = checkPs.executeQuery()) {
+                    if (rs.next() && rs.getInt(1) > 0) {
+                        MainCllr.mostrarAlerta("Error", "No se puede eliminar curso con pruebas asociadas.");
+                        return;
+                    }
+                }
+            }
+
             String query = "UPDATE curso SET is_active = 0 WHERE id = ?";
             try (PreparedStatement ps = con.prepareStatement(query)) {
                 ps.setInt(1, idCourse);
@@ -118,6 +141,11 @@ public class CourseC {
         }
     }
     
+    /**
+     * Actualiza un curso existente.
+     * @param cou El curso actualizado.
+     * @return true si se actualizó, false en error.
+     */
     public boolean updateCourse(Course cou) {
        try (Connection con = new connect().getConectar()) {
             String query = "UPDATE curso SET nivel = ? WHERE id = ?";

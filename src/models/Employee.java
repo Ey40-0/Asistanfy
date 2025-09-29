@@ -9,9 +9,22 @@ public class Employee {
     private int tipo;
     private int activa;
 
+    /**
+     * Constructor vacío.
+     */
     public Employee() {
     }
 
+    /**
+     * Constructor completo.
+     * @param id ID del empleado.
+     * @param nombre Nombre.
+     * @param apellido Apellido.
+     * @param email Email.
+     * @param contrasenia Contraseña.
+     * @param tipo Tipo (rol).
+     * @param activa Estado activo.
+     */
     public Employee(int id, String nombre, String apellido, String email, String contrasenia, int tipo, int activa) {
         this.id = id;
         this.nombre= nombre;
@@ -78,6 +91,10 @@ public class Employee {
         this.activa = activa;
     }   
 
+    /**
+     * Representación string del empleado.
+     * @return String con todos los atributos.
+     */
     @Override
     public String toString() {
         return "Employee{" + "id:" + id + ", nombre:" + nombre + ", apellido:" + apellido + ", contrasenia:" + contrasenia + ", email:" + email + ", tipo:" + tipo + ", activa:" + activa + '}';

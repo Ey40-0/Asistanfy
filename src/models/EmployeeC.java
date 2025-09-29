@@ -11,6 +11,11 @@ import javafx.collections.ObservableList;
 
 public class EmployeeC {
 
+    /**
+     * Registra un nuevo empleado si no existe.
+     * @param emp El empleado a registrar.
+     * @return true si se registró, false si ya existía o error.
+     */
     public boolean register(Employee emp) {
         try (Connection con = new connect().getConectar()) {
             String checkQuery = "SELECT COUNT(*) FROM Empleado WHERE email = ? AND activa = 1";
@@ -20,7 +25,7 @@ public class EmployeeC {
                 try (ResultSet rs = checkStmt.executeQuery()) {
                     if (rs.next() && rs.getInt(1) > 0) {
                         System.out.println("Ese usuario ya existe");
-                        return false; // ya existe
+                        return false;
                     }
                 }
             }
@@ -37,17 +42,23 @@ public class EmployeeC {
 
                 try (ResultSet rs = ps.getGeneratedKeys()) {
                     if (rs.next()) {
-                        emp.setId(rs.getInt(1)); // <- setear el ID real generado
+                        emp.setId(rs.getInt(1));
                     }
                 }
             }
-            return true; // insertado con exito
+            return true;
         } catch (SQLException e) {
             e.printStackTrace();
-            return false; // error al insertar
+            return false;
         }
     }
 
+    /**
+     * Autentica un empleado por email y contraseña.
+     * @param usuario Email.
+     * @param contrasenia Contraseña.
+     * @return El empleado si es válido, null en caso contrario.
+     */
     public Employee login(String usuario, String contrasenia) {
         try (Connection con = new connect().getConectar()) {
             String query = "SELECT * FROM Empleado WHERE email = ? AND activa = 1";
@@ -57,7 +68,6 @@ public class EmployeeC {
                     if (rs.next()) {
                         String passDB = rs.getString("contrasenia");
                         if (contrasenia.equals(passDB)) {
-                            // Devuelve un objeto Empleado con los datos de la db
                             return new Employee(
                                 rs.getInt("id_emp"),
                                 rs.getString("nombre"),
@@ -68,10 +78,10 @@ public class EmployeeC {
                                 rs.getInt("activa")
                             );
                         } else {
-                            return null; // contraseña incorrecta
+                            return null;
                         }
                     } else {
-                        return null; // usuario no existe
+                        return null;
                     }
                 }
             }
@@ -81,6 +91,10 @@ public class EmployeeC {
         }
     }
 
+    /**
+     * Obtiene todos los empleados activos (excepto admin).
+     * @return Lista observable de empleados.
+     */
     public ObservableList<Employee> getAllEmps() {
         ObservableList<Employee> empleados = FXCollections.observableArrayList();
         try (Connection con = new connect().getConectar()) {
@@ -106,20 +120,41 @@ public class EmployeeC {
         return empleados;
     }
     
+    /**
+     * Obtiene solo los profesores activos.
+     * @return Lista observable de profesores.
+     */
     public ObservableList<Employee> getProfesores() {
         ObservableList<Employee> todosEmpleados = this.getAllEmps();
         ObservableList<Employee> profesores = FXCollections.observableArrayList();
 
         for (Employee emp : todosEmpleados) {
-            if (emp.getTipo() == 0) { // tipo 0 = profesor
+            if (emp.getTipo() == 0) {
                 profesores.add(emp);
             }
         }
         return profesores;
     }
     
+    /**
+     * Desactiva un empleado (setea activa=0), verificando dependencias.
+     * @param idEmployee ID del empleado.
+     */
     public void deleteEmployee(int idEmployee) { 
         try (Connection con = new connect().getConectar()) {
+            // Verificar dependencias (evaluaciones asociadas)
+            String checkQuery = "SELECT COUNT(*) FROM evaluacion WHERE Empleado_id = ? AND is_active = 1";
+            try (PreparedStatement checkPs = con.prepareStatement(checkQuery)) {
+                checkPs.setInt(1, idEmployee);
+                try (ResultSet rs = checkPs.executeQuery()) {
+                    if (rs.next() && rs.getInt(1) > 0) {
+                        System.out.println("No se puede eliminar empleado con evaluaciones activas.");
+                        // Opcional: MainCllr.mostrarAlerta(...)
+                        return;
+                    }
+                }
+            }
+
             String query = "UPDATE empleado SET activa = 0 WHERE id_emp = ?";
             try (PreparedStatement ps = con.prepareStatement(query)) {
                 ps.setInt(1, idEmployee);
@@ -131,8 +166,26 @@ public class EmployeeC {
         }
     }
     
+    /**
+     * Actualiza un empleado, verificando unicidad de email.
+     * @param emp El empleado actualizado.
+     * @return true si se actualizó, false si email duplicado o error.
+     */
     public boolean updateEmployee(Employee emp) {
         try (Connection con = new connect().getConectar()) {
+            // Verificar unicidad de nuevo email
+            String checkQuery = "SELECT COUNT(*) FROM Empleado WHERE email = ? AND id_emp != ? AND activa = 1";
+            try (PreparedStatement checkStmt = con.prepareStatement(checkQuery)) {
+                checkStmt.setString(1, emp.getEmail());
+                checkStmt.setInt(2, emp.getId());
+                try (ResultSet rs = checkStmt.executeQuery()) {
+                    if (rs.next() && rs.getInt(1) > 0) {
+                        System.out.println("Email ya existe en otro empleado.");
+                        return false;
+                    }
+                }
+            }
+
             String query = """
                 UPDATE empleado SET
                     nombre = ?,
@@ -156,7 +209,6 @@ public class EmployeeC {
                     System.out.println("No se encontró el empleado con ID: " + emp.getId());
                 }
             }
-            return true;
         } catch (SQLException e) {
             e.printStackTrace();
         }

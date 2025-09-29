@@ -25,13 +25,15 @@ public class ShowStudentsCllr {
     
     private final StudentC stuc = new StudentC();
     
+    /**
+     * Inicializa el controlador, configurando columnas de la tabla.
+     */
     @FXML
     public void initialize() {
         colName.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getNombre()));
         colRun.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getRut()));
 
         if (Session.getInstance().getId_rol() == 0) {
-            // Profesor: solo visual
             colJustification.setCellValueFactory(cellData -> {
                 CheckBox checkBox = new CheckBox();
                 checkBox.selectedProperty().bind(cellData.getValue().justificationProperty());
@@ -39,7 +41,6 @@ public class ShowStudentsCllr {
                 return new SimpleObjectProperty<>(checkBox.isSelected());
             });
         } else {
-            // Inspector: editable
             colJustification.setCellValueFactory(cellData -> cellData.getValue().justificationProperty());
             colJustification.setCellFactory(CheckBoxTableCell.forTableColumn(colJustification));
             tableStuds.setEditable(true);
@@ -48,7 +49,7 @@ public class ShowStudentsCllr {
         colUpdate.setCellFactory(tc -> new TableCell<>() {
             private final Button upd = new Button("Modificar");
             {
-                upd.setOnAction(e -> {           
+                upd.setOnAction(e -> {
                     Student stu = getTableView().getItems().get(getIndex());
                     Session.getInstance().setSelectedStud(stu);
                     GuideCllr.getInstance().loadPanel("/views/MpAddStudVw.fxml");
@@ -67,12 +68,14 @@ public class ShowStudentsCllr {
         loadStuds();
     }
     
+    /**
+     * Carga los estudiantes asociados a la prueba seleccionada.
+     */
     public void loadStuds() {
         ObservableList<Student> studs = FXCollections.observableArrayList(
             stuc.getStudentsByTest(Session.getInstance().getSelectedTest().getId())
         );
 
-        // Agregar listener para actualizar en BD
         for (Student stud : studs) {
             stud.justificationProperty().addListener((obs, oldVal, newVal) -> {
                 stuc.updateJustification(stud.getId(), newVal);
@@ -82,6 +85,9 @@ public class ShowStudentsCllr {
         tableStuds.setItems(studs);
     }
     
+    /**
+     * Carga el panel para añadir estudiante (solo para profesores).
+     */
     public void btnAddStud() {
         if (Session.getInstance().getId_rol() == 1) {
             MainCllr.mostrarAlerta("Error", "Solo profesores pueden añadir ausentes.");
@@ -90,6 +96,9 @@ public class ShowStudentsCllr {
         GuideCllr.getInstance().loadPanel("/views/MpAddStudVw.fxml");
     }
     
+    /**
+     * Carga el panel para ver pruebas.
+     */
     public void btnViewTest() {
         GuideCllr.getInstance().loadPanel("/views/ShowTestsVw.fxml");
     }

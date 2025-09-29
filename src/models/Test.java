@@ -11,9 +11,22 @@ public class Test {
     private int idProfesor;
     private int is_active;
 
+    /**
+     * Constructor vacío.
+     */
     public Test() {
     }
 
+    /**
+     * Constructor completo.
+     * @param id ID de la prueba.
+     * @param titulo Título.
+     * @param fecha Fecha.
+     * @param curso Curso asociado.
+     * @param asignatura Asignatura.
+     * @param idProfesor ID del profesor.
+     * @param is_active Estado activo.
+     */
     public Test(int id, String titulo, LocalDate fecha, Course curso, Matter asignatura, int idProfesor, int is_active) {
         this.id = id;
         this.titulo = titulo;

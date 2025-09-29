@@ -32,6 +32,9 @@ public class AddEmployeesCllr {
     private Employee selected;
     private boolean showing = false;
     
+    /**
+     * Inicializa el controlador, configurando bindings y listeners.
+     */
     @FXML
     public void initialize() {
         txtFieldPassword.textProperty().bindBidirectional(txtPassword.textProperty());
@@ -67,6 +70,9 @@ public class AddEmployeesCllr {
         loadEmployees();
     }
 
+    /**
+     * Crea un nuevo empleado en la base de datos.
+     */
     @FXML
     private void createEmployee() {
         String nombre = txtNombre.getText().trim();
@@ -88,7 +94,6 @@ public class AddEmployeesCllr {
         Employee emp = new Employee(0, nombre, apellido, mail, contrasenia, tipo, 1);
 
         if (empc.register(emp)) {
-            //MainCllr.mostrarAlerta("Registro exitoso", "¡Usuario registrado correctamente!");
             clearFields();
             loadEmployees();
         } else {
@@ -96,18 +101,24 @@ public class AddEmployeesCllr {
         }
     }
     
-        @FXML
+    /**
+     * Elimina el empleado seleccionado (setea activa=0).
+     */
+    @FXML
     private void deleteEmployee() {
         if (selected != null) {
             empc.deleteEmployee(selected.getId());
+            listProfesores.getSelectionModel().clearSelection();
+            selected = null;
+            loadEmployees();
         } else {
             MainCllr.mostrarAlerta("Error", "Por favor selecciona un profesor.");
         } 
-        listProfesores.getSelectionModel().clearSelection();
-        selected = null;
-        loadEmployees();    
     }
     
+    /**
+     * Actualiza el empleado seleccionado en la base de datos.
+     */
     @FXML
     private void updateEmployee() {
         if (selected != null) {
@@ -143,6 +154,11 @@ public class AddEmployeesCllr {
         loadEmployees(); 
     }
     
+    /**
+     * Valida si un email es válido usando InternetAddress.
+     * @param correo El email a validar.
+     * @return true si es válido, false en caso contrario.
+     */
     private static boolean esValido(String correo) {
         try {
             InternetAddress email = new InternetAddress(correo);
@@ -153,16 +169,16 @@ public class AddEmployeesCllr {
         }
     }
     
+    /**
+     * Carga la lista de empleados desde la base de datos.
+     */
     private void loadEmployees() {
         ObservableList<Employee> empleados = empc.getAllEmps();
 
-        // Creamos la lista filtrable
         filteredEmployees = new FilteredList<>(empleados, e -> true);
 
-        // Asignamos al ListView
         listProfesores.setItems(filteredEmployees);
 
-        // Cell factory personalizado
         listProfesores.setCellFactory(lv -> new ListCell<Employee>() {
             @Override
             protected void updateItem(Employee emp, boolean empty) {
@@ -177,14 +193,14 @@ public class AddEmployeesCllr {
         });
     }
     
+    /**
+     * Muestra la información del empleado seleccionado (carga panel de tests).
+     */
     @FXML
     private void viewInformation() {
         if (selected != null && selected.getTipo() != 1) {
             try {
-                // Guardar el ID del empleado seleccionado en la sesión
                 Session.getInstance().setSelectedEmployeeId(selected.getId());
-
-                // Cargar el nuevo panel
                 GuideCllr.getInstance().loadPanel("/views/ShowTestsVw.fxml");
             } catch (Exception e) {
                 e.printStackTrace();
@@ -194,6 +210,9 @@ public class AddEmployeesCllr {
         }
     }
     
+    /**
+     * Muestra los datos del empleado seleccionado en los campos.
+     */
     private void showEmployeeData() {
         if (selected != null) {
             txtNombre.setText(selected.getNombre());
@@ -204,21 +223,21 @@ public class AddEmployeesCllr {
         }
     }
     
+    /**
+     * Alterna entre mostrar y ocultar la contraseña.
+     */
     @FXML
     private void onToggleShow() {
         showing = !showing;
         if (showing) {
-            // Mostrar el TextField con el texto claro
             txtFieldPassword.setVisible(true);
             txtFieldPassword.setManaged(true);
             txtPassword.setVisible(false);
             txtPassword.setManaged(false);
             btnToggle.setText("Ocultar");
-            // opcional: colocar el foco y mover caret al final
             txtFieldPassword.requestFocus();
             txtFieldPassword.positionCaret(txtFieldPassword.getText().length());
         } else {
-            // Volver a ocultar (PasswordField)
             txtFieldPassword.setVisible(false);
             txtFieldPassword.setManaged(false);
             txtPassword.setVisible(true);
@@ -229,11 +248,14 @@ public class AddEmployeesCllr {
         }
     }
     
+    /**
+     * Limpia todos los campos de entrada.
+     */
     private void clearFields() {
         txtNombre.clear();
         txtApellido.clear();
         txtPassword.clear();
-        txtFieldPassword.clear(); // si es visible también
+        txtFieldPassword.clear();
         txtMail.clear();
         typeUser.setSelected(false);
     }

@@ -14,6 +14,9 @@ public class AddStudentsCllr {
     
     StudentC stuc = new StudentC();
     
+    /**
+     * Inicializa el controlador, cargando datos si hay estudiante seleccionado.
+     */
     @FXML
     public void initialize() {
         if (Session.getInstance().getSelectedStud() != null) {
@@ -26,32 +29,28 @@ public class AddStudentsCllr {
         }
     }
     
+    /**
+     * Añade un nuevo estudiante asociado a la prueba seleccionada.
+     * @param event Evento de acción.
+     */
     @FXML
     public void addStudent(ActionEvent event) {
         
-        // Recoger los datos del alumno
         String name = fldName.getText().trim();
         String run = fldRun.getText().trim();
         
-        // Revisar campos vacios
         if (name.isEmpty() || run.isEmpty()) {
             MainCllr.mostrarAlerta("Campos vacios", "Por favor rellene todos los campos");
             return;
         }
         
-        // Validar run (xxxxxxxx-x)
         if (!MainCllr.validarRun(run)) {
             MainCllr.mostrarAlerta("Tipo incorrecto", "Por favor ingrese un run válido.");
             return;
         }
         
-        // Instanciar un alumno
         Student stu = new Student(0, MainCllr.formatearRun(run), name, Session.getInstance().getSelectedTest().getCurso());
-        System.out.println("Id Curso " + Session.getInstance().getSelectedTest().getCurso().getId());
-        System.out.println("Id Prueb " + Session.getInstance().getSelectedTest().getId());
-        // Insertar el Alumno en la db
         if (stuc.insert(stu, Session.getInstance().getSelectedTest().getId())) {
-            System.out.println(stu.toString());
             fldName.setText("");
             fldRun.setText("");
             GuideCllr.getInstance().loadPanel("/views/ShowStudVw.fxml");
@@ -61,10 +60,16 @@ public class AddStudentsCllr {
       
     }
     
+    /**
+     * Carga el panel para ver estudiantes.
+     */
     public void btnView() {
         GuideCllr.getInstance().loadPanel("/views/ShowStudVw.fxml");
     }
     
+    /**
+     * Actualiza el estudiante seleccionado en la base de datos.
+     */
     @FXML
     private void updateStudent() {
         String name = fldName.getText().trim();
@@ -94,6 +99,7 @@ public class AddStudentsCllr {
 
         if (stuc.updateStudent(stu)) {
             fldName.setText("");
+            Session.getInstance().setSelectedStud(null); // Limpieza de sesión
         } else {
             MainCllr.mostrarAlerta("Error", "Ha ocurrido un error al actualizar.");
         }

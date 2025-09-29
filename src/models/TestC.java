@@ -11,11 +11,15 @@ import java.sql.ResultSet;
 
 public class TestC {
     
+    /**
+     * Inserta una nueva prueba, verificando duplicados y reactivando si inactiva.
+     * @param eval La prueba a insertar.
+     * @return true si se insertó/reactivó, false en duplicado activo o error.
+     */
     public boolean insert(Test eval) {
         String checkSql = "SELECT id_eva FROM evaluacion WHERE descripcion = ? AND fecha = ? AND asignatura_id = ? AND empleado_id = ? AND is_active = 1";
 
         try (Connection con = new connect().getConectar()) {
-            // Verificar si ya existe activa para este profesor
             try (PreparedStatement checkPs = con.prepareStatement(checkSql)) {
                 checkPs.setString(1, eval.getTitulo());
                 checkPs.setDate(2, java.sql.Date.valueOf(eval.getFecha()));
@@ -30,7 +34,6 @@ public class TestC {
                 }
             }
 
-            // Verificar si existe inactiva para reactivar
             String checkInactiveSql = "SELECT id_eva FROM evaluacion WHERE descripcion = ? AND fecha = ? AND asignatura_id = ? AND empleado_id = ? AND is_active = 0";
             try (PreparedStatement checkInactivePs = con.prepareStatement(checkInactiveSql)) {
                 checkInactivePs.setString(1, eval.getTitulo());
@@ -51,7 +54,6 @@ public class TestC {
                 }
             }
 
-            // Insertar nueva
             String insertSql = "INSERT INTO evaluacion (descripcion, fecha, asignatura_id, empleado_id, is_active) VALUES (?, ?, ?, ?, ?)";
             try (PreparedStatement ps = con.prepareStatement(insertSql, Statement.RETURN_GENERATED_KEYS)) {
                 ps.setString(1, eval.getTitulo());
@@ -78,6 +80,11 @@ public class TestC {
         return false;
     }
     
+    /**
+     * Obtiene evaluaciones activas por profesor.
+     * @param profesorId ID del profesor.
+     * @return Lista de evaluaciones.
+     */
     public List<Test> getEvaluacionesByProfesor(int profesorId) {
         List<Test> evaluaciones = new ArrayList<>();
         String sql = """
@@ -121,8 +128,25 @@ public class TestC {
         return evaluaciones;
     }
     
+    /**
+     * Desactiva una prueba, eliminando relaciones dependientes.
+     * @param test La prueba a desactivar.
+     */
     public void deleteTest(Test test) {
         try (Connection con = new connect().getConectar()) {
+            // Eliminar relaciones en cascada
+            String deleteDetailsQuery = "DELETE FROM detalle_eva_alumno WHERE id_eva = ?";
+            try (PreparedStatement delDetailsPs = con.prepareStatement(deleteDetailsQuery)) {
+                delDetailsPs.setInt(1, test.getId());
+                delDetailsPs.executeUpdate();
+            }
+
+            String deleteCurQuery = "DELETE FROM detalle_eva_cur WHERE id_eva = ?";
+            try (PreparedStatement delCurPs = con.prepareStatement(deleteCurQuery)) {
+                delCurPs.setInt(1, test.getId());
+                delCurPs.executeUpdate();
+            }
+
             String query = "UPDATE evaluacion SET is_active = 0 WHERE id_eva = ?";
             try (PreparedStatement ps = con.prepareStatement(query)) {
                 ps.setInt(1, test.getId());

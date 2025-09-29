@@ -26,17 +26,21 @@ public class AddTestCllr {
     TestC evac = new TestC();
     CourseC curc = new CourseC();
     
+    /**
+     * Inicializa el controlador, cargando cursos y materias en los ComboBox.
+     */
     @FXML
     public void initialize() {
         fieldDescription.setOnAction(e -> fieldDate.requestFocus());
         
-        // Cargar cursos (llamando estático, sin crear objeto)
         fieldCourse.getItems().addAll(CourseC.getCourses());
 
-        // Cargar asignaturas
         fieldMatter.getItems().addAll(Matter.getMatters());
     }
     
+    /**
+     * Crea una nueva prueba en la base de datos y la asocia al curso.
+     */
     public void createTest() {
         String description = fieldDescription.getText().trim();
         LocalDate date = fieldDate.getValue();
@@ -67,6 +71,9 @@ public class AddTestCllr {
         }
     }
     
+    /**
+     * Actualiza una prueba existente (no implementado aún).
+     */
     private void updateTest() {
         
     }

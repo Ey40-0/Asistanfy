@@ -17,13 +17,19 @@ public class LoginCllr {
     
     EmployeeC empc = new EmployeeC();
     
+    /**
+     * Inicializa el controlador, configurando foco en campos.
+     */
     @FXML
     public void initialize() {
-        // pasa el foco al campo de contraseña
         str_user.setOnAction(e -> {str_contrasenia.requestFocus();});
         str_contrasenia.setOnAction(e -> {btn_siguiente(e);});
     }
     
+    /**
+     * Procesa el login del usuario.
+     * @param event Evento de acción.
+     */
     @FXML
     public void btn_siguiente(ActionEvent event) {
         String usuario = str_user.getText().trim();
@@ -52,6 +58,9 @@ public class LoginCllr {
         }
     }
     
+    /**
+     * Limpia los campos de usuario y contraseña.
+     */
     private void cleanInputs() {
         str_user.setText("");
         str_contrasenia.setText("");
