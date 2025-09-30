@@ -97,7 +97,7 @@ public class AddEmployeesCllr {
             clearFields();
             loadEmployees();
         } else {
-            MainCllr.getInstance().mostrarAlerta("Registro fallido", "Ese usuario ya existe o hubo un error.");
+            MainCllr.mostrarAlerta("Registro fallido", "Ese usuario ya existe o hubo un error.");
         }
     }
     
@@ -143,7 +143,7 @@ public class AddEmployeesCllr {
                 clearFields();
                 loadEmployees();
             } else {
-                MainCllr.getInstance().mostrarAlerta("Registro fallido", "Ese usuario ya existe o hubo un error.");
+                MainCllr.mostrarAlerta("Registro fallido", "Ese usuario ya existe o hubo un error.");
             }
             
         } else {

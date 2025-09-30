@@ -10,7 +10,7 @@ public class GuideCllr {
 
     @FXML private AnchorPane contentPane;
     private static GuideCllr instance;
-
+    
     @FXML
     public void initialize() {
         instance = this;
@@ -18,12 +18,13 @@ public class GuideCllr {
             return;
         }
 
-        switch (Session.getInstance().getId_rol()) {
+        switch (Session.getInstance().getEmployee().getTipo()) {
             case 0 -> btnNewTest();
             case 1 -> btnShowTeachers();
             case 2 -> btnRegister();
             default -> MainCllr.mostrarAlerta("Error", "Rol no reconocido.");
         }
+        
     }
 
     public static GuideCllr getInstance() {
@@ -77,11 +78,5 @@ public class GuideCllr {
 
     public void btnRegister() {
         loadPanel("/views/MaAddEmployeeVw.fxml");
-    }
-
-    public void btnLogout() {
-        MainCllr.getInstance().showPanel("/views/LoginVw.fxml");
-        Session.cerrarSesion();
-        MainCllr.mostrarAlerta("Éxito", "Sesión cerrada correctamente.");
     }
 }

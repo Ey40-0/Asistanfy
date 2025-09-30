@@ -80,8 +80,8 @@ public class ShowTestsCllr {
     private void loadTests() {
         ObservableList<Test> tests;
 
-        if (Session.getInstance().getId_rol() == 0) {
-            tests = FXCollections.observableArrayList(evac.getEvaluacionesByProfesor(Session.getInstance().getId()));
+        if (Session.getInstance().getEmployee().getTipo() == 0) {
+            tests = FXCollections.observableArrayList(evac.getEvaluacionesByProfesor(Session.getInstance().getEmployee().getId()));
         } else {
             int id = Session.getInstance().getSelectedEmployeeId();
             tests = FXCollections.observableArrayList(

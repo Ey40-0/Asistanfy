@@ -33,7 +33,7 @@ public class ShowStudentsCllr {
         colName.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getNombre()));
         colRun.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getRut()));
 
-        if (Session.getInstance().getId_rol() == 0) {
+        if (Session.getInstance().getEmployee().getTipo() == 0) {
             colJustification.setCellValueFactory(cellData -> {
                 CheckBox checkBox = new CheckBox();
                 checkBox.selectedProperty().bind(cellData.getValue().justificationProperty());
@@ -89,7 +89,7 @@ public class ShowStudentsCllr {
      * Carga el panel para añadir estudiante (solo para profesores).
      */
     public void btnAddStud() {
-        if (Session.getInstance().getId_rol() == 1) {
+        if (Session.getInstance().getEmployee().getTipo() == 1) {
             MainCllr.mostrarAlerta("Error", "Solo profesores pueden añadir ausentes.");
             return;
         }

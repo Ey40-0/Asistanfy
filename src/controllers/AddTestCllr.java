@@ -57,7 +57,7 @@ public class AddTestCllr {
             return;
         }
         
-        Test test = new Test(0, description, date, course, matter, Session.getInstance().getId(), 1);
+        Test test = new Test(0, description, date, course, matter, Session.getInstance().getEmployee().getId(), 1);
         
         if (evac.insert(test)) {
             MainCllr.mostrarAlerta("Registro exitoso", "¡Evaluación registrada correctamente!");

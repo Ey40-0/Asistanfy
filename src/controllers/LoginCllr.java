@@ -45,7 +45,7 @@ public class LoginCllr {
              
             System.out.println(emp.toString());
             
-            Session.iniciarSesion(emp.getId(), emp.getTipo());
+            Session.iniciarSesion(emp);
             
             switch (emp.getTipo()) {
                 case 0 -> MainCllr.getInstance().showPanel("/views/TeacherVw.fxml");

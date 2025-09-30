@@ -3,9 +3,7 @@ package controllers;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
-import models.Employee;
 import models.EmployeeC;
-import models.Session;
 
 public class ShowNotificationsCllr {
     @FXML
