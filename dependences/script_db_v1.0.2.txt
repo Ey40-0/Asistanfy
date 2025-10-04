@@ -1,0 +1,22 @@
+SELECT e.id_emp, e.nombre, e.apellido, e.email,
+	   e.contrasenia, e.id_rol,
+	   r.descripcion_rol, e.activa
+FROM Empleado e
+JOIN roles r ON e.id_rol = r.id_rol
+ORDER BY e.id_emp;
+
+SELECT a.id, a.rut_alum, a.nombre_alum,
+	   c.nivel, a.justification,
+	   e.descripcion, e.empleado_id
+FROM alumnos a
+JOIN curso c ON c.id = a.id_cur
+JOIN detalle_eva_alumno dea ON dea.id_alumno = a.id
+JOIN evaluacion e ON e.id_eva = dea.id_eva;
+
+select * from matter;
+select * from curso;
+select * from empleado;
+select * from detalle_eva_cur;
+select * from detalle_eva_alumno;
+select * from evaluacion;
+select * from alumnos;

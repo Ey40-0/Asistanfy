@@ -218,7 +218,7 @@ public class AddEmployeesCllr {
             txtNombre.setText(selected.getNombre());
             txtApellido.setText(selected.getApellido());
             txtMail.setText(selected.getEmail());
-            txtPassword.setText(selected.getContrasenia());
+            txtPassword.setText("");
             typeUser.setSelected(selected.getTipo() == 1);
         }
     }

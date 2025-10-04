@@ -31,11 +31,12 @@ public class EmployeeC {
             }
 
             String query = "INSERT INTO empleado (nombre, apellido, email, contrasenia, id_rol, activa) VALUES (?, ?, ?, ?, ?, ?)";
+            String hashedPassword = Session.hashPassword(emp.getContrasenia()); // Hasheo de la contraseña plana
             try (PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
                 ps.setString(1, emp.getNombre());
                 ps.setString(2, emp.getApellido());
                 ps.setString(3, emp.getEmail());
-                ps.setString(4, emp.getContrasenia());
+                ps.setString(4, hashedPassword);
                 ps.setInt(5, emp.getTipo());
                 ps.setInt(6, emp.getActiva());
                 ps.executeUpdate();
@@ -67,13 +68,13 @@ public class EmployeeC {
                 try (ResultSet rs = stmt.executeQuery()) {
                     if (rs.next()) {
                         String passDB = rs.getString("contrasenia");
-                        if (contrasenia.equals(passDB)) {
+                        if (Session.verifyPassword(contrasenia, passDB)) {
                             return new Employee(
                                 rs.getInt("id_emp"),
                                 rs.getString("nombre"),
                                 rs.getString("apellido"),
-                                rs.getString("contrasenia"),
                                 rs.getString("email"),
+                                rs.getString("contrasenia"),
                                 rs.getInt("id_rol"),
                                 rs.getInt("activa")
                             );
@@ -102,15 +103,13 @@ public class EmployeeC {
             try (PreparedStatement ps = con.prepareStatement(query);
                  ResultSet rs = ps.executeQuery()) {
                     while (rs.next()) {
-                        Employee emp = new Employee(
-                            rs.getInt("id_emp"),
-                            rs.getString("nombre"),
-                            rs.getString("apellido"),
-                            rs.getString("email"),
-                            rs.getString("contrasenia"),
-                            rs.getInt("id_rol"),
-                            rs.getInt("activa")
-                        );
+                        Employee emp = new Employee();
+                            emp.setId(rs.getInt("id_emp"));
+                            emp.setNombre(rs.getString("nombre"));
+                            emp.setApellido(rs.getString("apellido"));
+                            emp.setEmail(rs.getString("email"));
+                            emp.setTipo(rs.getInt("id_rol"));
+                            emp.setActiva(rs.getInt("activa"));
                         empleados.add(emp);
                     }
             }
@@ -149,7 +148,7 @@ public class EmployeeC {
                 try (ResultSet rs = checkPs.executeQuery()) {
                     if (rs.next() && rs.getInt(1) > 0) {
                         System.out.println("No se puede eliminar empleado con evaluaciones activas.");
-                        // Opcional: MainCllr.mostrarAlerta(...)
+                        // MainCllr.mostrarAlerta(...)
                         return;
                     }
                 }
@@ -194,11 +193,12 @@ public class EmployeeC {
                     contrasenia = ?,
                     id_rol = ?
                 WHERE id_emp = ?""";
+            String hashedPassword = emp.getContrasenia();
             try (PreparedStatement ps = con.prepareStatement(query)) {
                 ps.setString(1, emp.getNombre());
                 ps.setString(2, emp.getApellido());
                 ps.setString(3, emp.getEmail());
-                ps.setString(4, emp.getContrasenia());
+                ps.setString(4, hashedPassword);
                 ps.setInt(5, emp.getTipo());
                 ps.setInt(6, emp.getId());
                 int rows = ps.executeUpdate();

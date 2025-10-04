@@ -1,5 +1,7 @@
 package models;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 public class Session {
     private static Session instancia;
     
@@ -77,6 +79,37 @@ public class Session {
 
     public Employee getEmployee() {
         return employee;
+    }
+    
+    
+    
+    /**
+     * Hashea la contraseña.
+     * @param plainPassword
+     * @return 
+     */
+    public static String hashPassword(String plainPassword) {
+        int cost = 12; // puedes usar 10-14, depende del rendimiento que busques
+        return BCrypt.hashpw(plainPassword, BCrypt.gensalt(cost));
+    }
+
+    /**
+     * Verifica contraseña (login).
+     * @param plainPassword
+     * @param hashedPassword
+     * @return 
+     */
+    public static boolean verifyPassword(String plainPassword, String hashedPassword) {
+        if (plainPassword == null || hashedPassword == null || hashedPassword.length() < 20) {
+            return false;
+        }
+
+        try {
+            return BCrypt.checkpw(plainPassword, hashedPassword);
+        } catch (IllegalArgumentException e) {
+            System.err.println("Error al verificar contraseña: hash inválido: " + e.getMessage());
+            return false;
+        }
     }
     
 }

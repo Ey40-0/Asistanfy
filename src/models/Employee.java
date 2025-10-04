@@ -29,8 +29,8 @@ public class Employee {
         this.id = id;
         this.nombre= nombre;
         this.apellido = apellido;
-        this.contrasenia = contrasenia;
         this.email = email;
+        this.contrasenia = contrasenia;
         this.tipo = tipo;
         this.activa = activa;       
     }

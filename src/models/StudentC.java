@@ -9,6 +9,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 
 public class StudentC {
     
@@ -20,29 +24,94 @@ public class StudentC {
      */
     public boolean insert(Student stu, int idTest) {
         try (Connection con = new connect().getConectar()) {
-            // Verificar si el alumno ya existe por rut_alum
-            int idAlumno = 0;
-            String checkStudentQuery = "SELECT id, id_cur FROM alumnos WHERE rut_alum = ?";
-            try (PreparedStatement checkStudentStmt = con.prepareStatement(checkStudentQuery)) {
-                checkStudentStmt.setString(1, stu.getRut());
-                try (ResultSet rs = checkStudentStmt.executeQuery()) {
+            int idAlumnoExistente = 0;
+            int cursoExistente = 0;
+
+            // Verificar si el alumno ya existe por RUT
+            String buscarAlumno = "SELECT id, id_cur FROM alumnos WHERE rut_alum = ?";
+            try (PreparedStatement ps = con.prepareStatement(buscarAlumno)) {
+                ps.setString(1, stu.getRut());
+                try (ResultSet rs = ps.executeQuery()) {
                     if (rs.next()) {
-                        idAlumno = rs.getInt("id");
-                        int existingCourseId = rs.getInt("id_cur");
-                        // Verificar que el curso sea el mismo
-                        if (existingCourseId != stu.getCurso().getId()) {
-                            MainCllr.mostrarAlerta("Error al insertar","El alumno ya está registrado en un curso diferente.");
-                            return false;
-                        }
-                        stu.setId(idAlumno);
+                        idAlumnoExistente = rs.getInt("id");
+                        cursoExistente = rs.getInt("id_cur");
                     }
                 }
             }
 
-            // Si el alumno no existe, insertarlo en la tabla alumnos
-            if (idAlumno == 0) {
-                String insertStudentQuery = "INSERT INTO alumnos (rut_alum, nombre_alum, id_cur) VALUES (?, ?, ?)";
-                try (PreparedStatement ps = con.prepareStatement(insertStudentQuery, Statement.RETURN_GENERATED_KEYS)) {
+            // Obtener la materia de la evaluación
+            int idAsignaturaEvaluacion = 0;
+            String obtenerAsignatura = "SELECT Asignatura_id FROM evaluacion WHERE id_eva = ?";
+            try (PreparedStatement ps = con.prepareStatement(obtenerAsignatura)) {
+                ps.setInt(1, idTest);
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (rs.next()) {
+                        idAsignaturaEvaluacion = rs.getInt("Asignatura_id");
+                    } else {
+                        MainCllr.mostrarAlerta("Error", "Evaluación no encontrada.");
+                        return false;
+                    }
+                }
+            }
+
+            // Si ya existe un alumno con el mismo RUT
+            if (idAlumnoExistente != 0) {
+                // Obtener todas las materias de evaluaciones del alumno existente
+                String materiasAlumno = """
+                    SELECT DISTINCT e.Asignatura_id 
+                    FROM evaluacion e 
+                    JOIN detalle_eva_alumno dea ON e.id_eva = dea.id_eva 
+                    WHERE dea.id_alumno = ?
+                """;
+
+                List<Integer> materias = new ArrayList<>();
+                try (PreparedStatement ps = con.prepareStatement(materiasAlumno)) {
+                    ps.setInt(1, idAlumnoExistente);
+                    try (ResultSet rs = ps.executeQuery()) {
+                        while (rs.next()) {
+                            materias.add(rs.getInt("Asignatura_id"));
+                        }
+                    }
+                }
+
+                if (cursoExistente == stu.getCurso().getId()) {
+                    // Mismo curso
+                    if (materias.contains(idAsignaturaEvaluacion)) {
+                        // Misma materia -> NO insertar
+                        MainCllr.mostrarAlerta("Duplicado", "El alumno ya está registrado con esta materia en este curso.");
+                        return false;
+                    } else {
+                        // Forzar nuevo registro de alumno
+                        idAlumnoExistente = 0; // Forzar nuevo registro de alumno
+                    }
+                } else {
+                    // Curso distinto (¿Repitió? ¿Subió de nivel?)
+                    // Preguntar al usuario si quiere crear un nuevo registro
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("Curso diferente");
+                    alert.setHeaderText("El alumno ya está registrado en otro curso (" + cursoExistente + ").");
+                    alert.setContentText("¿Desea agregarlo nuevamente para el curso " + stu.getCurso().getId() + "?");
+
+                    // Botones personalizados
+                    ButtonType buttonSi = new ButtonType("Si", ButtonBar.ButtonData.YES);
+                    ButtonType buttonNo = new ButtonType("No", ButtonBar.ButtonData.NO);
+                    alert.getButtonTypes().setAll(buttonSi, buttonNo);
+
+                    Optional<ButtonType> result = alert.showAndWait();
+                    if (result.isEmpty() || result.get() == buttonNo) {
+                        MainCllr.mostrarAlerta("Cancelado", "El usuario canceló la operación.");
+                        return false;
+                    }
+
+                    // Insertar nuevo registro
+                    idAlumnoExistente = 0; // Forzar nuevo
+                }
+            }
+
+            // Insertar nuevo alumno si es necesario
+            if (idAlumnoExistente == 0) {
+                String insertAlumno = "INSERT INTO alumnos (rut_alum, nombre_alum, id_cur) VALUES (?, ?, ?)";
+                try (PreparedStatement ps = con.prepareStatement(insertAlumno, Statement.RETURN_GENERATED_KEYS)) {
                     ps.setString(1, stu.getRut());
                     ps.setString(2, stu.getNombre());
                     ps.setInt(3, stu.getCurso().getId());
@@ -50,52 +119,93 @@ public class StudentC {
 
                     try (ResultSet rs = ps.getGeneratedKeys()) {
                         if (rs.next()) {
-                            idAlumno = rs.getInt(1);
-                            stu.setId(idAlumno);
+                            int newId = rs.getInt(1);
+                            stu.setId(newId);
+                        } else {
+                            MainCllr.mostrarAlerta("Error", "No se pudo obtener el ID del nuevo alumno.");
+                            return false;
                         }
                     }
                 }
             }
 
-            // Verificar si la evaluación pertenece al curso correcto
-            String checkCourseQuery = "SELECT COUNT(*) FROM detalle_eva_cur WHERE id_eva = ? AND id_cur = ?";
-            try (PreparedStatement checkCourseStmt = con.prepareStatement(checkCourseQuery)) {
-                checkCourseStmt.setInt(1, idTest);
-                checkCourseStmt.setInt(2, stu.getCurso().getId());
-                try (ResultSet rs = checkCourseStmt.executeQuery()) {
+            // Verificar si evaluación está asociada al curso del alumno
+            String verificarCursoEvaluacion = "SELECT COUNT(*) FROM detalle_eva_cur WHERE id_eva = ? AND id_cur = ?";
+            try (PreparedStatement ps = con.prepareStatement(verificarCursoEvaluacion)) {
+                ps.setInt(1, idTest);
+                ps.setInt(2, stu.getCurso().getId());
+                try (ResultSet rs = ps.executeQuery()) {
                     if (rs.next() && rs.getInt(1) == 0) {
-                        System.out.println("La evaluación no está asociada al curso especificado.");
+                        MainCllr.mostrarAlerta("Error", "La evaluación no está asociada al curso del alumno.");
                         return false;
                     }
                 }
             }
 
-            // Verificar si el alumno ya tiene la evaluación
-            String checkEvalQuery = "SELECT COUNT(*) FROM detalle_eva_alumno WHERE id_alumno = ? AND id_eva = ?";
-            try (PreparedStatement checkEvalStmt = con.prepareStatement(checkEvalQuery)) {
-                checkEvalStmt.setInt(1, idAlumno);
-                checkEvalStmt.setInt(2, idTest);
-                try (ResultSet rs = checkEvalStmt.executeQuery()) {
+            // Verificar si ya tiene esta evaluación
+            String verificarDuplicado = "SELECT COUNT(*) FROM detalle_eva_alumno WHERE id_alumno = ? AND id_eva = ?";
+            try (PreparedStatement ps = con.prepareStatement(verificarDuplicado)) {
+                ps.setInt(1, stu.getId());
+                ps.setInt(2, idTest);
+                try (ResultSet rs = ps.executeQuery()) {
                     if (rs.next() && rs.getInt(1) > 0) {
-                        System.out.println("El alumno ya tiene esta evaluación.");
+                        MainCllr.mostrarAlerta("Error", "Este alumno ya tiene asignada esta evaluación.");
                         return false;
                     }
                 }
             }
 
             // Asignar evaluación al alumno
-            String assignQuery = "INSERT INTO detalle_eva_alumno (id_eva, id_alumno) VALUES (?, ?)";
-            try (PreparedStatement assignStmt = con.prepareStatement(assignQuery)) {
-                assignStmt.setInt(1, idTest);
-                assignStmt.setInt(2, idAlumno);
-                assignStmt.executeUpdate();
+            String asignar = "INSERT INTO detalle_eva_alumno (id_eva, id_alumno) VALUES (?, ?)";
+            try (PreparedStatement ps = con.prepareStatement(asignar)) {
+                ps.setInt(1, idTest);
+                ps.setInt(2, stu.getId());
+                ps.executeUpdate();
             }
 
+            // MainCllr.mostrarAlerta("Éxito", "Alumno registrado y evaluación asignada correctamente.");
             return true;
 
         } catch (SQLException e) {
             e.printStackTrace();
+            MainCllr.mostrarAlerta("Error de BD", "Fallo al registrar alumno: " + e.getMessage());
             return false;
+        }
+    }
+
+    // Método auxiliar: Valida si las materias son distintas (el alumno no tiene evaluaciones previas en esta materia)
+    private boolean areMateriasDistintas(int idAlumno, int idTest, Connection con) throws SQLException {
+        // Obtener la materia de la prueba actual
+        String getTestMateriaQuery = "SELECT e.id_asig FROM evaluaciones e WHERE e.id = ?"; // Asume tabla 'evaluaciones' con campo 'id_asig' para materia
+        int testMateriaId = 0;
+        try (PreparedStatement stmt = con.prepareStatement(getTestMateriaQuery)) {
+            stmt.setInt(1, idTest);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    testMateriaId = rs.getInt("id_asig");
+                }
+            }
+        }
+
+        if (testMateriaId == 0) {
+            // Si no se puede obtener la materia, asumir que son distintas por defecto
+            return true;
+        }
+
+        // Verificar si el alumno ya tiene evaluaciones en esta materia (obtener materias de sus evaluaciones previas)
+        String checkStudentMateriasQuery = """
+            SELECT DISTINCT e.id_asig 
+            FROM evaluaciones e 
+            INNER JOIN detalle_eva_alumno dea ON e.id = dea.id_eva 
+            WHERE dea.id_alumno = ? AND e.id_asig = ?
+            """;
+        try (PreparedStatement stmt = con.prepareStatement(checkStudentMateriasQuery)) {
+            stmt.setInt(1, idAlumno);
+            stmt.setInt(2, testMateriaId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                // Si hay resultados, significa que ya tiene en esta materia (NO son distintas)
+                return !rs.next(); // Retorna true si NO hay resultados (materias distintas)
+            }
         }
     }
     
