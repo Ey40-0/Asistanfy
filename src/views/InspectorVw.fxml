@@ -15,7 +15,7 @@
          <children>
             <Button layoutX="5.0" layoutY="5.0" mnemonicParsing="false" onAction="#btnShowTeachers" prefHeight="30.0" prefWidth="110.0" styleClass="btns-inicio" text="Profesores" />
             <Button layoutX="5.0" layoutY="430.0" mnemonicParsing="false" onAction="#btnConfig" prefHeight="30.0" prefWidth="110.0" styleClass="btns-inicio" text="Configuración" />
-            <Button layoutX="5.0" layoutY="40.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="110.0" styleClass="btns-inicio" text="Reportes" />
+            <Button layoutX="5.0" layoutY="40.0" mnemonicParsing="false" onAction="#btnReports" prefHeight="30.0" prefWidth="110.0" styleClass="btns-inicio" text="Reportes" />
          </children></Pane>
       <AnchorPane id="container" fx:id="contentPane" layoutX="136.0" layoutY="8.0" prefHeight="465.0" prefWidth="685.0" styleClass="container" />
    </children>

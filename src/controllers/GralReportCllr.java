@@ -1,6 +1,6 @@
 package controllers;
 
-public class GralReportController {
+public class GralReportCllr {
 
     
     

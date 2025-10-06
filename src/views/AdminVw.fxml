@@ -16,6 +16,7 @@
                 <Button layoutX="5.0" layoutY="40.0" mnemonicParsing="false" onAction="#btnAddMatter" prefHeight="30.0" prefWidth="110.0" styleClass="btns-inicio" text="Materias" />
                 <Button layoutX="5.0" layoutY="75.0" mnemonicParsing="false" onAction="#btnAddCourse" prefHeight="30.0" prefWidth="110.0" styleClass="btns-inicio" text="Cursos" />
                 <Button layoutX="5.0" layoutY="430.0" mnemonicParsing="false" onAction="#btnConfig" prefHeight="30.0" prefWidth="110.0" styleClass="btns-inicio" text="Configuración" />
+            <Button layoutX="5.0" layoutY="395.0" mnemonicParsing="false" onAction="#btnReports" prefHeight="30.0" prefWidth="110.0" styleClass="btns-inicio" text="Reportes" />
             </children>
         </Pane>
         <AnchorPane id="container" fx:id="contentPane" layoutX="136.0" layoutY="8.0" prefHeight="465.0" prefWidth="685.0" styleClass="container" />
