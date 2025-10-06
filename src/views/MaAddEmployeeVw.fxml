@@ -10,8 +10,9 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="465.0" prefWidth="685.0" styleClass="container" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AddEmployeesCllr">
-   <children>
+<AnchorPane prefHeight="465.0" prefWidth="685.0" styleClass="container" stylesheets="@../styles/common.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AddEmployeesCllr">
+
+    <children>
       <Pane layoutX="40.0" layoutY="58.0" prefHeight="368.0" prefWidth="300.0" style="-fx-background-color: #222; -fx-background-radius: 5;">
          <children>
             <Label layoutX="35.0" layoutY="19.0" prefHeight="20.0" prefWidth="230.0" text="Nombre" />
@@ -23,10 +24,10 @@
             <TextField fx:id="txtMail" layoutX="35.0" layoutY="151.0" prefHeight="31.0" prefWidth="230.0" promptText="example123@mail.com" />
             <TextField fx:id="txtFieldPassword" layoutX="35.0" layoutY="211.0" prefHeight="31.0" prefWidth="190.0" />
             <PasswordField fx:id="txtPassword" layoutX="35.0" layoutY="211.0" prefHeight="31.0" prefWidth="190.0" promptText="********" />
-            <Button layoutX="180.0" layoutY="258.0" mnemonicParsing="false" onAction="#createEmployee" prefHeight="30.0" prefWidth="85.0" text="Registrar" />
+            <Button layoutX="180.0" layoutY="258.0" mnemonicParsing="false" onAction="#createEmployee" prefHeight="30.0" prefWidth="85.0" styleClass="button" text="Registrar" />
             <CheckBox fx:id="typeUser" alignment="CENTER_RIGHT" layoutX="35.0" layoutY="262.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="false" prefHeight="22.0" prefWidth="130.0" text="Es Inspector?" textFill="#afafaf" />
-            <Button layoutX="35.0" layoutY="304.0" mnemonicParsing="false" onAction="#deleteEmployee" prefHeight="30.0" prefWidth="100.0" text="Borrar" />
-            <Button layoutX="165.0" layoutY="304.0" mnemonicParsing="false" onAction="#updateEmployee" prefHeight="30.0" prefWidth="100.0" text="Modificar" />
+            <Button layoutX="35.0" layoutY="304.0" mnemonicParsing="false" onAction="#deleteEmployee" prefHeight="30.0" prefWidth="100.0" styleClass="button" text="Borrar" />
+            <Button layoutX="165.0" layoutY="304.0" mnemonicParsing="false" onAction="#updateEmployee" prefHeight="30.0" prefWidth="100.0" styleClass="button" text="Modificar" />
             <Button fx:id="btnToggle" layoutX="234.0" layoutY="211.0" mnemonicParsing="false" onAction="#onToggleShow" prefHeight="31.0" prefWidth="31.0" text="☉">
                <font>
                   <Font size="13.0" />
