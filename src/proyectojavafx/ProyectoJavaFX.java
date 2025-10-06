@@ -24,8 +24,8 @@ public class ProyectoJavaFX extends Application {
         primaryStage.initStyle(StageStyle.TRANSPARENT);
         primaryStage.setTitle("Mi App JavaFX");
         primaryStage.setScene(scene);
-        primaryStage.setWidth(760);
-        primaryStage.setHeight(500);
+        primaryStage.setWidth(840);
+        primaryStage.setHeight(520);
         primaryStage.show();
         primaryStage.getScene().setFill(Color.TRANSPARENT);
     }
