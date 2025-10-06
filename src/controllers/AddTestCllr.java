@@ -8,6 +8,7 @@ import javafx.scene.control.TextField;
 import models.Matter;
 import models.Course;
 import models.CourseC;
+import models.MatterC;
 import models.Test;
 import models.TestC;
 import models.Session;
@@ -35,7 +36,7 @@ public class AddTestCllr {
         
         fieldCourse.getItems().addAll(CourseC.getCourses());
 
-        fieldMatter.getItems().addAll(Matter.getMatters());
+        fieldMatter.getItems().addAll(MatterC.getMatters());
     }
     
     /**

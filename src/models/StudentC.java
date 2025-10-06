@@ -310,4 +310,35 @@ public class StudentC {
         return false;
     }
     
+    
+    public String studentMostLeft(int curId) {
+        String student = "N/A"; // valor por defecto
+        String sql = """
+            SELECT a.nombre_alum as nombre, a.rut_alum, COUNT(*) AS total_inasistencias
+            FROM alumnos a
+            JOIN detalle_eva_alumno dea ON dea.id_alumno = a.id
+            JOIN evaluacion e ON dea.id_eva = e.id_eva
+            WHERE a.id_cur = ?
+              AND YEAR(e.fecha) = YEAR(CURDATE())
+            GROUP BY a.rut_alum, a.nombre_alum
+            ORDER BY total_inasistencias DESC
+            LIMIT 1;
+        """;
+
+        try (Connection con = new connect().getConectar();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, curId);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) { // chequeo si hay resultado
+                    student = rs.getString("nombre");
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return student;
+    }
 }

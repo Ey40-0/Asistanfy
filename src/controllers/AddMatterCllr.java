@@ -7,6 +7,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import models.Matter;
+import models.MatterC;
 
 public class AddMatterCllr {
     
@@ -45,7 +46,7 @@ public class AddMatterCllr {
         }
         
         Matter mat = new Matter(0, name);
-        if (Matter.addNewMatter(mat)) {
+        if (MatterC.addNewMatter(mat)) {
             fldName.setText("");
             loadMatters();
         }
@@ -55,7 +56,7 @@ public class AddMatterCllr {
      * Carga la lista de materias desde la base de datos.
      */
     private void loadMatters() {
-        ObservableList<Matter> materias = Matter.getMatters();
+        ObservableList<Matter> materias = MatterC.getMatters();
 
         filteredMatters = new FilteredList<>(materias, m -> true);
 
@@ -89,7 +90,7 @@ public class AddMatterCllr {
      */
     public void deleteMatter() {
         if (selected != null) {
-            Matter.deleteMatter(selected.getId());
+            MatterC.deleteMatter(selected.getId());
             loadMatters();
         } else {
             MainCllr.mostrarAlerta("Error", "Por favor selecciona una materia para borrar.");
@@ -110,7 +111,7 @@ public class AddMatterCllr {
             }
             
             Matter mat = new Matter (selected.getId(), name);
-            if (Matter.updateMatter(mat)) {
+            if (MatterC.updateMatter(mat)) {
                 fldName.setText("");
             } else {
                 MainCllr.mostrarAlerta("Error", "Ha ocurrido un error al actualizar.");

@@ -165,4 +165,35 @@ public class CourseC {
         }
        return false;
    }
+    
+    public Integer totalLefts(int curId) {
+        int total = 0; // mejor usar int primitivo
+        String sql = """
+            SELECT COUNT(dea.id) AS total_inasistencias
+            FROM detalle_eva_alumno dea
+            JOIN evaluacion e ON dea.id_eva = e.id_eva
+            JOIN alumnos a ON dea.id_alumno = a.id
+            JOIN curso c ON c.id = a.id_cur
+            WHERE YEAR(e.fecha) = YEAR(CURDATE())
+            AND c.id = ?
+        """;
+
+        try (Connection con = new connect().getConectar();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, curId);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) { // siempre hay que avanzar el ResultSet
+                    total = rs.getInt("total_inasistencias");
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return total;
+    }
+
 }
