@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `controller` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `controller`;
 -- MySQL dump 10.13  Distrib 8.0.42, for Win64 (x86_64)
 --
 -- Host: localhost    Database: controller
@@ -31,7 +33,7 @@ CREATE TABLE `alumnos` (
   PRIMARY KEY (`id`),
   KEY `Alumnos_Cur_FK` (`id_cur`),
   CONSTRAINT `Alumnos_Cur_FK` FOREIGN KEY (`id_cur`) REFERENCES `curso` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,6 +42,7 @@ CREATE TABLE `alumnos` (
 
 LOCK TABLES `alumnos` WRITE;
 /*!40000 ALTER TABLE `alumnos` DISABLE KEYS */;
+INSERT INTO `alumnos` VALUES (1,'22668944-3','Ariel',28,NULL),(2,'22383119-2','Alan',28,NULL),(3,'22383119-2','Alan',28,NULL),(4,'22383119-2','Alan',28,NULL),(5,'22668944-3','Ariel',28,NULL),(6,'15665184-2','Claudio',28,NULL);
 /*!40000 ALTER TABLE `alumnos` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -52,4 +55,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-10-02 16:52:34
+-- Dump completed on 2025-10-06  7:06:25

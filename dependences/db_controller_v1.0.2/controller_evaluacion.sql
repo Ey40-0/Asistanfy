@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `controller` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `controller`;
 -- MySQL dump 10.13  Distrib 8.0.42, for Win64 (x86_64)
 --
 -- Host: localhost    Database: controller
@@ -35,7 +37,7 @@ CREATE TABLE `evaluacion` (
   KEY `Evaluacion_Emp_FK` (`Empleado_id`),
   CONSTRAINT `Evaluacion_Asig_FK` FOREIGN KEY (`Asignatura_id`) REFERENCES `matter` (`id`),
   CONSTRAINT `Evaluacion_Emp_FK` FOREIGN KEY (`Empleado_id`) REFERENCES `empleado` (`id_emp`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -44,6 +46,7 @@ CREATE TABLE `evaluacion` (
 
 LOCK TABLES `evaluacion` WRITE;
 /*!40000 ALTER TABLE `evaluacion` DISABLE KEYS */;
+INSERT INTO `evaluacion` VALUES (1,'2025-10-31','JEG_01',1,2,1),(2,'2025-10-23','JEG_02',4,2,1),(3,'2025-10-30','JEG_03',5,2,1),(4,'2025-10-23','JEG_04',6,2,1);
 /*!40000 ALTER TABLE `evaluacion` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -56,4 +59,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-10-02 16:52:34
+-- Dump completed on 2025-10-06  7:06:25

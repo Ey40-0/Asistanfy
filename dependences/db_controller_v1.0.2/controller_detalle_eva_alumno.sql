@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `controller` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `controller`;
 -- MySQL dump 10.13  Distrib 8.0.42, for Win64 (x86_64)
 --
 -- Host: localhost    Database: controller
@@ -31,7 +33,7 @@ CREATE TABLE `detalle_eva_alumno` (
   KEY `id_alumno` (`id_alumno`),
   CONSTRAINT `detalle_eva_alumno_ibfk_1` FOREIGN KEY (`id_eva`) REFERENCES `evaluacion` (`id_eva`),
   CONSTRAINT `detalle_eva_alumno_ibfk_2` FOREIGN KEY (`id_alumno`) REFERENCES `alumnos` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,6 +42,7 @@ CREATE TABLE `detalle_eva_alumno` (
 
 LOCK TABLES `detalle_eva_alumno` WRITE;
 /*!40000 ALTER TABLE `detalle_eva_alumno` DISABLE KEYS */;
+INSERT INTO `detalle_eva_alumno` VALUES (7,1,1),(8,1,2),(9,2,3),(10,3,4),(11,2,5),(12,2,6);
 /*!40000 ALTER TABLE `detalle_eva_alumno` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -52,4 +55,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-10-02 16:52:34
+-- Dump completed on 2025-10-06  7:06:25
