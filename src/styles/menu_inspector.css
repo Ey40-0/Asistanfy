@@ -26,21 +26,25 @@
 
 /* Estilo para el contenedor de botones */
 #containerBtns {
-    -fx-background-color: #02142a; /* Fondo azul oscuro */
+    -fx-background-color: #2f2f2f; /* Fondo azul oscuro */
     -fx-background-radius: 10; /* Bordes redondeados */
 }
 
 /* Estilo para los botones de inicio */
 .btns-inicio {
-    -fx-background-color: #395fa9; /* Fondo azul */
-    -fx-background-radius: 40; /* Bordes muy redondeados */
+    -fx-background-color: #2f2f2f; /* Fondo azul */
+    -fx-background-radius: 10; /* Bordes muy redondeados */
     -fx-padding: 0; /* Sin padding */
+    -fx-border-color: #395fa9; /* Borde azul */
+    -fx-border-width: 2; /* Grosor del borde */
+    -fx-border-radius: 5; /* Borde redondeado igual que el fondo */
+    -fx-text-fill:dfdfdf;
 }
 
 /* Efecto hover para los botones de inicio */
 .btns-inicio:hover {
     -fx-background-color: #294f99; /* Azul más oscuro */
-    -fx-effect: dropshadow(gaussian, #1d7cbd, 5, 0, 0, 0); /* Sombra azul */
+    -fx-effect: dropshadow(gaussian, #4676b9, 5, 0, 0, 0); /* Sombra azul */
 }
 
 /* Estilo para contenedores genéricos */

@@ -132,17 +132,17 @@ public class MatterC {
        String mattName = "";
         String sql = """
             SELECT 
-                m.name AS materia,
-                COUNT(dea.id) AS total_inasistencias
-            FROM detalle_eva_alumno dea
-            JOIN evaluacion e ON dea.id_eva = e.id_eva
-            JOIN matter m ON e.Asignatura_id = m.id
-            JOIN alumnos a ON dea.id_alumno = a.id
-            JOIN curso c ON a.id_cur = c.id
-            WHERE c.id = ?   -- acá metís el curso seleccionado
-            GROUP BY m.id, m.name
-            ORDER BY total_inasistencias DESC
-            LIMIT 1;
+                            m.name AS materia,
+                            COUNT(dea.id) AS total_inasistencias
+                        FROM detalle_eva_alumno dea
+                        JOIN evaluacion e ON dea.id_eva = e.id_eva
+                        JOIN matter m ON e.Asignatura_id = m.id
+                        JOIN alumnos a ON dea.id_alumno = a.id
+                        JOIN curso c ON a.id_cur = c.id
+                        WHERE c.id = ?   -- acá metís el curso seleccionado
+                        GROUP BY m.id, m.name
+                        ORDER BY total_inasistencias DESC
+                        LIMIT 1;
         """;
 
         try (Connection con = new connect().getConectar();

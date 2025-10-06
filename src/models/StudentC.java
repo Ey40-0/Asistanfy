@@ -422,26 +422,25 @@ public class StudentC {
         return total;
     }
     
-    public static int countJustificated(int stuId) {
+    public static int countLefts(String stuRun) {
         int total = 0; // valor por defecto
         String sql = """
             SELECT 
                 a.nombre_alum AS nombre,
                 a.rut_alum,
-                a.justification,
-                COUNT(*) AS total_inasistencias
+            COUNT(*) AS inasistencias
             FROM alumnos a
             JOIN detalle_eva_alumno dea ON dea.id_alumno = a.id
             JOIN evaluacion e ON dea.id_eva = e.id_eva
-            WHERE a.id = ?
-              AND YEAR(e.fecha) = YEAR(CURDATE())
-            GROUP BY a.rut_alum, a.nombre_alum, a.justification;
+            WHERE a.rut_alum = ?
+                AND YEAR(e.fecha) = YEAR(CURDATE())
+            GROUP BY a.rut_alum, a.nombre_alum;
         """;
 
         try (Connection con = new connect().getConectar();
              PreparedStatement ps = con.prepareStatement(sql)) {
 
-            ps.setInt(1, stuId);
+            ps.setString(1, stuRun);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) { // chequeo si hay resultado
                     total = rs.getInt("inasistencias");
@@ -454,4 +453,144 @@ public class StudentC {
 
         return total;
     }
+    
+    public static int countLeftsJustified(String stuRun) {
+        int total = 0; // valor por defecto
+        String sql = """
+            SELECT 
+                a.nombre_alum AS nombre,
+                a.rut_alum,
+                a.justification,
+                COUNT(*) AS inasistenciasJust
+            FROM alumnos a
+            JOIN detalle_eva_alumno dea ON dea.id_alumno = a.id
+            JOIN evaluacion e ON dea.id_eva = e.id_eva
+            WHERE a.rut_alum = ?
+              AND YEAR(e.fecha) = YEAR(CURDATE())
+              AND justification = 1
+            GROUP BY a.rut_alum, a.nombre_alum, a.justification;
+        """;
+
+        try (Connection con = new connect().getConectar();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setString(1, stuRun);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) { // chequeo si hay resultado
+                    total = rs.getInt("inasistenciasJust");
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return total;
+    }
+    
+    public static int countNoJustified(String stuRun) {
+        int total = 0; // valor por defecto
+        String sql = """
+            SELECT 
+                a.nombre_alum AS nombre,
+                a.rut_alum,
+                a.justification,
+                COUNT(*) AS inasistenciasJust
+            FROM alumnos a
+            JOIN detalle_eva_alumno dea ON dea.id_alumno = a.id
+            JOIN evaluacion e ON dea.id_eva = e.id_eva
+            WHERE a.rut_alum = ?
+              AND YEAR(e.fecha) = YEAR(CURDATE())
+              AND justification is null OR justification = 0
+            GROUP BY a.rut_alum, a.nombre_alum, a.justification;
+        """;
+
+        try (Connection con = new connect().getConectar();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setString(1, stuRun);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) { // chequeo si hay resultado
+                    total = rs.getInt("inasistenciasJust");
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return total;
+    }
+    
+    
+    
+    public static String getMostMissedMatter(String stuRun) {
+        String matter = ""; // valor por defecto
+        String sql = """
+            SELECT 
+                m.name AS materia,
+                COUNT(*) AS total_registros
+            FROM alumnos a
+            JOIN detalle_eva_alumno dea ON dea.id_alumno = a.id
+            JOIN evaluacion e ON dea.id_eva = e.id_eva
+            JOIN matter m ON e.asignatura_id = m.id
+            WHERE a.rut_alum = ?
+              AND YEAR(e.fecha) = YEAR(CURDATE())
+            GROUP BY e.asignatura_id
+            ORDER BY total_registros DESC
+            LIMIT 1;
+        """;
+
+        try (Connection con = new connect().getConectar();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setString(1, stuRun);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) { // chequeo si hay resultado
+                    matter = rs.getString("materia");
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return matter;
+    }
+    
+    public static String getLastAbsenceDate(String stuRun) {
+        String evaluacion = ""; // valor por defecto
+        String sql = """
+            SELECT 
+                e.id_eva,
+                e.fecha,
+                m.name AS materia,
+                e.descripcion AS nombre_evaluacion
+            FROM alumnos a
+            JOIN detalle_eva_alumno dea ON dea.id_alumno = a.id
+            JOIN evaluacion e ON dea.id_eva = e.id_eva
+            JOIN matter m ON e.asignatura_id = m.id
+            WHERE a.rut_alum = ?
+              AND YEAR(e.fecha) = YEAR(CURDATE())
+            ORDER BY e.fecha DESC
+            LIMIT 1;
+        """;
+
+        try (Connection con = new connect().getConectar();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setString(1, stuRun);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) { // chequeo si hay resultado
+                    evaluacion = rs.getString("nombre_evaluacion");
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return evaluacion;
+    }
+    
 }

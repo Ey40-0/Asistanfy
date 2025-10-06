@@ -18,15 +18,15 @@ public class StudentReportCllr {
     
     @FXML private TableView<Student> tableStudent;
     Student stu = Session.getInstance().getSelectedStud();
-    
+
     @FXML
     public void initialize() {
         lblData.setText(stu.getNombre()+" - "+stu.getRut());
-        lblLefts.setText(StudentC.countLefts(stu.getId()));
-        lblJustificated.setText(string);
-        lblNoJustificated.setText(string);
-        lblMatter.setText(string);
-        lblLast.setText(string);
+        lblLefts.setText(String.valueOf(StudentC.countLefts(stu.getRut())));
+        lblJustificated.setText(String.valueOf(StudentC.countLeftsJustified(stu.getRut())));
+        lblNoJustificated.setText(String.valueOf(StudentC.countNoJustified(stu.getRut())));
+        lblMatter.setText(StudentC.getMostMissedMatter(stu.getRut()));
+        lblLast.setText(StudentC.getLastAbsenceDate(stu.getRut()));
     }
 
 }
