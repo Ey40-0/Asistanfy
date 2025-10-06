@@ -25,7 +25,7 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <TextField layoutX="15.0" layoutY="71.0" prefHeight="25.0" prefWidth="210.0" />
+            <TextField fx:id="fldSearch" layoutX="15.0" layoutY="71.0" prefHeight="25.0" prefWidth="210.0" />
          </children>
       </Pane>
       <Pane layoutX="238.0" prefHeight="466.0" prefWidth="450.0">

@@ -10,6 +10,8 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
@@ -340,5 +342,116 @@ public class StudentC {
         }
 
         return student;
+    }
+    
+    public ObservableList<Student> getAllStudents() {
+        ObservableList<Student> students = FXCollections.observableArrayList();
+        String sql = """
+            -- Mostrar todos los alumnos
+            SELECT a.*, c.id AS id_curso, c.nivel AS nombre_curso
+            FROM alumnos a
+            JOIN (
+                SELECT rut_alum, MIN(id) AS min_id
+                FROM alumnos
+                GROUP BY rut_alum
+            ) AS uniq 
+                ON a.rut_alum = uniq.rut_alum 
+                AND a.id = uniq.min_id
+            JOIN curso c 
+                ON a.id_cur = c.id;
+        """;
+
+        try (Connection con = new connect().getConectar();
+             PreparedStatement ps = con.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                Course level = new Course(
+                    rs.getInt("id_curso"),
+                    rs.getString("nombre_curso")
+                );
+
+                Student stud = new Student(
+                    rs.getInt("id"),
+                    rs.getString("rut_alum"),
+                    rs.getString("nombre_alum"),
+                    level
+                );
+
+                stud.setJustification(rs.getBoolean("justification"));
+
+                students.add(stud);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return students;
+    }
+    
+    public static int countLefts(int stuId) {
+        int total = 0; // valor por defecto
+        String sql = """
+            SELECT 
+                a.nombre_alum AS nombre,
+                a.rut_alum,
+                COUNT(*) AS total_inasistencias
+            FROM alumnos a
+            JOIN detalle_eva_alumno dea ON dea.id_alumno = a.id
+            JOIN evaluacion e ON dea.id_eva = e.id_eva
+            WHERE a.id = ? 
+              AND YEAR(e.fecha) = YEAR(CURDATE())
+            GROUP BY a.rut_alum, a.nombre_alum;
+        """;
+
+        try (Connection con = new connect().getConectar();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, stuId);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) { // chequeo si hay resultado
+                    total = rs.getInt("inasistencias");
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return total;
+    }
+    
+    public static int countJustificated(int stuId) {
+        int total = 0; // valor por defecto
+        String sql = """
+            SELECT 
+                a.nombre_alum AS nombre,
+                a.rut_alum,
+                a.justification,
+                COUNT(*) AS total_inasistencias
+            FROM alumnos a
+            JOIN detalle_eva_alumno dea ON dea.id_alumno = a.id
+            JOIN evaluacion e ON dea.id_eva = e.id_eva
+            WHERE a.id = ?
+              AND YEAR(e.fecha) = YEAR(CURDATE())
+            GROUP BY a.rut_alum, a.nombre_alum, a.justification;
+        """;
+
+        try (Connection con = new connect().getConectar();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, stuId);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) { // chequeo si hay resultado
+                    total = rs.getInt("inasistencias");
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return total;
     }
 }
